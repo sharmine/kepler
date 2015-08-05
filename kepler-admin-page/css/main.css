@@ -1,0 +1,222 @@
+﻿/*
+* @description: 基础样式
+* @author: andy
+* @update: andy (2014-7-10 14:37)*/
+.m-page {
+    min-width: 300px;
+    max-width: 768px;
+    min-height:100%;
+	margin: 0 auto;
+    background-color: #fff;
+}
+.m-orderinfo-page{
+    background-color:#f1f0f6;
+}
+.m-target1 {
+    height: 150px;
+}
+.m-display {
+ 	display: none;
+}
+/*m:透明文本框;*/
+.m-placeholder {
+    width: 50%;
+    color: #444;
+    background:transparent;
+    border: 0;
+    font-size: 15px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    /*文字溢出的部分隐藏并用省略号代替*/
+}
+.m-placeholder:disabled {
+    color: #000;
+}
+input.m-js-common-time::-webkit-input-placeholder {
+    color: #444;
+}
+.m-absolute {
+    position: absolute;
+}
+/*m:文本框;*/
+.m-check-input {
+     background-color: #f5f5f5;
+     border-radius: 4px;
+     height: 55px;
+     line-height: 55px;
+     padding: 0 13px;
+}
+
+.m-check-input input {
+     width:100%;
+     color: #999;
+}
+.m-bottom {
+    margin-bottom: 15px;
+}
+.m-left {
+    float: left;
+}
+.m-right {
+    float: right;
+}
+.m-center {
+    text-align: center;
+}
+/*乘车人信息*/
+.m-check-wrap {
+    background-color: #fff;
+    border-radius: 4px;
+    width: 280px;
+ }
+ .m-check-wrap .check-title {
+    font-size: 18px;
+    padding: 10px 0;
+    text-align: center;
+    background-color: #592d2d;
+    border-radius: 3px 3px 0 0;
+    color: #fff;
+    position: relative;
+ }
+ .m-check-wrap .check-close {
+    border: 1px solid #fff;
+    border-radius: 20px;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+ }
+ .m-check-wrap .check-close i:first-child {
+    border-top: 0;
+    border-right: 0;
+    border-left: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    width: 6px;
+    height: 6px;
+    display: block;
+     -webkit-transform: rotate(230deg);
+     position: relative;
+     top: 6px;
+     left: 2px;
+ }
+  .m-check-wrap .check-close i:last-child {
+    border-top: 0;
+    border-right: 0;
+    border-left: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    width: 6px;
+    height: 6px;
+    display: block;
+    -webkit-transform: rotate(47deg);
+     position: relative;
+     top: 0px;
+     left: 11px;
+ }
+ .m-check-wrap .check-info {
+    padding: 0px 6px;
+ }
+.m-check-wrap .check-info p{
+    text-align: left;
+    background-color: #FFFFF5;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-bottom: 1px solid #C8C7CC;
+}
+.m-check-wrap table.check-price {
+    width: 100%;
+ }
+ .m-check-wrap table.check-price tr {
+    height: 36px;
+    font-size: 14px;
+    color: #483131;
+ }
+ .m-check-wrap .check-footer {
+    height: 55px;
+    border-top: 1px solid #cbcbcb;
+ }
+ .m-check-wrap .check-cartype {
+    height: 101.5px;
+    border-top: 1px solid #c8c7cc;
+    margin-top: 13px;
+ }
+ .m-check-wrap .check-cartype ul {
+    display: -webkit-box;
+    -webkit-box-pack:center;
+ }
+ .m-check-wrap .check-cartype ul li {
+    -webkit-box-flex: 1;
+    text-align: center;
+    display:box;
+    display:-webkit-box;
+    box-pack:center;
+    -webkit-box-pack:center;
+    box-orient:vertical;
+    -webkit-box-orient:vertical;
+    -webkit-box-align:center;
+ }
+ .m-check-wrap .check-cartype .con {
+     width: 41px;
+     height: 41px;
+     margin-top: 6px;
+ }
+ .m-check-wrap .opacity {
+    -webkit-filter: grayscale(0.9);
+     filter: grayscale(0.9);/* W3C */ 
+     opacity: 0.3;
+ }
+  .m-check-wrap .check-cartype i {
+    border:1px solid transparent;
+  }
+  .m-check-wrap .check-cartype .current i {
+    border-top: 0;
+    border-right: 0;
+    border-left: 1px solid #adadad;
+    border-bottom: 1px solid #adadad;
+    background-color: #fdfdfd;
+    width: 15px;
+    height: 15px;
+    display: block;
+    -webkit-transform:rotate(316deg);
+    position: relative;
+    top: -8px;
+  }
+
+  .m-check-wrap .check-cartype h3 {
+     color: #cccccc;
+     font-size: 13px;
+     margin-top: 6px;
+  }
+  .m-check-wrap .check-cartype .current h3 {
+     color: #592d2d;
+  }
+ /*m:个人信息*/
+ .m-check-wrap .check-per-info {
+    padding: 12px;
+ }
+ .m-check-wrap .check-per-footer {
+    border-top: 1px solid #adadad;
+    border-radius: 0 0 4px 4px;
+    display: box;
+    display: -webkit-box;
+ }
+ .m-check-wrap .check-per-footer span {
+    font-size:18px;
+    color:#483131;
+    padding:10px 0;
+    display:block;
+    box-flex:1;
+    -webkit-box-flex:1;
+    text-align: center;
+    width:100px;
+}
+.m-write {
+    background-color: #fff;
+}
+.m-arr-r {
+    position: absolute;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #666;
+}

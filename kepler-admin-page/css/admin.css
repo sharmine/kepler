@@ -1,0 +1,945 @@
+@import "/css/common.css";
+
+/*section*/
+
+/*page*/
+/*index*/
+.index {
+    background-color: #efeff4;
+}
+
+.index header h1 {
+    margin-left: 0;
+}
+
+.index section {
+    padding: 7px 9.5px;
+}
+
+.index section ul {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding-bottom: 23.5px;
+}
+
+.index section li {
+    display: box;
+    display: -webkit-box;
+    orient: horizontal;
+    -webkit-box-orient: horizontal;
+    box-align: center;
+    -webkit-box-align: center;
+}
+
+.index section .img {
+    width: 25px;
+    height: 25px;
+    margin-left: 17.5px;
+    margin-right: 8.5px;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+}
+.index section .img.house{
+    background-image:url('/resources/m-ico-build.png');
+}
+.index section .img.travel{
+    background-image:url('/resources/admin-travel.png');
+}
+.index section .img.account{
+    background-image:url('/resources/admin-account.png');
+}
+.index section .img.pay{
+    background-image:url('/resources/admin-pay.png');
+}
+.index section .img.invoice{
+    background-image:url('/resources/admin-invoice.png');
+}
+.index section .img.info{
+    background-image:url('/resources/admin-info.png');
+}
+.index section .img.help{
+    background-image:url('/resources/admin-help.png');
+}
+.index section .img.discount{
+    background-image:url('/resources/admin-discount.png');
+}
+.index section .text {
+    border-bottom: 1px solid #c8c7cc;
+    box-flex: 1;
+    -webkit-box-flex: 1;
+    display: box;
+    display: -webkit-box;
+    orient: horizontal;
+    -webkit-box-orient: horizontal;
+    box-align: center;
+    -webkit-box-align: center;
+    padding: 19.5px 0;
+}
+
+.index section .text span {
+    font-size: 15px;
+    box-flex: 1;
+    -webkit-box-flex: 1;
+    display: block;
+}
+
+.index section .text span b{
+    display:inline-block;
+    background-color: #592d2d;
+    color:#fff;
+    height:15px;
+    line-height:15px;
+    text-align: center;
+    font-size:12px;
+    font-weight: normal;
+    margin-left:3px;
+}
+.index section .text span b.s{
+    border-radius: 15px;
+    width:15px;
+}
+.index section .text span b.m{
+    border-radius: 8px;
+    width:25px;
+}
+
+.index section .text i {
+    margin-right: 11.5px;
+}
+
+/*czmx*/
+.czmx section ul {
+    background-color: #fff;
+    padding-bottom: 23.5px;
+}
+
+.czmx section li {
+    border-bottom: 1px solid #c8c7cc;
+    display: box;
+    display: -webkit-box;
+    orient: horizontal;
+    -webkit-box-orient: horizontal;
+    padding: 10px 25px;
+}
+
+.czmx section .l {
+    box-flex: 1;
+    -webkit-box-flex: 1;
+}
+
+.czmx section .l em {
+    font-size: 15px;
+}
+
+.czmx section .l i {
+    font-size: 11px;
+    color: #fff;
+    padding: 0 5px;
+    border-radius: 5px;
+    background-color: #77bc55;
+    margin-left: 15px;
+}
+
+.czmx section p {
+    padding-top: 5px;
+}
+
+.czmx section span {
+    font-size: 11px;
+    color: #999;
+}
+
+.czmx section .r {
+    text-align: center;
+}
+
+.czmx section .r strong {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/*cz*/
+.cz section {
+    background-color: #fff;
+    padding: 20px 11px;
+}
+
+.cz section .p1 {
+    font-size: 13px;
+}
+
+.cz section .ui-text {
+    margin-top: 5px;
+}
+
+.cz section .note {
+    padding-top: 15px;
+}
+
+.cz section .note span {
+    font-size: 13px;
+}
+
+.cz section .note span a {
+    text-decoration: underline;
+    color: #592d2d;
+}
+
+.cz section .ui-button {
+    margin-top: 33px;
+}
+
+/*kpjl*/
+.kpjl section ul {
+    background-color: #fff;
+    padding-bottom: 23.5px;
+}
+
+.kpjl section li {
+    border-bottom: 1px solid #c8c7cc;
+    display: box;
+    display: -webkit-box;
+    orient: horizontal;
+    -webkit-box-orient: horizontal;
+    padding: 10px 25px;
+}
+
+.kpjl section .l {
+    box-flex: 1;
+    -webkit-box-flex: 1;
+}
+
+.kpjl section .l em {
+    font-size: 15px;
+}
+
+.kpjl section p {
+    padding-top: 5px;
+}
+
+.kpjl section span {
+    font-size: 11px;
+    color: #999;
+}
+
+.kpjl section .r {
+    text-align: center;
+    display: box;
+    display: -webkit-box;
+    box-align: center;
+    -webkit-box-align: center;
+}
+
+.kpjl section .r strong {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/*xgsjhm*/
+.page-info .info {
+    margin-top: 1px;
+    border: 1px solid #ccc;
+    background-color: #fffeea;
+    padding: 10px 12px;
+    border-left: 0;
+    border-right: 0;
+}
+
+.page-info .con {
+    padding: 19px 12px;
+}
+
+.page-info .ui-verify {
+    margin: 12px 0 23px;
+}
+
+.page-info .tip {
+    font-size: 14px;
+    color: #ff7e00;
+    text-decoration: underline;
+    margin-top: 10px;
+    display: block;
+}
+
+/*txfpxx*/
+.txfpxx section {
+    background-color: #fff;
+    padding: 9px 12.5px;
+}
+
+.txfpxx section p {
+    color: #999;
+    padding: 5px 0 10px;
+}
+
+/*txyzxx*/
+.txyzxx section {
+    background-color: #fff;
+    padding: 9px 12.5px;
+}
+
+/*yjdl*/
+.yjdl{
+    max-width: 640px;
+    min-height: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+}
+.voice-box {
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 10px 20px;
+    width: 230px;
+    position: relative;
+}
+
+.voice-box .p1, .voice-box .p2 {
+    text-align: center;
+}
+
+.voice-box .p1 {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.voice-box .p2 {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.voice-box .p3 {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.voice-box .p3 em {
+    color: #ff7e00;
+}
+
+.voice-box .ui-close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+/*xggrxx*/
+.xggrxx section {
+    background-color: #fff;
+    padding: 9px 12.5px;
+}
+
+.xggrxx section li {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display: box;
+    display: -webkit-box;
+    box-align: center;
+    -webkit-box-align: center;
+    padding-right: 10px;
+    margin-bottom: 9px;
+}
+
+.xggrxx section li input {
+    box-flex: 1;
+    -webkit-box-flex: 1;
+    display: block;
+    text-align: right;
+    border: 0;
+    background-color: #ebebeb;
+    padding-right: 5px;
+}
+
+.xggrxx section li span {
+    display: block;
+    color: #acacac;
+}
+
+/*zfbd*/
+.zfbd section {
+    font-size: 13px;
+    padding: 10px 12px;
+}
+
+.zfbd section h3 {
+    font-size: 15px;
+}
+
+.zfbd section p {
+
+}
+
+.zfbd section ul li {
+    padding-top: 15px;
+}
+
+.zfbd section .hint {
+    padding-top: 15px;
+}
+
+.zfbd section .hint a {
+    font-size: 13px;
+    color: #592d2d;
+}
+
+.zfbd section .bind {
+    border-radius: 5px;
+    background-color: #faf9f5;
+    border: 1px solid #e5e5e5;
+    padding: 15px;
+    display: box;
+    display: -webkit-box;
+    box-align: center;
+    -webkit-box-align: center;
+    margin-top: 15px;
+}
+
+.zfbd section .bind span {
+    font-size: 15px;
+    color: #592d2d;
+    display: block;
+    background: url("/resources/bank.png") no-repeat;
+    background-size: 25px 17px;
+    padding-left: 30px;
+    box-flex: 1;
+    -webkit-box-flex: 1;
+}
+
+.zfbd section .bind i {
+    border-color: #592d2d;
+}
+
+.zfbd .choose-bank-box {
+    border-radius: 3px;
+    width: 90%;
+    background-color: #fff;
+}
+
+.zfbd .choose-bank-box h3 {
+    font-size: 15px;
+    padding: 10px 0;
+    text-align: center;
+    background-color: #592d2d;
+    border-radius: 3px 3px 0 0;
+    color: #fff;
+}
+
+.zfbd .choose-bank-box ul {
+    overflow-y: auto;
+}
+
+.zfbd .choose-bank-box li {
+    display: box;
+    display: -webkit-box;
+    box-align: center;
+    -webkit-box-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #cbcbcb;
+}
+
+.zfbd .choose-bank-box li:last-child {
+    border-bottom: 0;
+}
+
+.zfbd .choose-bank-box li .l {
+    box-flex: 1;
+    -webkit-box-flex: 1;
+}
+
+.zfbd .choose-bank-box li img {
+    height: 25px;
+}
+
+/*wdxyk*/
+.wdxyk section {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 12px 9px;
+    padding-top: 20px;
+}
+
+.wdxyk section .credit-code {
+    font-size: 21px;
+    color: #000;
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.wdxyk section .bottom {
+    display: box;
+    display: -webkit-box;
+    border-radius: 0 0 5px 5px;
+    background-color: #f2f2f2;
+    padding: 10px;
+}
+
+.wdxyk section .bottom span {
+    box-flex: 1;
+    -webkit-box-flex: 1;
+    display: block;
+}
+
+.wdxyk section .bottom i {
+    margin-right: 5px;
+}
+
+/*fp*/
+.fp section .money {
+    background-color: #fffeeb;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.fp section .money span {
+    font-size: 15px;
+    color: #666;
+}
+
+.fp section .money p {
+    padding-top: 10px;
+    font-size: 45px;
+    color: #592d2d;
+    font-weight: bold;
+}
+
+.fp section .go {
+    padding: 15px 10px;
+    display: box;
+    display: -webkit-box;
+    box-align: center;
+    -webkit-box-align: center;
+    border: 1px solid #d3d2d6;
+    border-left: 0;
+    border-right: 0;
+}
+
+.fp section .go span {
+    font-size: 15px;
+    color: #592d2d;
+    box-flex: 1;
+    -webkit-box-flex: 1;
+    display: block;
+
+}
+
+.fp section .hint {
+    padding: 10px;
+    color: #666;
+}
+
+.fp section .hint h3 {
+    font-size: 14px;
+}
+
+.fp section .hint p {
+    padding-top: 10px;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+/*ye*/
+.ye section .money {
+    background-color: #fffeeb;
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 1px solid #c8c7cc;
+}
+
+.ye section .money span {
+    font-size: 15px;
+    color: #666;
+}
+
+.ye section .money p {
+    padding-top: 10px;
+    font-size: 45px;
+    color: #592d2d;
+    font-weight: bold;
+}
+
+.ye section .m {
+    display: box;
+    display: -webkit-box;
+    box-align: center;
+    -webkit-box-align: center;
+    padding: 20px 15px;
+    border-bottom: 1px solid #c8c7cc;
+}
+
+.ye section .l {
+    box-flex: 1;
+    -webkit-box-flex: 1;
+}
+
+.ye section .l span, .ye section .l em {
+    vertical-align: 3.5px;
+}
+
+.ye section .l span {
+    color: #666;
+}
+
+.ye section .l em {
+    color: #592d2d;
+    text-decoration: underline;
+}
+
+.ye section .l strong {
+    font-size: 18px;
+}
+
+.ye section .pay {
+    border-radius: 3px;
+    border: 1px solid #c8c7cc;
+    padding: 8.5px;
+    margin: 15px;
+    display: box;
+    display: -webkit-box;
+    box-align: center;
+    -webkit-box-align: center;
+}
+
+.ye section .logo {
+    width: 44px;
+    height: 44px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.ye section .alipay .logo {
+    background-image: url("/resources/alipay.png");
+}
+
+.ye section .wxpay .logo {
+    background-image: url("/resources/wxpay.png");
+}
+
+.ye section .say {
+    box-flex: 1;
+    -webkit-box-flex: 1;
+    padding-left: 3px;
+}
+
+.ye section .say em {
+    color: #592d2d;
+    font-size: 15px;
+}
+
+.ye section .say p {
+    color: #999;
+}
+
+/*wdxc*/
+.wdxc{
+    padding-top:44px;
+}
+.wdxc header{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:99;
+}
+.wdxc section {
+    background-color: #fff;
+}
+
+.wdxc section.no {
+    background-color: #efeff4;
+}
+
+.wdxc section .tab {
+    display: box;
+    display: -webkit-box;
+    background-color: #bfbfbf;
+    padding-top: 7px;
+}
+
+.wdxc section .tab > div {
+    padding: 10px 0;
+    font-size: 15px;
+    color: #fff;
+    background-color: #8d8c8c;
+    box-flex: 1;
+    -webkit-box-flex: 1;
+    text-align: center;
+}
+
+.wdxc section .tab > div.current {
+    color: #592d2d;
+    background-color: #fff;
+}
+
+.wdxc section .tab .current-travel {
+    border-top-right-radius: 3px;
+    margin-right: 4px;
+}
+
+.wdxc section .tab .history-travel {
+    border-top-left-radius: 3px;
+}
+
+.wdxc section .tab-con {
+    padding: 20px 10px;
+}
+
+.wdxc section .tab-con .item {
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.wdxc section .tab-con > div {
+    display: none;
+}
+
+.wdxc section .tab-con > div.current {
+    display: block;
+}
+
+.wdxc section .tab-con .item > div {
+    padding: 12px 5px;
+}
+
+.wdxc section .tab-con .item .top {
+    display: box;
+    display: -webkit-box;
+    font-size: 15px;
+}
+
+.wdxc section .tab-con .item .top .l {
+    box-flex: 1;
+    -webkit-box-flex: 1;
+}
+
+.wdxc section .tab-con .item .top .r {
+    color: #bc7955;
+}
+
+.wdxc section .tab-con .item .top .r.complete {
+    color: #666;
+}
+
+.wdxc section .tab-con .item .center {
+    display: box;
+    display: -webkit-box;
+    border-top: 1px solid #ccc;
+    box-align: center;
+    -webkit-box-align: center;
+}
+
+.wdxc section .tab-con .item .center .l .icon {
+
+}
+
+.wdxc section .tab-con .item .center .l .icon i {
+    display: block;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    border-width: 1px;
+
+    border-style: solid;
+    text-align: center;
+    line-height: 15px;
+}
+
+.wdxc section .tab-con .item .center .l .icon .begin {
+    color: #7dbf5d;
+    border-color: #7dbf5d;
+    margin-bottom: 2px;
+}
+
+.wdxc section .tab-con .item .center .l .icon .line {
+    height: 40px;
+    border-left: 2px dashed #ccc;
+    margin-left: 8px;
+}
+
+.wdxc section .tab-con .item .center .l .icon .end {
+    color: #be7d5a;
+    border-color: #be7d5a;
+    margin-top: 2px;
+}
+
+.wdxc section .tab-con .item .bottom {
+    display: box;
+    display: -webkit-box;
+    box-align: center;
+    -webkit-box-align: center;
+}
+
+.wdxc section .tab-con .item .bottom .l {
+    color: #ccc;
+    font-size: 13px;
+    box-flex: 1;
+    -webkit-box-flex: 1;
+}
+
+.wdxc section .tab-con .item .center .address {
+    box-flex: 1;
+    -webkit-box-flex: 1;
+    padding-left: 15px;
+}
+
+.wdxc section .tab-con .item .center .address > div:first-child {
+    padding-bottom: 20px;
+}
+
+.wdxc section .tab-con .item .center .address h3 {
+    font-size: 16px;
+    color: #444;
+    padding-bottom: 10px;
+}
+
+.wdxc section .tab-con .item .center .address span {
+    font-size: 11px;
+    color: #999;
+}
+
+.wdxc section .tab-con .item .bottom .r {
+    border-radius: 3px;
+    border: 1px solid #d6d6d6;
+    background: -webkit-linear-gradient(top, #fff, #f3f3f3);
+    width: 81.5px;
+    height: 35.5px;
+    color: #444;
+    text-align: center;
+    line-height: 35.5px;
+}
+
+.wdxc .no-travel {
+    margin-top: -20px;
+    display:none;
+}
+
+.wdxc .no-travel .top {
+    width: 221px;
+    height: 214px;
+    background: url("/resources/no-travel.png") no-repeat;
+    background-size: 100% 100%;
+    margin: 0 auto;
+}
+
+.wdxc .no-travel .ui-button {
+    width: 120px;
+    height: 36px;
+    line-height: 36px;
+    margin: 15px auto;
+}
+
+.wdxc .no-travel-page, .wdxc .no-travel-page section, .wdxc .no-travel-page section .tab > div.current {
+    background-color: #efeff4;
+}
+
+/*discount*/
+.discount .page{
+    background-color:#efeff4;
+}
+.discount section .t{
+    padding:20px 10px;
+}
+
+.discount section .t .ibox{
+    border-radius: 8px;
+    border:1px solid #666;
+    display:-webkit-box;
+}
+.discount section .t .ibox input{
+    display:block;
+}
+
+.discount section .t .ibox input[type=text]{
+    border-radius:8px 0 0 8px;
+    background-color: #fff;
+    font-size:15px;
+    height:45px;
+    border:0;
+    padding:0 5px;
+    -webkit-box-flex:1;
+}
+.discount section .t .ibox input[type=text]::-webkit-input-placeholder{
+    color:#ccc;
+}
+.discount section .t .ibox .button{
+    border-radius:0 8px 8px 0;
+    border-left:1px solid #666;
+    height:45px;
+    line-height:45px;
+    color:#592d2d;
+    text-align: center;
+    padding:0 20px;
+    background-color:#fae500;
+    font-size: 15px;
+}
+
+.discount section .t .ibox .button:active {
+    background-color:#d9c700;
+    color:#592d2d;
+}
+
+.discount section .b{
+    padding:0 10px;
+}
+
+.discount section .b .item{
+    height:80px;
+    display:-webkit-box;
+    -webkit-box-align:center;
+    -webkit-box-pack:center;
+    color:#fff;
+    margin-bottom:10px;
+    position: relative;
+}
+
+.discount section .b .item .i-d{
+    position: absolute;
+    height:80px;
+    width:8px;
+    top:0;
+}
+
+.discount section .b .item .i-d.l{
+    left:-5px;
+}
+.discount section .b .item .i-d.r{
+    right:-5px;
+}
+
+.discount section .b .item .i-d i{
+    width:8px;
+    height:8px;
+    background-color:#efeff4;
+    display:block;
+    margin:3px 0;
+    border-radius:8px;
+}
+
+.discount section .b .item .s-1{
+    font-size:24px;
+    vertical-align: 22px;
+    margin-left: -12px;
+    font-weight: bold;
+
+}
+
+.discount section .b .item .s-2{
+    font-size:55px;
+    font-weight: bold;
+}
+
+.discount section .b .item .text{
+    padding-left:14px;
+}
+
+.discount section .b .item .s-3{
+    width:150px;
+    font-size:15px;
+    padding-bottom:5px;
+}
+
+.discount section .b .item .s-4{
+    background:url("/resources/date-bg.png") no-repeat;
+    background-size:121px 16px;
+    text-align: center;
+    width:121px;
+}

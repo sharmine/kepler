@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<import resource="kepler-serial.xml" />
+
+	<bean id="kepler.zookeeper.connection" class="com.kepler.zookeeper.ZkConnection" />
+
+	<bean id="kepler.zookeeper" class="com.kepler.zookeeper.ZkFactory" init-method="init" destroy-method="destory">
+		<constructor-arg ref="kepler.zookeeper.connection" />
+		<constructor-arg ref="kepler.zookeeper.processors" />
+	</bean>
+
+	<util:list id="kepler.zookeeper.processors">
+		<ref bean="kepler.zookeeper.processor.connected" />
+	</util:list>
+
+	<bean id="kepler.zookeeper.processor.connected" class="com.kepler.zookeeper.processor.Connected">
+		<constructor-arg ref="kepler.zookeeper.connection" />
+	</bean>
+
+	<bean id="kepler.admin.service.context" class="com.kepler.admin.service.impl.ServiceContextImpl">
+		<constructor-arg ref="kepler.zookeeper" />
+		<constructor-arg ref="kepler.serial" />
+	</bean>
+
+</beans>

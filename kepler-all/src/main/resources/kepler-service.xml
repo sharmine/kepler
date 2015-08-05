@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+    http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<bean id="kepler.service.exported.broadcast" class="com.kepler.service.exported.BroadcastExported">
+		<constructor-arg>
+			<list>
+				<ref bean="kepler.service.exported.context" />
+				<ref bean="kepler.service.exported.zookeeper" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="kepler.service.exported.context" class="com.kepler.service.exported.DefaultContext" />
+
+	<bean id="kepler.service.imported" class="com.kepler.service.imported.ChainedImported">
+		<constructor-arg>
+			<util:list>
+				<ref bean="kepler.service.imported.zookeeper" />
+				<ref bean="kepler.service.imported.collector" />
+			</util:list>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="kepler.service.imported.abstract" abstract="true">
+		<constructor-arg ref="kepler.invoker" />
+		<constructor-arg ref="kepler.service.imported" />
+		<constructor-arg ref="kepler.protocol.request" />
+	</bean>
+
+</beans>

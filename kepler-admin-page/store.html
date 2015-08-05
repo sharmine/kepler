@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/base.css" />
+<title>--</title>
+</head>
+<body>
+	<style type="text/css">
+	.city-selector{margin:20px 5px;}
+	.city-selector-label{float:left;width:65px;height:30px;line-height:30px;}
+	.city-selector-item{float:left;margin-left:10px;}
+	.city-selector-item .form-control{width:auto;}
+	.city-selector-item select{width:100px!important;}
+	.city-selector-btn{float:right;display:block;padding:0 10px;background:url(images/icon-location.png) 5px 8px no-repeat;height:34px;line-height:34px;border:1px solid #ccc;border-radius:5px;color:#333;cursor:pointer;}
+	.city-selector-btn:hover{color:#333;}
+	</style>
+	<header id="header" class="header-topbar">
+		<a class="go-back" onclick="javascript:history.go(-1);">
+		<img src="/images/go_back.png"/></a>
+		<h1 class="header-title">体验店</h1>
+	</header>
+	
+	<div class="city-selector">
+		<div class="city-selector-label">选择城市：</div>
+		<div class="city-selector-item">
+			<select class="form-control province">
+				<option value="">请选择</option>
+			</select>
+		</div>
+		<div class="city-selector-item">
+			<select class="form-control city">
+				<option value="">请选择</option>
+			</select>
+		</div>
+		<a class="city-selector-btn">&nbsp;&nbsp;&nbsp;&nbsp;定位</a>
+	</div>
+
+	<div id="content" class="sales-list">
+		<br>
+		<div class="sales-list-show">
+		    <ul id="fly" class="fly-list">
+				<li>
+               		<div class="inner-sales">
+                    	<h2 class="shops-name">长寿旗舰店</h2>
+                    	<p>
+                    	<span class="sales-span-title">电话：</span>
+                    	<span class="sales-span-content">4008517517</span>
+                    	</p>
+                    	<p>
+                    	<span class="sales-span-title">地址：</span>
+                    	<span class="sales-span-content">上海市长寿路137号财富时代大厦22楼</span>
+                    	</p>
+               		</div>
+				</li>
+				<li>
+               		<div class="inner-sales">
+                    	<h2 class="shops-name">长寿旗舰店</h2>
+                    	<p>
+                    	<span class="sales-span-title">电话：</span>
+                    	<span class="sales-span-content">4008517517</span>
+                    	</p>
+                    	<p>
+                    	<span class="sales-span-title">地址：</span>
+                    	<span class="sales-span-content">上海市长寿路137号财富时代大厦22楼</span>
+                    	</p>
+               		</div>
+				</li>
+		    </ul>
+		</div>
+	</div>
+	
+	<footer id="footer">
+	<ul id="foot-state">
+		<li><a href="/login.html">登录</a></li>
+		<li><a href="/register.html">注册</a></li>
+		<li><a href="javascript:;">返回顶部</a></li>
+	</ul>
+	<p class="copyright">&copy;2014 --</p>
+	</footer>	
+</body>
+</html>

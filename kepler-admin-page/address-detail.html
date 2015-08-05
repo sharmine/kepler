@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<link rel="stylesheet" href="/css/base.css" />
+<title>--</title>
+</head>
+<body>
+
+	<header id="header" class="header-topbar">
+		<a class="go-back" href="/address.html">
+		<img src="/images/go_back.png"/></a>
+		<h1 class="header-title">新增收货地址</h1>
+	</header>
+
+	<div id="content" class="content-feedback">
+		<div class="order-detail-body" style="margin:0 16px;">
+		    <h2 class="login-main-title">收货人姓名/手机号</h2>
+		    <p class="large-input feedback-style">
+		    <input type="number" id="reciver" placeholder="收货人姓名"/>
+		    </p>
+		    <p class="large-input feedback-style">
+		    <input type="tel" placeholder="手机号码" /></p>
+		    <h2 class="login-main-title">收货地址</h2>
+		    <div id="provice-list" class="div-select2">
+				<select id="provice-select" class="select-pay-options">
+				 <option value="-1">请选择</option>
+				</select>
+				<i id="provice-text" class="default-pay">省</i>
+				<i class="default-pay-arrow"></i>
+			</div>
+			<br/>
+
+			<div id="city-list" class="div-select2">
+				<select id="city-select" class="select-pay-options">
+				 <option value="-1">请选择</option>
+				</select>
+				<i id="city-text" class="default-pay">市</i>
+				<i class="default-pay-arrow"></i>
+			</div>
+			<br/>
+
+			<div id="district-list" class="div-select2">
+				<select id="district-select" class="select-pay-options">
+				 <option value="-1">请选择</option>
+				</select>
+				<i id="district-text" class="default-pay">区</i>
+				<i class="default-pay-arrow"></i>
+			</div>
+			<br/>
+
+			<div class="feedback-input">
+			     <textarea id="address" placeholder="不少于10个字(路名/街道地址)"></textarea>
+			</div>
+			<p class="large-input feedback-style">
+			<input type="number" placeholder="邮政编码" /></p>
+			<span id="submit" class="submit feedback-style" style="margin-top:20px;margin-bottom:60px;">确认添加</span>
+		</div>
+	</div>
+	<footer id="footer">
+		<ul id="foot-state">
+			<li><a href="/login.html">登录</a></li>
+			<li><a href="/register.html">注册</a></li>
+			<li><a href="javascript:;">返回顶部</a></li>
+		</ul>
+		<p class="copyright">&copy;2014 --</p>
+	</footer>
+</body>
+</html>
+	

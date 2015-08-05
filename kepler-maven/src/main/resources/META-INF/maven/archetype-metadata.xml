@@ -1,0 +1,10 @@
+<archetype-descriptor name="kepler">
+	<fileSets>
+		<fileSet filtered="true">
+			<directory>modules</directory>
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</archetype-descriptor>

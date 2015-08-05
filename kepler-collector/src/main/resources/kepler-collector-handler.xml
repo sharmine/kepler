@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+    http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<alias name="com.kepler.collector.handler" alias="kepler.collector.history" />
+	<alias name="com.kepler.collector.handler" alias="kepler.collector.note" />
+
+	<bean class="com.kepler.service.exported.ExportedServiceFactory">
+		<constructor-arg ref="kepler.service.exported.broadcast" />
+		<constructor-arg index="1" value="com.kepler.collector.Note" />
+		<constructor-arg index="2" value="0.0.1" />
+		<constructor-arg ref="kepler.collector.note" />
+	</bean>
+
+	<bean class="com.kepler.service.exported.ExportedServiceFactory">
+		<constructor-arg ref="kepler.service.exported.broadcast" />
+		<constructor-arg index="1" value="com.kepler.collector.History" />
+		<constructor-arg index="2" value="0.0.1" />
+		<constructor-arg ref="kepler.collector.history" />
+	</bean>
+
+	<bean id="com.kepler.collector.handler" class="com.kepler.collector.MongoHandler">
+		<constructor-arg ref="kepler.mongo.config.collector" />
+	</bean>
+
+</beans>

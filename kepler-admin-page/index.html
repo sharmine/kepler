@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<link rel="stylesheet" href="/css/base.css" />
+<title>-</title>
+</head>
+<body>
+	<header id="header" style="border-bottom:1px solid #cbcbcb;">
+		<a href="#" class="logo">
+			<img src="http://m.oppo.com/images/logo.png" />
+		</a>
+		<a class="shopping-cart" href="/user.html">
+		<img src="/images/personal.png" />
+		</a>
+	</header>
+	<div id="content">
+		<div id="wrap-imgs">
+			<div id="home-imgs">
+				<img onload="this.parentNode.style.backgroundImage='none';" linkto="#" src="/temp/coupon_1.png">
+				<img onload="this.parentNode.style.backgroundImage='none';" linkto="#" src="/temp/coupon_1.png">
+				<img onload="this.parentNode.style.backgroundImage='none';" linkto="#" src="/temp/coupon_1.png">
+			</div>
+			<div class="pointers"></div>
+		</div>
+		
+		<ul id="home-type" data-liffect="pageTop">
+			<li class="home-type-li home-type-1">
+			<a href="/house.html">
+			<img src="/images/menu_icon1.gif" />
+			<span>促销</span>
+			</a>
+			</li>
+			
+			<li class="home-type-li home-type-2">
+			<a href="/broker.html">
+			<img src="/images/menu_icon2.gif" />
+			<span>手机</span>
+			</a>
+			</li>
+			
+			<li class="home-type-li home-type-3">
+			<a href="/armature.html">
+			<img src="/images/menu_icon3.gif" />
+			<span>配件</span>
+			</a>
+			</li>
+			
+			<li class="home-type-li home-type-4">
+			<a class="home-to-user" href="/user.html">
+			<img src="/images/menu_icon4.gif" />
+			<span>我的OPPO</span>
+			</a>
+			</li>
+		</ul>
+		
+		<ul id="activity">
+			<li style="position:relative;">
+				<a href="#" class="home-big-img"><img src="/temp/prod_1.png"/></a>
+				<p class="begin-time">OPPO十周年 购物狂欢节</p>
+				<p class="between-time">年中优惠大派送</p>
+				<nav style="position:absolute;right:10px;bottom:10px;"> 
+					<p class="recommend-realprice" style="margin-bottom:6px;right:0;"></p>
+					<p class="recommend-oldprice"></p>
+				</nav>
+			</li>
+		</ul>
+	</div>
+	<!--bottom login status-->
+
+	<footer id="footer">
+		<ul id="foot-state">
+			<li><a href="/login.html">登录</a></li>
+			<li><a href="/register.html">注册</a></li>
+			<li><a href="javascript:;">返回顶部</a></li>
+		</ul>
+		<p class="copyright">&copy;2014 --</p>
+	</footer>
+	<script src="/js/jquery-1.11.1.min.js"></script>
+	<script src="/js/jquery.touchSwipe.js"></script>
+	<script src="/js/heruijun.touchSwipe.js"></script>
+	<script src="/js/jquery.lazyload.js"></script>
+	<script>
+	$(function() {
+		$("img").lazyload({
+			effect : "fadeIn",
+			placeholder : ""
+		});
+
+		// 获取焦点图广告
+		$('#home-imgs').threetiSwipe({
+			onLoad: function(){
+			},
+			playTime: 5000
+		});
+
+		//导航色块动画
+		$("ul[data-liffect] li").each(function (i) {
+			$(this).attr("style", "-webkit-animation-delay:" + i * 300 + "ms;"
+					+ "-moz-animation-delay:" + i * 300 + "ms;"
+					+ "-o-animation-delay:" + i * 300 + "ms;"
+					+ "animation-delay:" + i * 300 + "ms;");
+			if (i == $("ul[data-liffect] li").size() -1) {
+				$("ul[data-liffect]").addClass("play");
+			}
+		})
+	});
+	</script>
+</body>
+</html>

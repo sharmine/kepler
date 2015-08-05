@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<link rel="stylesheet" href="/css/base.css" />
+<title>--</title>
+</head>
+<body>
+	<header id="header" class="header-topbar">
+		<a id="go-back" class="go-back" href="#">
+		<img src="/images/go_back.png"/></a>
+		<h1 class="header-title">服务中心</h1>
+	</header>
+	
+	<div id="content" class="my-coupon">
+		<div class="reg-row">
+			<div class="reg-row-border">
+			<input type="text" id="route" placeholder="服务名称" value=""/>
+			</div>
+		</div>
+		<ul class="used-status">
+			<li><span id="order-unuse" class="current-span">按发布日期</span></li>
+			<li><span id="order-used" >按数据流量</span></li>
+			<li><span id="order-overdue">按请求数量</span></li>
+		</ul>
+		<div id="nodes">
+		</div>
+		<div id="detail" class="user-body" style="display:none">
+			<ul>
+				<li>
+				</li>
+                <li id="y-cellphone">
+					<div>
+						<span class="info-left">主机名称</span>
+                        <span id="detail_host" class="info-right"></span>
+					</div>
+				</li>
+				<li id="change-email">
+					<div>
+						<span class="info-left">主机标签</span>
+						<span id="detail_tag" class="info-right"></span>
+					</div>
+				</li>
+				<div id="status">
+				</div>
+			</ul>
+			<div class="reg-row">
+				<span id="submit-offline" class="submit">立即离线</span>
+			</div>
+			<div class="reg-row">
+				<span id="submit-goback" class="submit">继续查看</span>
+			</div>
+		</div>
+		<footer id="footer">
+		<ul id="foot-state">
+			<li><a href="/login.html">登录</a></li>
+			<li><a href="/register.html">注册</a></li>
+			<li><a href="javascript:;">返回顶部</a></li>
+		</ul>
+		<p class="copyright">&copy;2014 --</p>
+		</footer>	
+		<script src="/js/jquery-1.11.1.min.js"></script>
+		<script src="/js/jquery.timers-1.2.js"></script> 
+		<script type="text/javascript">
+		$('#order-unuse').on('click',function(){
+			$('#order-unuse').addClass('current-span');
+			$('#order-used').removeClass('current-span');
+			$('#order-overdue').removeClass('current-span');
+			showUnuse();
+		});
+
+		$('#order-used').on('click',function(){
+			$('#order-unuse').removeClass('current-span');
+			$('#order-used').addClass('current-span');
+			$('#order-overdue').removeClass('current-span');
+			showUsed();
+		});
+
+		$('#order-overdue').on('click',function(){
+			$('#order-unuse').removeClass('current-span');
+			$('#order-used').removeClass('current-span');
+			$('#order-overdue').addClass('current-span');
+			showPast();
+		});
+		</script>
+		<script>
+		var status = false;
+		var previous = "";
+		var template_service = "<ul class='coupon-used-list'><li><div class='coupon-list-left'><h2>${service}</h2><h3>${path}</h3></div><div class='coupon-list-right'><div><h2 class='coupon-list-right-button' onclick='${action}'>${button}</h2></div><div></div></div></li></ul>"
+		var template_status = "<li><div><span class=\"info-left\">客户连接</span><span class=\"info-right\">${host}</span></div><div><span class=\"info-left\">总量/超时/异常/RTT</span><span class=\"info-right\">${status}</span></div></li>"
+		
+		String.prototype.replaceAll = function(s1, s2){
+		　　return this.replace(new RegExp(s1,"gm"),s2);
+	　　	}
+		
+		function route(path){
+			$('#detail').slideUp();
+			$('#nodes').slideDown();
+			status = false;
+			previous = path.substring(0, path.lastIndexOf("/"));
+			$("body").everyTime('9999s', function(){});
+			jQuery.ajax({
+				type: "GET",
+				url: "/api/service",
+				data: {'path': path},
+				success: function callbackFunction(data){
+					$("#nodes").empty();
+					$(data).each(function(index, element){
+						if(element.detail){
+							nodes[index] = element.node;
+						}
+						$("#nodes").append(template_service.replace("${service}", element.service + (element.detail && element.node.tag != "" ? "(" + element.node.tag + ")" : "")).replace("${path}", element.path).replace("${path}", element.path).replace("${action}", element.detail ?  "node(\"" + element.path +"\"," + index + ")" : "route(\"" + element.path + "\")").replace("${button}", element.detail ? "服务明细" : "立即进入"));
+					});
+				}
+			});
+		}
+
+		function node(path, index){
+			status = true;
+			previous = path.substring(0, path.lastIndexOf("/"));
+			$('#nodes').slideUp();
+			$('#detail').slideDown();
+			$('#detail_tag').text(nodes[index].tag);
+			$('#detail_host').text(nodes[index].host);
+			$('#submit-offline').attr("path", nodes[index].path)
+			stat();
+		}
+
+		function stat(){
+			if(status) {
+				jQuery.ajax({
+					type: "GET",
+					url: "/api/history",
+					data: {"path": previous, "host": $('#detail_host').text()},
+					success: function callbackFunction(data){
+						$("#status").empty();
+						$(data).each(function(index, element){
+							$("#status").append(template_status.replace("${host}", element.source).replace("${status}", element.total + "/" + element.timeout + "/" + element.exception + "/" + (element.rtt / element.total).toFixed(2)));
+						});
+					}
+				});
+			}
+			$("body").everyTime('10s', stat);
+		}
+		
+		$("#route").change(function() {
+			route($("#route").val().replaceAll("\\.", "/"));
+		});
+			
+		$("#go-back").click(function() {
+			route(previous);
+		});
+		
+		$("#submit-goback").click(function() {
+			$('#nodes').slideDown();
+			$('#detail').slideUp();
+			route(previous);
+		});
+		
+		$("#submit-offline").click(function() {
+			jQuery.ajax({
+				type: "POST",
+				url: "/api/service",
+				data: {'path': $('#submit-offline').attr('path')},
+				success: function callbackFunction(data){
+					route(previous);
+				}
+			});
+		});
+		
+		$(document).ready(function() {
+			route(previous);
+		});
+		</script>
+</body>
+</html>

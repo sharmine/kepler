@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.kepler</groupId>
+	<artifactId>kepler-maven</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<repositories>
+		<repository>
+			<id>releases</id>
+			<name>DHF Central Code Repository</name>
+			<url>http://10.128.8.31:8081/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>snapshots</id>
+			<name>DHF snapshots Code Repository</name>
+			<url>http://10.128.8.31:8081/nexus/content/groups/public-snapshots/</url>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<url>http://10.128.8.31:8081/nexus/content/repositories/com.dhf.repository/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Internal Snapshots</name>
+			<url>http://10.128.8.31:8081/nexus/content/repositories/com.dhf.repositories.snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>
