@@ -92,7 +92,7 @@
 		var status = false;
 		var previous = "";
 		var template_service = "<ul class='coupon-used-list'><li><div class='coupon-list-left'><h2>${service}</h2><h3>${path}</h3></div><div class='coupon-list-right'><div><h2 class='coupon-list-right-button' onclick='${action}'>${button}</h2></div><div></div></div></li></ul>"
-		var template_status = "<li><div><span class=\"info-left\">客户连接</span><span class=\"info-right\">${host}</span></div><div><span class=\"info-left\">总量/超时/异常/RTT</span><span class=\"info-right\">${status}</span></div></li>"
+		var template_status = "<li><div><span class=\"info-left\">客户连接</span><span class=\"info-right\">${host}</span></div><div><span class=\"info-left\">A/T/E/RTT</span><span class=\"info-right\">${status}</span></div></li>"
 		
 		String.prototype.replaceAll = function(s1, s2){
 		　　return this.replace(new RegExp(s1,"gm"),s2);

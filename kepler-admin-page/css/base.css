@@ -308,8 +308,8 @@ width:15%;height:60px;margin-top:10px;margin-right:15px;float:left;}
 .order-status-3{color:#565656;}
 .user-body{margin:10px 0 150px 0;}
 .user-body li{border-bottom:1px solid #cccccc;clear:both;}
-.user-body li span{font-size:18px;}
-.info-left{float:left;color:#959595;}
+.user-body li span{font-size:13px;}
+.info-left{float:left;color:#555555;}
 .info-right{float:right;margin-right:30px;color:#00935f;}
 .info-user-head{position:absolute;top:0;right:0;}
 .user-body li div{margin:15px;height:100%;overflow:hidden;position:relative;}
