@@ -9,7 +9,7 @@ import com.kepler.host.impl.DefaultHost;
  * 
  * @author kim 2015年7月27日
  */
-public class AverageCondition implements Condition {
+public class AvgCondition implements Condition {
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,7 @@ public class AverageCondition implements Condition {
 
 	private String target;
 
-	public AverageCondition put(String source, String target, long rtt, long total, long timeout, long exception) {
+	public AvgCondition put(String source, String target, long rtt, long total, long timeout, long exception) {
 		this.index++;
 		this.rtt += rtt;
 		this.total += total;

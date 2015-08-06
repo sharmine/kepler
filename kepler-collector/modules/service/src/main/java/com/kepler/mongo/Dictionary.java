@@ -17,13 +17,13 @@ public interface Dictionary {
 	public final static String FIELD_ID = "_id";
 
 	public final static String FIELD_RTT = "rtt";
-	
+
 	public final static String FIELD_TOTAL = "total";
-	
+
 	public final static String FIELD_MINUTE = "minute";
 
 	public final static String FIELD_METHOD = "method";
-	
+
 	public final static String FIELD_SERVICE = "service";
 
 	public final static String FIELD_VERSION = "version";
@@ -35,6 +35,10 @@ public interface Dictionary {
 	public final static String FIELD_HOST_SOURCE = "host_source";
 
 	public final static String FIELD_HOST_TARGET = "host_target";
-	
+
+	public final static String FIELD_HOST_SOURCE_GROUP = "host_source_group";
+
+	public final static String FIELD_HOST_TARGET_GROUP = "host_target_group";
+
 	public Object get(String key);
 }

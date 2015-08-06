@@ -116,8 +116,8 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 	 */
 	public void response(Response response) {
 		this.response = response;
-		this.stauts = Status.DONE;
 		synchronized (this) {
+			this.stauts = Status.DONE;
 			this.notifyAll();
 		}
 	}

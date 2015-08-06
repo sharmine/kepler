@@ -23,8 +23,8 @@ public class ZkConnection {
 	}
 
 	public void activate() {
-		this.valid.set(true);
 		synchronized (this) {
+			this.valid.set(true);
 			this.notifyAll();
 		}
 	}

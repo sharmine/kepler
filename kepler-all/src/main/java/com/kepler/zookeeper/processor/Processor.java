@@ -20,7 +20,7 @@ abstract public class Processor {
 	}
 
 	abstract public void process(String path);
-	
+
 	public static class StateMatch {
 
 		private final KeeperState state;
@@ -38,6 +38,7 @@ abstract public class Processor {
 		}
 
 		public boolean equals(Object ob) {
+			// Not null point security
 			StateMatch matcher = StateMatch.class.cast(ob);
 			return this.state.equals(matcher.state) && this.event.equals(matcher.event);
 		}

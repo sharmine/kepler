@@ -23,7 +23,7 @@ public interface Host {
 
 	public final static String GROUP_DEFAULT = "unknow";
 
-	public final static String GROUP = PropertiesUtils.get(Host.class.getName().toLowerCase() + ".name", Host.GROUP_DEFAULT);
+	public final static String GROUP = PropertiesUtils.get(Host.class.getName().toLowerCase() + ".name", System.getenv("USER") != null ? System.getenv("USER") : Host.GROUP_DEFAULT);
 
 	public int port();
 

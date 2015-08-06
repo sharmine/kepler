@@ -28,6 +28,7 @@ public class Service {
 	}
 
 	public boolean equals(Object ob) {
+		// Not null point security
 		Service service = Service.class.cast(ob);
 		return this.service.equals(service.service) && this.version.equals(service.version);
 	}

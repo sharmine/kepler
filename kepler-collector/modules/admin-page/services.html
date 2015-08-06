@@ -126,7 +126,7 @@
 							if(element.detail){
 								nodes[index] = element.node;
 							}
-							$("#nodes").append(template_service.replace("${service}", element.service + (element.detail && element.node.tag != "" ? "(" + element.node.tag + ")" : "")).replace("${path}", element.path).replace("${path}", element.path).replace("${action}", element.detail ?  "node(\"" + element.path +"\"," + index + ")" : "route(\"" + element.path + "\")").replace("${button}", element.detail ? "服务明细" : "立即进入"));
+							$("#nodes").append(template_service.replace("${service}", element.service + (element.detail && element.node.tag != "" ? "(" + element.node.tag + ")" : "")).replace("${path}", element.path.length < 50 ? element.path : ("... " +  element.path.substring(element.path.length - 47))).replace("${path}", element.path).replace("${action}", element.detail ?  "node(\"" + element.path +"\"," + index + ")" : "route(\"" + element.path + "\")").replace("${button}", element.detail ? "服务明细" : "立即进入"));
 						});
 					}
 				}

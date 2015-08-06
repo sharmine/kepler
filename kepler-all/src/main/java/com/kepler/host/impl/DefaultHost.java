@@ -52,6 +52,7 @@ public class DefaultHost implements Host, Serializable {
 	}
 
 	public boolean equals(Object ob) {
+		// Not null point security
 		Host host = Host.class.cast(ob);
 		return this.host().equals(host.host()) && (this.port() == host.port());
 	}

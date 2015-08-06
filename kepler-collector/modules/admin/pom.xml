@@ -17,6 +17,11 @@
 			<artifactId>kepler-all</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.kepler</groupId>
+			<artifactId>kepler-collector-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- For Filter -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
