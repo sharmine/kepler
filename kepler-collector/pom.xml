@@ -6,7 +6,6 @@
 	<version>1.0-SNAPSHOT</version>
 	<modules>
 		<module>modules/parent</module>
-		<module>modules/client</module>
 		<module>modules/interface</module>
 	</modules>
 </project>

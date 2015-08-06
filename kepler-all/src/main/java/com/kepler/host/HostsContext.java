@@ -14,18 +14,16 @@ public interface HostsContext {
 	 */
 	public void ban(Host host);
 
+	/**
+	 * 仅移除路由, 并不中断连接
+	 * 
+	 * @param host
+	 */
+	public void del(Host host);
+
 	public void unban(Host host);
 
 	public Hosts get(Class<?> service, String version);
-
-	/**
-	 * 但不会终止连接
-	 * 
-	 * @param service
-	 * @param version
-	 * @return
-	 */
-	public Hosts del(Class<?> service, String version);
 
 	/**
 	 * Hosts 4 all service

@@ -52,6 +52,14 @@ public class DefaultHosts implements Hosts, HostCollector {
 		}
 	}
 
+	public void del(Host host) {
+		synchronized (this.locks.get(host)) {
+			this.hosts.remove(host);
+			this.tags.del(host);
+			this.bans.del(host);
+		}
+	}
+
 	public void ban(Host host) {
 		synchronized (this.locks.get(host)) {
 			if (this.hosts.remove(host) && this.tags.del(host)) {

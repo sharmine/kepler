@@ -188,9 +188,9 @@ public class DefaultConnect implements Connect {
 		}
 
 		public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+			DefaultConnect.LOGGER.warn("Connect binding (" + DefaultConnect.this.local.getAsString() + " to " + this.host.getAsString() + ") ...");
 			ctx.fireChannelRegistered();
 			this.ctx = ctx;
-			DefaultConnect.LOGGER.warn("Connect binding (" + DefaultConnect.this.local.getAsString() + " to " + this.host.getAsString() + ") ...");
 		}
 
 		public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {

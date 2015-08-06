@@ -1,9 +1,13 @@
 package com.kepler.collector.rpc.impl;
 
+import java.io.Serializable;
+
 /**
  * @author kim 2015年8月6日
  */
-public class GroupHost {
+public class GroupHost implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	private final String group;
 
@@ -15,11 +19,11 @@ public class GroupHost {
 		this.host = host;
 	}
 
-	public String group() {
+	public String getGroup() {
 		return this.group;
 	}
 
-	public String host() {
+	public String getHost() {
 		return this.host;
 	}
 }

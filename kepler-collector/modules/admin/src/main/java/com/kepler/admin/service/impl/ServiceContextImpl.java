@@ -130,7 +130,12 @@ public class ServiceContextImpl implements ServiceContext {
 
 		@Override
 		public String getHost() {
-			return this.host.host() + ":" + this.host.port() + " (" + this.host.group() + ")";
+			return this.host.host() + ":" + this.host.port();
+		}
+
+		@Override
+		public String getHostAsString() {
+			return this.getHost() + " (" + this.host.group() + ")";
 		}
 	}
 }

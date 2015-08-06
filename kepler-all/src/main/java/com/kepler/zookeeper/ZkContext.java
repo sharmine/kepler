@@ -87,7 +87,7 @@ public class ZkContext implements Imported, Exported {
 			// 同步Context绑定Hosts过程
 			this.context.get(node.service(), node.version()).put(node.host());
 		}
-		this.imported.put(node.service(), node.version(), path);
+		this.imported.put(path, node.host());
 		this.connect.connect(node.host());
 	}
 
@@ -122,7 +122,7 @@ public class ZkContext implements Imported, Exported {
 
 	@Override
 	public void exported(Class<?> service, String version, Object instance) throws Exception {
-		this.exported.put(service, version, this.zoo.create(this.road.roadmap(this.road.path(service, version)) + (ZkContext.ROOT + "_"), this.serial.serial(new ZkSerial(this.local, version, service)), Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL));
+		this.exported.put(this.zoo.create(this.road.roadmap(this.road.path(service, version)) + (ZkContext.ROOT + "_"), this.serial.serial(new ZkSerial(this.local, version, service)), Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL));
 	}
 
 	private class Roadmap {
@@ -151,16 +151,16 @@ public class ZkContext implements Imported, Exported {
 
 	private class Exporteds {
 
-		private final Set<Node> exported = new CopyOnWriteArraySet<Node>();
+		private final Set<String> exported = new CopyOnWriteArraySet<String>();
 
-		public void put(Class<?> service, String version, String path) {
-			this.exported.add(new Node(service, version, path));
+		public void put(String path) {
+			this.exported.add(path);
 		}
 
 		public void destory() {
-			for (Node exported : this.exported) {
+			for (String exported : this.exported) {
 				try {
-					ZkContext.this.zoo.delete(exported.path(), 0);
+					ZkContext.this.zoo.delete(exported, 0);
 				} catch (Exception e) {
 					e.printStackTrace();
 					ZkContext.LOGGER.error(e.getMessage(), e);
@@ -171,46 +171,17 @@ public class ZkContext implements Imported, Exported {
 
 	private class Importeds {
 
-		private final Map<String, Node> imported = new ConcurrentHashMap<String, Node>();
+		private final Map<String, Host> imported = new ConcurrentHashMap<String, Host>();
 
-		public void put(Class<?> service, String version, String path) {
-			this.imported.put(path, new Node(service, version, path));
+		public void put(String path, Host host) {
+			this.imported.put(path, host);
 		}
 
 		public void destory(String path) {
-			Node node = this.imported.get(path);
-			if (node != null) {
-				// 但不会终止连接
-				ZkContext.this.context.del(node.service(), node.version());
+			Host host = this.imported.remove(path);
+			if (host != null) {
+				ZkContext.this.context.del(host);
 			}
-		}
-	}
-
-	private class Node {
-
-		private final String path;
-
-		private final String version;
-
-		private final Class<?> service;
-
-		public Node(Class<?> service, String version, String path) {
-			super();
-			this.path = path;
-			this.service = service;
-			this.version = version;
-		}
-
-		public String path() {
-			return this.path;
-		}
-
-		public String version() {
-			return this.version;
-		}
-
-		public Class<?> service() {
-			return this.service;
 		}
 	}
 
@@ -230,6 +201,7 @@ public class ZkContext implements Imported, Exported {
 					}
 				} catch (Throwable e) {
 					e.printStackTrace();
+
 					ZkContext.LOGGER.error(e.getMessage(), e);
 				}
 			}

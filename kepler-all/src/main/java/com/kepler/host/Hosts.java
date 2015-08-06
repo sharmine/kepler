@@ -9,6 +9,8 @@ public interface Hosts {
 
 	public void put(Host host);
 
+	public void del(Host host);
+
 	public void ban(Host host);
 
 	public void unban(Host host);

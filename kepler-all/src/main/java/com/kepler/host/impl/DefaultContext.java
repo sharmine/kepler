@@ -55,11 +55,6 @@ public class DefaultContext implements HostsContext, Extension, Router {
 		return hosts != null ? hosts : this.put(vs, new DefaultHosts(this.routes.get(DefaultContext.ROUTING)));
 	}
 
-	// 移除指定服务的Hosts (ZK回调)
-	public Hosts del(Class<?> service, String version) {
-		return this.hosts.remove(new Service(service, version));
-	}
-
 	public Collection<Hosts> hosts() {
 		return this.hosts.values();
 	}
@@ -76,6 +71,12 @@ public class DefaultContext implements HostsContext, Extension, Router {
 		if (connected) {
 			// 在尝试重连充分必要条件为任意Hosts尚存Host映射.即使重连失败时亦能在下次尝试时进行终止
 			this.connects.put(host);
+		}
+	}
+
+	public void del(Host host) {
+		for (Hosts each : this.hosts.values()) {
+			each.del(host);
 		}
 	}
 

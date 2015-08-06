@@ -6,8 +6,10 @@ package com.kepler.admin.service;
 public interface Node {
 	
 	public String getTag();
+	
+	public String getPath();
 
 	public String getHost();
 	
-	public String getPath();
+	public String getHostAsString();
 }

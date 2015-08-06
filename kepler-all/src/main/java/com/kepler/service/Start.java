@@ -15,7 +15,8 @@ public class Start {
 	private final static Log LOGGER = LogFactory.getLog(Start.class);
 
 	public static void main(String[] args) throws Exception {
-		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:" + PropertiesUtils.get(Start.class.getName().toLowerCase() + ".xml"))) {
+		try {
+			ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:" + PropertiesUtils.get(Start.class.getName().toLowerCase() + ".xml"));
 			Runtime.getRuntime().addShutdownHook(new Shutdown(context));
 			Start.wait(context);
 			Start.LOGGER.warn("Kepler + (" + context.getBean(Host.class).getAsString() + ") closed ...");
@@ -47,6 +48,8 @@ public class Start {
 		public void run() {
 			synchronized (this.context) {
 				synchronized (context) {
+					// 先关闭后唤醒
+					this.context.close();
 					this.context.notifyAll();
 				}
 			}

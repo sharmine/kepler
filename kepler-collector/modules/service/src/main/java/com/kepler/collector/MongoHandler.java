@@ -7,7 +7,8 @@ import java.util.concurrent.TimeUnit;
 
 import com.kepler.collector.rpc.Condition;
 import com.kepler.collector.rpc.Conditions;
-import com.kepler.collector.rpc.impl.AvgCondition;
+import com.kepler.collector.rpc.impl.GroupCondition;
+import com.kepler.collector.rpc.impl.GroupHost;
 import com.kepler.collector.runtime.State;
 import com.kepler.config.PropertiesUtils;
 import com.kepler.mongo.Dictionary;
@@ -42,7 +43,7 @@ public class MongoHandler implements Note, History {
 		for (Conditions each : conditions) {
 			for (Condition condition : each.conditions()) {
 				// Servce ,Version, Method, TargetHost union index
-				this.config.collection().update(BasicDBObjectBuilder.start().add(Dictionary.FIELD_SERVICE, each.service()).add(Dictionary.FIELD_VERSION, each.version()).add(Dictionary.FIELD_METHOD, each.method()).add(Dictionary.FIELD_HOST_TARGET, condition.target().getAsString()).add(Dictionary.FIELD_HOST_SOURCE, condition.source().getAsString()).add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).get(), BasicDBObjectBuilder.start().add(Dictionary.FIELD_SERVICE, each.service()).add(Dictionary.FIELD_VERSION, each.version()).add(Dictionary.FIELD_HOST_SOURCE, condition.source().getAsString()).add(Dictionary.FIELD_HOST_TARGET, condition.target().getAsString()).add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).add(Dictionary.FIELD_RTT, condition.rtt()).add(Dictionary.FIELD_TIMEOUT, condition.timeout()).add(Dictionary.FIELD_TOTAL, condition.total()).add(Dictionary.FIELD_EXCEPTION, condition.exception()).get(), true, false);
+				this.config.collection().update(BasicDBObjectBuilder.start().add(Dictionary.FIELD_SERVICE, each.service()).add(Dictionary.FIELD_VERSION, each.version()).add(Dictionary.FIELD_METHOD, each.method()).add(Dictionary.FIELD_HOST_TARGET, condition.target().getAsString()).add(Dictionary.FIELD_HOST_SOURCE, condition.source().getAsString()).add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).get(), BasicDBObjectBuilder.start().add(Dictionary.FIELD_SERVICE, each.service()).add(Dictionary.FIELD_VERSION, each.version()).add(Dictionary.FIELD_HOST_SOURCE, condition.source().getAsString()).add(Dictionary.FIELD_HOST_SOURCE_GROUP, condition.source().group()).add(Dictionary.FIELD_HOST_TARGET, condition.target().getAsString()).add(Dictionary.FIELD_HOST_TARGET_GROUP, condition.target().group()).add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).add(Dictionary.FIELD_RTT, condition.rtt()).add(Dictionary.FIELD_TIMEOUT, condition.timeout()).add(Dictionary.FIELD_TOTAL, condition.total()).add(Dictionary.FIELD_EXCEPTION, condition.exception()).get(), true, false);
 			}
 		}
 	}
@@ -58,16 +59,16 @@ public class MongoHandler implements Note, History {
 	}
 
 	private void group(Group group, DBObject db) {
-		group.put(MongoUtils.asString(db, Dictionary.FIELD_HOST_SOURCE), MongoUtils.asString(db, Dictionary.FIELD_HOST_TARGET), MongoUtils.asLong(db, Dictionary.FIELD_RTT), MongoUtils.asLong(db, Dictionary.FIELD_TOTAL), MongoUtils.asLong(db, Dictionary.FIELD_TIMEOUT), MongoUtils.asLong(db, Dictionary.FIELD_EXCEPTION));
+		group.put(new GroupHost(MongoUtils.asString(db, Dictionary.FIELD_HOST_SOURCE_GROUP), MongoUtils.asString(db, Dictionary.FIELD_HOST_SOURCE)), new GroupHost(MongoUtils.asString(db, Dictionary.FIELD_HOST_TARGET_GROUP), MongoUtils.asString(db, Dictionary.FIELD_HOST_TARGET)), MongoUtils.asLong(db, Dictionary.FIELD_RTT), MongoUtils.asLong(db, Dictionary.FIELD_TOTAL), MongoUtils.asLong(db, Dictionary.FIELD_TIMEOUT), MongoUtils.asLong(db, Dictionary.FIELD_EXCEPTION));
 	}
 
 	private class Group {
 
 		private final Map<String, Condition> conditions = new HashMap<String, Condition>();
 
-		public void put(String source, String target, long rtt, long total, long timeout, long exception) {
-			AvgCondition average = AvgCondition.class.cast(this.conditions.get(source));
-			this.conditions.put(source, (average = (average != null ? average : new AvgCondition())).put(source, target, rtt, total, timeout, exception));
+		public void put(GroupHost source, GroupHost target, long rtt, long total, long timeout, long exception) {
+			GroupCondition average = GroupCondition.class.cast(this.conditions.get(source));
+			this.conditions.put(source.getHost(), (average = (average != null ? average : new GroupCondition())).put(source, target, rtt, total, timeout, exception));
 		}
 
 		public Collection<Condition> conditions() {

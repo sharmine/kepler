@@ -41,9 +41,8 @@
 				</li>
                 <li id="y-cellphone">
 					<div>
-						<hidden id="detail_host" value=""/>
 						<span class="info-left">主机名称</span>
-                        <span id="detail_host_string" class="info-right"></span>
+                        <span id="detail_host" class="info-right"></span>
 					</div>
 				</li>
 				<li id="change-email">
@@ -140,8 +139,7 @@
 			$('#nodes').slideUp();
 			$('#detail').slideDown();
 			$('#detail_tag').text(nodes[index].tag);
-			$('#detail_host').val(nodes[index].host);
-			$('#detail_host_string').text(nodes[index].hostAsString);
+			$('#detail_host').text(nodes[index].host);
 			$('#submit-offline').attr("path", nodes[index].path)
 			stat();
 		}
@@ -151,11 +149,11 @@
 				jQuery.ajax({
 					type: "GET",
 					url: "/api/history",
-					data: {"path": previous, "host": $('#detail_host').val()},
+					data: {"path": previous, "host": $('#detail_host').text()},
 					success: function callbackFunction(data){
 						$("#status").empty();
 						$(data).each(function(index, element){
-							$("#status").append(template_status.replace("${host}", element.source.host + " / " + element.source.group).replace("${status}", element.total + "/" + element.timeout + "/" + element.exception + "/" + (element.rtt / element.total).toFixed(2)));
+							$("#status").append(template_status.replace("${host}", element.source).replace("${status}", element.total + "/" + element.timeout + "/" + element.exception + "/" + (element.rtt / element.total).toFixed(2)));
 						});
 					}
 				});

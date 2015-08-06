@@ -9,7 +9,7 @@ import com.kepler.host.impl.DefaultHost;
  * 
  * @author kim 2015年7月27日
  */
-public class AvgCondition implements Condition {
+public class GroupCondition implements Condition {
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,11 +23,11 @@ public class AvgCondition implements Condition {
 
 	private long exception;
 
-	private String source;
+	private GroupHost source;
 
-	private String target;
+	private GroupHost target;
 
-	public AvgCondition put(String source, String target, long rtt, long total, long timeout, long exception) {
+	public GroupCondition put(GroupHost source, GroupHost target, long rtt, long total, long timeout, long exception) {
 		this.index++;
 		this.rtt += rtt;
 		this.total += total;
@@ -41,20 +41,20 @@ public class AvgCondition implements Condition {
 
 	@Override
 	public Host source() {
-		return DefaultHost.valueOf(this.source);
+		return DefaultHost.valueOf(this.source.getHost());
 	}
 
-	public String getSource() {
-		return this.source().getAsString();
+	public GroupHost getSource() {
+		return this.source;
 	}
 
 	@Override
 	public Host target() {
-		return DefaultHost.valueOf(this.target);
+		return DefaultHost.valueOf(this.target.getHost());
 	}
 
-	public String getTarget() {
-		return this.target().getAsString();
+	public GroupHost getTarget() {
+		return this.target;
 	}
 
 	@Override

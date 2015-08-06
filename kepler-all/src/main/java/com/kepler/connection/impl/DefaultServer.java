@@ -120,8 +120,8 @@ public class DefaultServer {
 	private class ExportedHandler extends ChannelInboundHandlerAdapter {
 
 		public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-			ctx.fireChannelRegistered();
 			DefaultServer.LOGGER.warn("Connect binding (" + DefaultServer.this.local.getAsString() + " to " + ctx.channel().remoteAddress() + ") ...");
+			ctx.fireChannelRegistered();
 		}
 
 		/**
