@@ -10,6 +10,7 @@ import com.kepler.collector.rpc.Conditions;
 import com.kepler.collector.rpc.impl.AverageCondition;
 import com.kepler.collector.runtime.State;
 import com.kepler.config.PropertiesUtils;
+import com.kepler.host.Host;
 import com.kepler.mongo.Dictionary;
 import com.kepler.mongo.MongoConfig;
 import com.kepler.mongo.impl.MongoUtils;
@@ -22,15 +23,15 @@ import com.mongodb.DBObject;
  * @author kim 2015年7月22日
  */
 @Version("0.0.1")
-public class MongoHandler implements Note, History {
+public class MongoHandler implements Note, History, Relation {
 
 	private final static Integer HISTORY = Integer.valueOf(PropertiesUtils.get(MongoHandler.class.getName().toLowerCase() + ".history", "2"));
 
 	private final MongoConfig config;
 
-	public MongoHandler(MongoConfig config) {
+	public MongoHandler(MongoConfig host) {
 		super();
-		this.config = config;
+		this.config = host;
 	}
 
 	@Override
@@ -73,5 +74,11 @@ public class MongoHandler implements Note, History {
 		public Collection<Condition> conditions() {
 			return this.conditions.values();
 		}
+	}
+
+	@Override
+	public Collection<Host> relation(String service, String version, String host) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

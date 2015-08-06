@@ -17,7 +17,7 @@ public interface Dictionary {
 	public final static String FIELD_ID = "_id";
 
 	public final static String FIELD_RTT = "rtt";
-
+	
 	public final static String FIELD_TOTAL = "total";
 	
 	public final static String FIELD_MINUTE = "minute";
@@ -35,6 +35,6 @@ public interface Dictionary {
 	public final static String FIELD_HOST_SOURCE = "host_source";
 
 	public final static String FIELD_HOST_TARGET = "host_target";
-
+	
 	public Object get(String key);
 }

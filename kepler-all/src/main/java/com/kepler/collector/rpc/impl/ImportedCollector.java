@@ -29,7 +29,10 @@ public class ImportedCollector implements Runnable, Collector, Imported {
 	 */
 	private final AtomicLong minute = new AtomicLong(this.minute());
 
-	private final AtomicInteger index = new AtomicInteger();
+	/**
+	 * Start 1
+	 */
+	private final AtomicInteger index = new AtomicInteger(1);
 
 	private final Host local;
 
@@ -82,7 +85,7 @@ public class ImportedCollector implements Runnable, Collector, Imported {
 	}
 
 	private MultiKeyMap index(int index) {
-		return this.conditions[((this.index.get() & Byte.MAX_VALUE) + index) % this.conditions.length];
+		return this.conditions[((this.index.get() + index) & Byte.MAX_VALUE) % this.conditions.length];
 	}
 
 	private MultiKeyMap exchange() {

@@ -57,7 +57,7 @@ public class ServiceContextImpl implements ServiceContext {
 	@Override
 	public Node del(String path) throws Exception {
 		Node node = this.get(path);
-		this.zooKeeper.delete(ZkContext.ROOT + "/" + node.getPath(), 0);
+		this.zooKeeper.delete(ZkContext.ROOT + "/" + path, 0);
 		return node;
 	}
 
@@ -130,7 +130,7 @@ public class ServiceContextImpl implements ServiceContext {
 
 		@Override
 		public String getHost() {
-			return this.host.host() + ":" + this.host.port();
+			return this.host.host() + ":" + this.host.port() + " (" + this.host.group() + ")";
 		}
 	}
 }

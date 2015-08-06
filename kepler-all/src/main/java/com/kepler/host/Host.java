@@ -21,11 +21,17 @@ public interface Host {
 	 */
 	public final static String TAG = PropertiesUtils.get(Host.TAG_KEY, Host.TAG_DEFAULT);
 
+	public final static String GROUP_DEFAULT = "unknow";
+
+	public final static String GROUP = PropertiesUtils.get(Host.class.getName().toLowerCase() + ".name", Host.GROUP_DEFAULT);
+
 	public int port();
 
 	public String tag();
 
 	public String host();
+
+	public String group();
 
 	public String getAsString();
 

@@ -15,13 +15,21 @@ public class DefaultHost implements Host, Serializable {
 
 	private final String tag;
 
+	private final String group;
+
 	private final String host;
 
-	public DefaultHost(String tag, String host, int port) {
+	public DefaultHost(String group, String tag, String host, int port) {
 		super();
+		this.group = group;
 		this.host = host;
 		this.port = port;
 		this.tag = tag;
+	}
+
+	@Override
+	public String group() {
+		return this.group;
 	}
 
 	@Override
@@ -62,6 +70,6 @@ public class DefaultHost implements Host, Serializable {
 
 	public static DefaultHost valueOf(String strings) {
 		String[] param = strings.split(":");
-		return new DefaultHost(Host.TAG_DEFAULT, param[0], Integer.valueOf(param[1]));
+		return new DefaultHost(Host.GROUP_DEFAULT, Host.TAG_DEFAULT, param[0], Integer.valueOf(param[1]));
 	}
 }

@@ -31,7 +31,7 @@ public class LocalHost implements Host, Serializable {
 	private final Host local;
 
 	public LocalHost() throws Exception {
-		this.local = new DefaultHost(Host.TAG, this.address(), LocalHost.PORT_STABLE ? LocalHost.PORT : this.free());
+		this.local = new DefaultHost(Host.GROUP, Host.TAG, this.address(), LocalHost.PORT_STABLE ? LocalHost.PORT : this.free());
 	}
 
 	private String address() throws Exception {
@@ -69,6 +69,11 @@ public class LocalHost implements Host, Serializable {
 	@Override
 	public String host() {
 		return this.local.host();
+	}
+
+	@Override
+	public String group() {
+		return this.local.group();
 	}
 
 	@Override

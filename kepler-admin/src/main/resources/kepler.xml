@@ -6,6 +6,6 @@
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 	<import resource="classpath:kepler-admin.xml" />
-	<import resource="classpath:kepler-status.xml" />
+	<import resource="classpath:kepler-history.xml" />
 
 </beans>

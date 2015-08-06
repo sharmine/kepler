@@ -30,6 +30,11 @@
 		</ul>
 		<div id="nodes">
 		</div>
+		<div id="empty" class="user-body" style="display:none">
+			<div class="reg-row">
+				<span id="submit-empty" class="submit">删除节点</span>
+			</div>
+		</div>
 		<div id="detail" class="user-body" style="display:none">
 			<ul>
 				<li>
@@ -90,6 +95,7 @@
 		</script>
 		<script>
 		var status = false;
+		var current = "";
 		var previous = "";
 		var template_service = "<ul class='coupon-used-list'><li><div class='coupon-list-left'><h2>${service}</h2><h3>${path}</h3></div><div class='coupon-list-right'><div><h2 class='coupon-list-right-button' onclick='${action}'>${button}</h2></div><div></div></div></li></ul>"
 		var template_status = "<li><div><span class=\"info-left\">客户连接</span><span class=\"info-right\">${host}</span></div><div><span class=\"info-left\">A/T/E/RTT</span><span class=\"info-right\">${status}</span></div></li>"
@@ -100,8 +106,10 @@
 		
 		function route(path){
 			$('#detail').slideUp();
+			$('#empty').slideUp();
 			$('#nodes').slideDown();
 			status = false;
+			current = path;
 			previous = path.substring(0, path.lastIndexOf("/"));
 			$("body").everyTime('9999s', function(){});
 			jQuery.ajax({
@@ -110,12 +118,17 @@
 				data: {'path': path},
 				success: function callbackFunction(data){
 					$("#nodes").empty();
-					$(data).each(function(index, element){
-						if(element.detail){
-							nodes[index] = element.node;
-						}
-						$("#nodes").append(template_service.replace("${service}", element.service + (element.detail && element.node.tag != "" ? "(" + element.node.tag + ")" : "")).replace("${path}", element.path).replace("${path}", element.path).replace("${action}", element.detail ?  "node(\"" + element.path +"\"," + index + ")" : "route(\"" + element.path + "\")").replace("${button}", element.detail ? "服务明细" : "立即进入"));
-					});
+					if(data.length == 0 && path != "") {
+						$('#submit-empty').html("删除 " + (path.length < 20 ? path : " ... " + path.substring(path.length - 17)));
+						$('#empty').slideDown();
+					} else { 
+						$(data).each(function(index, element){
+							if(element.detail){
+								nodes[index] = element.node;
+							}
+							$("#nodes").append(template_service.replace("${service}", element.service + (element.detail && element.node.tag != "" ? "(" + element.node.tag + ")" : "")).replace("${path}", element.path).replace("${path}", element.path).replace("${action}", element.detail ?  "node(\"" + element.path +"\"," + index + ")" : "route(\"" + element.path + "\")").replace("${button}", element.detail ? "服务明细" : "立即进入"));
+						});
+					}
 				}
 			});
 		}
@@ -148,6 +161,17 @@
 			$("body").everyTime('10s', stat);
 		}
 		
+		function offline(path){
+			jQuery.ajax({
+				type: "POST",
+				url: "/api/service",
+				data: {'path': path},
+				success: function callbackFunction(data){
+					route(previous);
+				}
+			});
+		}
+		
 		$("#route").change(function() {
 			route($("#route").val().replaceAll("\\.", "/"));
 		});
@@ -162,15 +186,12 @@
 			route(previous);
 		});
 		
-		$("#submit-offline").click(function() {
-			jQuery.ajax({
-				type: "POST",
-				url: "/api/service",
-				data: {'path': $('#submit-offline').attr('path')},
-				success: function callbackFunction(data){
-					route(previous);
-				}
-			});
+		$("#submit-empty").click(function () {
+			offline(current);
+		});
+		
+		$("#submit-offline").click(function () {
+			offline($('#submit-offline').attr('path'));
 		});
 		
 		$(document).ready(function() {

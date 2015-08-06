@@ -11,14 +11,12 @@
 	<bean class="com.kepler.service.exported.ExportedServiceFactory">
 		<constructor-arg ref="kepler.service.exported.broadcast" />
 		<constructor-arg index="1" value="com.kepler.collector.Note" />
-		<constructor-arg index="2" value="0.0.1" />
 		<constructor-arg ref="kepler.collector.note" />
 	</bean>
 
 	<bean class="com.kepler.service.exported.ExportedServiceFactory">
 		<constructor-arg ref="kepler.service.exported.broadcast" />
 		<constructor-arg index="1" value="com.kepler.collector.History" />
-		<constructor-arg index="2" value="0.0.1" />
 		<constructor-arg ref="kepler.collector.history" />
 	</bean>
 
