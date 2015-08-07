@@ -38,12 +38,12 @@ public class DefaultContext implements ChannelContext {
 	}
 
 	public ChannelInvoker del(Host host) {
-		DefaultContext.LOGGER.warn("Host:" + host.getAsString() + " removed");
+		DefaultContext.LOGGER.warn("ChannelInvoker:" + host.getAsString() + " removed");
 		return this.channels.remove(host);
 	}
 
 	public ChannelInvoker put(Host host, ChannelInvoker invoker) {
-		DefaultContext.LOGGER.warn("Host:" + host.getAsString() + " added");
+		DefaultContext.LOGGER.warn("ChannelInvoker:" + host.getAsString() + " added");
 		this.channels.put(host, invoker);
 		this.context.unban(host);
 		return invoker;

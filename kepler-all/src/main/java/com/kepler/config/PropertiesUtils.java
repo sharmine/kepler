@@ -38,7 +38,7 @@ final public class PropertiesUtils {
 	 * @return
 	 */
 	public static String get(String key) {
-		return System.getProperty(key, PropertiesUtils.PROPERTIES.getProperty(key));
+		return PropertiesUtils.get(key, null);
 	}
 
 	/**
@@ -49,6 +49,8 @@ final public class PropertiesUtils {
 	 * @return
 	 */
 	public static String get(String key, String def) {
-		return System.getProperty(key, PropertiesUtils.PROPERTIES.getProperty(key, def));
+		String value = System.getProperty(key, PropertiesUtils.PROPERTIES.getProperty(key, def));
+		PropertiesUtils.LOGGER.info("Loading properties: " + key + " / " + value);
+		return value;
 	}
 }

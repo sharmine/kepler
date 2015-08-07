@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.management.ManagementFactory;
 import java.text.MessageFormat;
+import java.util.UUID;
 
 import com.kepler.config.PropertiesUtils;
-import com.kepler.host.Host;
 
 /**
  * @author kim 2015年7月15日
@@ -24,15 +24,15 @@ public class StartPID {
 
 	private final PrintStream out;
 
-	public StartPID(Host local) throws Exception {
+	public StartPID() throws Exception {
 		super();
-		String file = MessageFormat.format(StartPID.FILENAME, String.valueOf(local.port()));
+		String file = MessageFormat.format(StartPID.FILENAME, UUID.randomUUID().toString());
 		this.out = new PrintStream(new FileOutputStream(file + ".out"));
 		this.pid = new File(file + ".pid");
 	}
 
 	public void init() throws IOException {
-		this.pid().pidOut();
+		this.pid().out();
 	}
 
 	private StartPID pid() throws IOException {
@@ -42,7 +42,7 @@ public class StartPID {
 		return this;
 	}
 
-	private StartPID pidOut() {
+	private StartPID out() {
 		if (StartPID.REWRITE) {
 			System.setOut(new PrintStream(this.out));
 		}

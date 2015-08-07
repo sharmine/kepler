@@ -35,6 +35,7 @@ import com.kepler.connection.handler.DecoderHandler;
 import com.kepler.connection.handler.EncoderHandler;
 import com.kepler.host.Host;
 import com.kepler.host.HostLocks;
+import com.kepler.host.impl.DefaultHost;
 import com.kepler.host.impl.SegmentLocks;
 import com.kepler.invoker.Invoker;
 import com.kepler.protocol.Request;
@@ -131,7 +132,7 @@ public class DefaultConnect implements Connect {
 			// 加入通道
 			this.channels.put(invoker.host(), invoker);
 		} catch (Throwable e) {
-			// 关闭并重连
+			// 关闭并尝试重连
 			this.closeable.close(invoker.host());
 			throw e;
 		}
@@ -164,9 +165,9 @@ public class DefaultConnect implements Connect {
 			return this.invoker;
 		}
 
-		// closeable.close间接调用
+		// closeable.close
 		public void close() {
-			// 禁止在EventLoop线程进行Boostrap关闭, 将造成死锁(当前线程也为EventLoop线程, 无法关闭)
+			// 禁止在EventLoop线程进行Boostrap关闭, 会造成死锁(当前线程也为EventLoop线程, 无法关闭)
 			DefaultConnect.this.threads.execute(new CloseRunnable(this.bootstrap, this.host));
 		}
 
@@ -182,21 +183,24 @@ public class DefaultConnect implements Connect {
 
 		private ChannelHandlerContext ctx;
 
+		private Host local;
+
 		public InvokerHandler(Host host) {
 			super();
 			this.host = host;
 		}
 
-		public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-			DefaultConnect.LOGGER.warn("Connect binding (" + DefaultConnect.this.local.getAsString() + " to " + this.host.getAsString() + ") ...");
-			ctx.fireChannelRegistered();
-			this.ctx = ctx;
+		public void channelActive(ChannelHandlerContext ctx) throws Exception {
+			// 1, localAddress -> is loop ? remoteaddress/localport : localAddress
+			this.local = (this.local = new DefaultHost(InetSocketAddress.class.cast((this.ctx = ctx).channel().localAddress()))).loop(Host.LOOP) ? new DefaultHost(Host.GROUP, Host.TAG, DefaultConnect.this.local.host(), this.local.port()) : this.local;
+			this.ctx.fireChannelActive();
+			DefaultConnect.LOGGER.warn("Connect binding (" + this.local + " to " + this.host.getAsString() + ") ...");
 		}
 
-		public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-			DefaultConnect.LOGGER.warn("Connect closing (" + DefaultConnect.this.local.getAsString() + " to " + this.host.getAsString() + ") ...");
+		public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+			DefaultConnect.LOGGER.warn("Connect closing (" + this.local + " to " + this.host.getAsString() + ") ...");
 			DefaultConnect.this.closeable.close(this.host);
-			ctx.fireChannelUnregistered();
+			ctx.fireChannelInactive();
 		}
 
 		public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
@@ -205,7 +209,7 @@ public class DefaultConnect implements Connect {
 		}
 
 		public Object invoke(Request request) {
-			return this.invoke(new AckFuture(this.host, request));
+			return this.invoke(new AckFuture(this.local, this.host, request));
 		}
 
 		private Object invoke(AckFuture future) {

@@ -1,6 +1,8 @@
 package com.kepler.mongo.impl;
+
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.kepler.mongo.MongoConfig;
@@ -14,7 +16,6 @@ import com.mongodb.MongoClient;
 import com.mongodb.WriteConcern;
 import com.mongodb.WriteResult;
 
-
 /**
  * 
  * @author kim 2013-11-15
@@ -24,11 +25,11 @@ public class MongoProxyConfig implements MongoConfig {
 	 * 重置数据集合(All)
 	 */
 	private final static DBObject queryClear = BasicDBObjectBuilder.start().get();
-	
+
 	private final Map<String, Object> configs = new HashMap<String, Object>();
-	
+
 	private final MongoWrapCollection wrap;
-	
+
 	private final DBCollection collection;
 
 	public MongoProxyConfig(MongoClient client, String db, String collection) {
@@ -54,7 +55,7 @@ public class MongoProxyConfig implements MongoConfig {
 	}
 
 	private class MongoWrapCollection implements MongoOperation {
-		
+
 		public WriteResult remove(DBObject query) {
 			return this.remove(query, WriteConcern.MAJORITY);
 		}
@@ -116,6 +117,11 @@ public class MongoProxyConfig implements MongoConfig {
 
 		public AggregationOutput aggregate(final DBObject... ops) {
 			return MongoProxyConfig.this.collection.aggregate(Arrays.asList(ops));
+		}
+
+		@SuppressWarnings("unchecked")
+		public List<Object> distinct(String key, DBObject query) {
+			return MongoProxyConfig.this.collection.distinct(key, query);
 		}
 	}
 }

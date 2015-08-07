@@ -119,18 +119,18 @@ public class DefaultServer {
 	@Sharable
 	private class ExportedHandler extends ChannelInboundHandlerAdapter {
 
-		public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-			DefaultServer.LOGGER.warn("Connect binding (" + DefaultServer.this.local.getAsString() + " to " + ctx.channel().remoteAddress() + ") ...");
-			ctx.fireChannelRegistered();
+		public void channelActive(ChannelHandlerContext ctx) throws Exception {
+			DefaultServer.LOGGER.warn("Connect binding (" + ctx.channel().localAddress() + " to " + ctx.channel().remoteAddress() + ") ...");
+			ctx.fireChannelActive();
 		}
 
 		/**
 		 * @see com.kepler.host.LocalHost 会触发对本地服务端口嗅探
 		 */
-		public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-			DefaultServer.LOGGER.error("Client closing (" + DefaultServer.this.local.getAsString() + " to " + ctx.channel().remoteAddress() + ") ...");
+		public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+			DefaultServer.LOGGER.error("Client closing (" + ctx.channel().localAddress() + " to " + ctx.channel().remoteAddress() + ") ...");
 			ctx.close().addListener(ExceptionListener.TRACE);
-			ctx.fireChannelUnregistered();
+			ctx.fireChannelInactive();
 		}
 
 		// 任何未捕获异常(如OOM)均需要终止通道

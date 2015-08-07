@@ -1,6 +1,7 @@
 package com.kepler.admin.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -10,7 +11,6 @@ import org.springframework.util.StringUtils;
 
 import com.kepler.admin.service.Node;
 import com.kepler.admin.service.Path;
-import com.kepler.admin.service.Paths;
 import com.kepler.admin.service.ServiceContext;
 import com.kepler.host.Host;
 import com.kepler.serial.SerialFactory;
@@ -23,6 +23,8 @@ import com.kepler.zookeeper.ZkSerial;
 public class ServiceContextImpl implements ServiceContext {
 
 	private final static Log LOGGER = LogFactory.getLog(ServiceContextImpl.class);
+	
+	private final static List<Path> EMPTY = Collections.unmodifiableList(new ArrayList<Path>());
 
 	private final ZooKeeper zooKeeper;
 
@@ -35,12 +37,12 @@ public class ServiceContextImpl implements ServiceContext {
 	}
 
 	@Override
-	public Paths path(String path) {
+	public List<Path> path(String path) {
 		try {
 			return new ZkPaths(path, this.zooKeeper.getChildren(ZkContext.ROOT + (StringUtils.isEmpty(path) ? "" : ("/" + path)), true));
 		} catch (Exception e) {
-			ServiceContextImpl.LOGGER.warn(e.getMessage(), e);
-			return null;
+			ServiceContextImpl.LOGGER.info(e.getMessage(), e);
+			return ServiceContextImpl.EMPTY;
 		}
 	}
 
@@ -61,7 +63,7 @@ public class ServiceContextImpl implements ServiceContext {
 		return node;
 	}
 
-	private class ZkPaths extends ArrayList<Path> implements Paths {
+	private class ZkPaths extends ArrayList<Path> {
 
 		private final static long serialVersionUID = 1L;
 

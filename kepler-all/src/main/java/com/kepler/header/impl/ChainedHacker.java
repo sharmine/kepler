@@ -1,7 +1,8 @@
 package com.kepler.header.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.kepler.extension.Extension;
 import com.kepler.header.Headers;
@@ -12,7 +13,11 @@ import com.kepler.header.HeadersHacker;
  */
 public class ChainedHacker implements HeadersHacker, Extension {
 
-	private final List<HeadersHacker> hackers = new ArrayList<HeadersHacker>();
+	private final Set<HeadersHacker> hackers = new TreeSet<HeadersHacker>(new Comparator<HeadersHacker>() {
+		public int compare(HeadersHacker o1, HeadersHacker o2) {
+			return o1.sort() - o2.sort();
+		}
+	});
 
 	@Override
 	// 将本次迭代返回Headers作为下次迭代参数Headers(便于包装Headers)
@@ -22,6 +27,10 @@ public class ChainedHacker implements HeadersHacker, Extension {
 			each = hacker.put(each);
 		}
 		return each;
+	}
+
+	public int sort() {
+		return Integer.MIN_VALUE;
 	}
 
 	@Override

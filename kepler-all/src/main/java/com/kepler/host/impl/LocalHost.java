@@ -26,12 +26,14 @@ public class LocalHost implements Host, Serializable {
 
 	private final static int PORT = Integer.valueOf(PropertiesUtils.get(LocalHost.class.getName().toLowerCase() + ".port", "9876"));
 
-	private final static boolean PORT_STABLE = Boolean.valueOf(PropertiesUtils.get(LocalHost.class.getName().toLowerCase() + ".port_stable", "false"));
+	private final static int INTERVAL = Integer.valueOf(PropertiesUtils.get(LocalHost.class.getName().toLowerCase() + ".interval", "500"));
+
+	private final static boolean STABLE = Boolean.valueOf(PropertiesUtils.get(LocalHost.class.getName().toLowerCase() + ".stable", "false"));
 
 	private final Host local;
 
 	public LocalHost() throws Exception {
-		this.local = new DefaultHost(Host.GROUP, Host.TAG, this.address(), LocalHost.PORT_STABLE ? LocalHost.PORT : this.free());
+		this.local = new DefaultHost(Host.GROUP, Host.TAG, this.address(), LocalHost.STABLE ? LocalHost.PORT : this.free());
 	}
 
 	private String address() throws Exception {
@@ -52,7 +54,7 @@ public class LocalHost implements Host, Serializable {
 	private int free() throws Exception {
 		for (int index = LocalHost.PORT; index < LocalHost.PORT + 1000; index++) {
 			try (Socket socket = new Socket()) {
-				socket.connect(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), index), 500);
+				socket.connect(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), index), LocalHost.INTERVAL);
 			} catch (IOException e) {
 				LocalHost.LOGGER.debug("Port " + index + " used ... ");
 				return index;
@@ -86,6 +88,10 @@ public class LocalHost implements Host, Serializable {
 	}
 
 	public boolean loop(Host host) {
+		return this.local.loop(host);
+	}
+
+	public boolean loop(String host) {
 		return this.local.loop(host);
 	}
 

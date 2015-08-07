@@ -54,8 +54,8 @@ public class DefaultConditions implements Conditions {
 	}
 
 	// 并发情况下, 首次初始化会存在丢失
-	public void put(Host source, Host target, Status status, long rtt) {
-		WriteableCondition condition = WriteableCondition.class.cast(this.conditions.get(source, target));
-		this.conditions.put(source, target, (condition = (condition != null ? condition : new WriteableCondition(source, target))).touch().rtt(rtt).timeout(status).exception(status));
+	public void put(Host local, Host host, Status status, long rtt) {
+		WriteableCondition condition = WriteableCondition.class.cast(this.conditions.get(local, host));
+		this.conditions.put(local, host, (condition = (condition != null ? condition : new WriteableCondition(local, host))).touch().rtt(rtt).timeout(status).exception(status));
 	}
 }

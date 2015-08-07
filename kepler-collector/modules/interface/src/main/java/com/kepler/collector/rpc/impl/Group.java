@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @author kim 2015年8月6日
  */
-public class GroupHost implements Serializable{
+public class Group implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -13,7 +13,7 @@ public class GroupHost implements Serializable{
 
 	private final String host;
 
-	public GroupHost(String group, String host) {
+	public Group(String group, String host) {
 		super();
 		this.group = group;
 		this.host = host;
@@ -25,5 +25,14 @@ public class GroupHost implements Serializable{
 
 	public String getHost() {
 		return this.host;
+	}
+
+	public int hashCode() {
+		return this.group.hashCode() ^ this.getHost().hashCode();
+	}
+
+	public boolean equals(Object ob) {
+		Group host = Group.class.cast(ob);
+		return this.getGroup().equals(host.getGroup()) && this.getHost().equals(host.getHost());
 	}
 }

@@ -5,10 +5,8 @@
     http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<import resource="classpath:kepler-core.xml" />
-
 	<bean id="kepler.collector.history" class="com.kepler.service.imported.ImportedServiceFactory" parent="kepler.service.imported.abstract">
-		<constructor-arg index="0" value="com.kepler.collector.History" />
+		<constructor-arg index="0" value="com.kepler.collector.rpc.History" />
 	</bean>
 
 </beans>

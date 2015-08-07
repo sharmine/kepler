@@ -49,7 +49,7 @@ import com.kepler.org.apache.commons.collections.keyvalue.MultiKey;
  * <li><code>MultiKeyMap.decorate(new LRUMap())</code> creates an least recently used map.
  * <li><code>MultiKeyMap.decorate(new ReferenceMap())</code> creates a garbage collector sensitive map.
  * </ul>
- * Note that <code>IdentityMap</code> and <code>ReferenceIdentityMap</code> are unsuitable
+ * Audience that <code>IdentityMap</code> and <code>ReferenceIdentityMap</code> are unsuitable
  * for use as the key comparison would work on the whole MultiKey, not the elements within.
  * <p>
  * As an example, consider a least recently used cache that uses a String airline code
@@ -67,7 +67,7 @@ import com.kepler.org.apache.commons.collections.keyvalue.MultiKey;
  * }
  * </pre>
  * <p>
- * <strong>Note that MultiKeyMap is not synchronized and is not thread-safe.</strong>
+ * <strong>Audience that MultiKeyMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. This class may throw exceptions when accessed
  * by concurrent threads without synchronization.

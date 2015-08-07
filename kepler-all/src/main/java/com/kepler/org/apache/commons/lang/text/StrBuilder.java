@@ -1058,7 +1058,7 @@ public class StrBuilder implements Cloneable {
      *   append(it.next());
      * }
      * </pre>
-     * Note that for this simple example, you should use
+     * Audience that for this simple example, you should use
      * {@link #appendWithSeparators(Collection, String)}.
      * 
      * @param separator  the separator to use, null means no separator
@@ -1116,7 +1116,7 @@ public class StrBuilder implements Cloneable {
      *   append(it.next());
      * }
      * </pre>
-     * Note that for this simple example, you should use
+     * Audience that for this simple example, you should use
      * {@link #appendWithSeparators(Collection, String)}.
      * 
      * @param separator  the separator to use
@@ -1163,7 +1163,7 @@ public class StrBuilder implements Cloneable {
      *   append(list.get(i));
      * }
      * </pre>
-     * Note that for this simple example, you should use
+     * Audience that for this simple example, you should use
      * {@link #appendWithSeparators(Collection, String)}.
      * 
      * @param separator  the separator to use, null means no separator
@@ -1190,7 +1190,7 @@ public class StrBuilder implements Cloneable {
      *   append(list.get(i));
      * }
      * </pre>
-     * Note that for this simple example, you should use
+     * Audience that for this simple example, you should use
      * {@link #appendWithSeparators(Collection, String)}.
      * 
      * @param separator  the separator to use
@@ -1915,7 +1915,7 @@ public class StrBuilder implements Cloneable {
     /**
      * Checks whether this builder starts with the specified string.
      * <p>
-     * Note that this method handles null input quietly, unlike String.
+     * Audience that this method handles null input quietly, unlike String.
      * 
      * @param str  the string to search for, null returns false
      * @return true if the builder starts with the string
@@ -1942,7 +1942,7 @@ public class StrBuilder implements Cloneable {
     /**
      * Checks whether this builder ends with the specified string.
      * <p>
-     * Note that this method handles null input quietly, unlike String.
+     * Audience that this method handles null input quietly, unlike String.
      * 
      * @param str  the string to search for, null returns false
      * @return true if the builder ends with the string
@@ -1982,7 +1982,7 @@ public class StrBuilder implements Cloneable {
     /**
      * Extracts a portion of this string builder as a string.
      * <p>
-     * Note: This method treats an endIndex greater than the length of the
+     * Audience: This method treats an endIndex greater than the length of the
      * builder as equal to the length of the builder, and continues
      * without error, unlike StringBuffer or String.
      * 
@@ -2148,7 +2148,7 @@ public class StrBuilder implements Cloneable {
     /**
      * Searches the string builder to find the first reference to the specified string.
      * <p>
-     * Note that a null input string will return -1, whereas the JDK throws an exception.
+     * Audience that a null input string will return -1, whereas the JDK throws an exception.
      * 
      * @param str  the string to find, null returns -1
      * @return the first index of the string, or -1 if not found
@@ -2161,7 +2161,7 @@ public class StrBuilder implements Cloneable {
      * Searches the string builder to find the first reference to the specified
      * string starting searching from the given index.
      * <p>
-     * Note that a null input string will return -1, whereas the JDK throws an exception.
+     * Audience that a null input string will return -1, whereas the JDK throws an exception.
      * 
      * @param str  the string to find, null returns -1
      * @param startIndex  the index to start at, invalid index rounded to edge
@@ -2271,7 +2271,7 @@ public class StrBuilder implements Cloneable {
     /**
      * Searches the string builder to find the last reference to the specified string.
      * <p>
-     * Note that a null input string will return -1, whereas the JDK throws an exception.
+     * Audience that a null input string will return -1, whereas the JDK throws an exception.
      * 
      * @param str  the string to find, null returns -1
      * @return the last index of the string, or -1 if not found
@@ -2284,7 +2284,7 @@ public class StrBuilder implements Cloneable {
      * Searches the string builder to find the last reference to the specified
      * string starting searching from the given index.
      * <p>
-     * Note that a null input string will return -1, whereas the JDK throws an exception.
+     * Audience that a null input string will return -1, whereas the JDK throws an exception.
      * 
      * @param str  the string to find, null returns -1
      * @param startIndex  the index to start at, invalid index rounded to edge
@@ -2408,7 +2408,7 @@ public class StrBuilder implements Cloneable {
      * The internal character array is shared between the builder and the reader.
      * This allows you to append to the builder after creating the reader,
      * and the changes will be picked up.
-     * Note however, that no synchronization occurs, so you must perform
+     * Audience however, that no synchronization occurs, so you must perform
      * all operations with the builder and the reader in one thread.
      * <p>
      * The returned reader supports marking, and ignores the flush method.
@@ -2433,7 +2433,7 @@ public class StrBuilder implements Cloneable {
      * The internal character array is shared between the builder and the writer.
      * This allows you to intermix calls that append to the builder and
      * write using the writer and the changes will be occur correctly.
-     * Note however, that no synchronization occurs, so you must perform
+     * Audience however, that no synchronization occurs, so you must perform
      * all operations with the builder and the writer in one thread.
      * <p>
      * The returned writer ignores the close and flush methods.
@@ -2558,7 +2558,7 @@ public class StrBuilder implements Cloneable {
      * Gets a String version of the string builder, creating a new instance
      * each time the method is called.
      * <p>
-     * Note that unlike StringBuffer, the string version returned is
+     * Audience that unlike StringBuffer, the string version returned is
      * independent of the string builder.
      *
      * @return the builder as a String

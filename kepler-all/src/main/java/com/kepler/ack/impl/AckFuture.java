@@ -24,7 +24,7 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 	/**
 	 * 最大超时
 	 */
-	private final static int TIMEOUT = Integer.valueOf(PropertiesUtils.get(AckFuture.class.getName().toLowerCase() + ".timeout", "10000"));
+	private final static int TIMEOUT = Integer.valueOf(PropertiesUtils.get(AckFuture.class.getName().toLowerCase() + ".timeout", "15000"));
 
 	private final static Log LOGGER = LogFactory.getLog(AckFuture.class);
 
@@ -45,6 +45,8 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 
 	private final Request request;
 
+	private final Host local;
+
 	private final Host host;
 
 	private Status stauts = Status.WAITING;
@@ -62,11 +64,12 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 	/**
 	 * 是否已取消(外部调用Cancel)
 	 */
-	private boolean cancelled;
+	private boolean canceled;
 
-	public AckFuture(Host host, Request request) {
+	public AckFuture(Host local, Host host, Request request) {
 		super();
 		this.host = host;
+		this.local = local;
 		this.request = request;
 	}
 
@@ -77,7 +80,7 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 	 */
 	private AckFuture checkTimeout() throws KeplerException {
 		// 外部取消表示为超时
-		if (this.cancelled || this.timeout) {
+		if (this.canceled || this.timeout) {
 			this.stauts = Status.TIMEOUT;
 			throw new KeplerException("ACK: " + this.request.ack() + " for (" + this.request.service() + " / " + this.request.version() + ") to " + this.host.getAsString() + " timeout after: " + this.elapse());
 		}
@@ -99,6 +102,10 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 
 	public Host host() {
 		return this.host;
+	}
+
+	public Host local() {
+		return this.local;
 	}
 
 	public Status status() {
@@ -133,17 +140,17 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 	 * @return
 	 */
 	public boolean cancel(boolean mayInterruptIfRunning) {
-		if (!this.cancelled) {
+		if (!this.canceled) {
 			AckFuture.LOGGER.warn("ACK: " + this.request.ack() + " (Using" + this.elapse() + ") will be canceled ...");
-			this.cancelled = true;
+			this.canceled = true;
 			this.thread.interrupt();
 		}
-		return this.cancelled;
+		return this.canceled;
 	}
 
 	@Override
 	public boolean isCancelled() {
-		return this.cancelled;
+		return this.canceled;
 	}
 
 	@Override

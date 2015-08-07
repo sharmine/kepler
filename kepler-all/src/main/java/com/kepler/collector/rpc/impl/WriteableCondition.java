@@ -21,24 +21,24 @@ public class WriteableCondition implements Condition {
 
 	private final AtomicLong exception = new AtomicLong();
 
-	private final Host source;
+	private final Host local;
 
-	private final Host target;
-	
-	public WriteableCondition(Host source, Host target) {
+	private final Host host;
+
+	public WriteableCondition(Host local, Host host) {
 		super();
-		this.source = source;
-		this.target = target;
+		this.local = local;
+		this.host = host;
 	}
 
 	@Override
-	public Host source() {
-		return this.source;
+	public Host local() {
+		return this.local;
 	}
 
 	@Override
-	public Host target() {
-		return this.target;
+	public Host host() {
+		return this.host;
 	}
 
 	public long rtt() {
@@ -80,7 +80,7 @@ public class WriteableCondition implements Condition {
 		}
 		return this;
 	}
-	
+
 	public void clear() {
 		this.rtt.set(0);
 		this.total.set(0);

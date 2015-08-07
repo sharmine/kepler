@@ -8,8 +8,8 @@
 	<import resource="classpath:kepler-core.xml" />
 	<!-- 
 	<import resource="classpath:kepler-collector-period.xml" />
-	<bean id="kepler.collector.note" class="com.kepler.service.imported.ImportedServiceFactory" parent="kepler.service.imported.abstract">
-		<constructor-arg index="0" value="com.kepler.collector.Note" />
+	<bean id="kepler.collector.audience" class="com.kepler.service.imported.ImportedServiceFactory" parent="kepler.service.imported.abstract">
+		<constructor-arg index="0" value="com.kepler.collector.Audience" />
 	</bean>
 	-->
 

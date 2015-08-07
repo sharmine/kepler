@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import com.kepler.ack.Ack;
 import com.kepler.collector.rpc.Collector;
 import com.kepler.collector.rpc.Conditions;
-import com.kepler.host.Host;
 import com.kepler.org.apache.commons.collections.map.MultiKeyMap;
 import com.kepler.service.Imported;
 
@@ -30,23 +29,21 @@ public class ImportedCollector implements Runnable, Collector, Imported {
 	private final AtomicLong minute = new AtomicLong(this.minute());
 
 	/**
-	 * Start 1
+	 * Start from 1
 	 */
 	private final AtomicInteger index = new AtomicInteger(1);
 
-	private final Host local;
-
 	private final ThreadPoolExecutor threads;
 
-	public ImportedCollector(Host local, ThreadPoolExecutor threads) {
+	public ImportedCollector(ThreadPoolExecutor threads) {
 		super();
-		this.local = local;
 		this.threads = threads;
 	}
 
 	@Override
 	public void collect(Ack ack) {
-		Conditions.class.cast(this.curr().get(ack.request().service().getName(), ack.request().version())).put(this.local, ack.host(), ack.status(), ack.elapse());
+		// Service,Version,Method维度
+		DefaultConditions.class.cast(this.curr().get(ack.request().service().getName(), ack.request().version(), ack.request().method())).put(ack.local(), ack.host(), ack.status(), ack.elapse());
 	}
 
 	@Override
@@ -58,7 +55,7 @@ public class ImportedCollector implements Runnable, Collector, Imported {
 
 	private void methods(Class<?> service, String version, int index) {
 		for (Method method : service.getMethods()) {
-			this.conditions[index].put(service.getName(), version, new DefaultConditions(service.getName(), version, method.getName()));
+			this.conditions[index].put(service.getName(), version, method.getName(), new DefaultConditions(service.getName(), version, method.getName()));
 		}
 	}
 
@@ -88,6 +85,11 @@ public class ImportedCollector implements Runnable, Collector, Imported {
 		return this.conditions[((this.index.get() + index) & Byte.MAX_VALUE) % this.conditions.length];
 	}
 
+	/**
+	 * 1, Index++, 2, Set Minute, 3, Prepare clear
+	 * 
+	 * @return
+	 */
 	private MultiKeyMap exchange() {
 		this.index.incrementAndGet();
 		this.minute.set(this.minute());
@@ -97,7 +99,7 @@ public class ImportedCollector implements Runnable, Collector, Imported {
 
 	public void run() {
 		for (Object each : ImportedCollector.this.next().values()) {
-			Conditions.class.cast(each).clear();
+			DefaultConditions.class.cast(each).clear();
 		}
 	}
 }

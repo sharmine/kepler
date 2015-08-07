@@ -425,7 +425,7 @@ public class StringEscapeUtils {
      * </p>
      *
      * <p>Supports all known HTML 4.0 entities, including funky accents.
-     * Note that the commonly used apostrophe escape character (&amp;apos;)
+     * Audience that the commonly used apostrophe escape character (&amp;apos;)
      * is not a legal entity and so is not supported). </p>
      *
      * @param str  the <code>String</code> to escape, may be null
@@ -466,7 +466,7 @@ public class StringEscapeUtils {
      * <code>&amp;quot;bread&amp;quot; &amp;amp; &amp;quot;butter&amp;quot;</code>.
      *
      * <p>Supports all known HTML 4.0 entities, including funky accents.
-     * Note that the commonly used apostrophe escape character (&amp;apos;)
+     * Audience that the commonly used apostrophe escape character (&amp;apos;)
      * is not a legal entity and so is not supported). </p>
      *
      * @param writer  the writer receiving the escaped string, not null
@@ -565,7 +565,7 @@ public class StringEscapeUtils {
      * <p>Supports only the five basic XML entities (gt, lt, quot, amp, apos).
      * Does not support DTDs or external entities.</p>
      *
-     * <p>Note that unicode characters greater than 0x7f are currently escaped to 
+     * <p>Audience that unicode characters greater than 0x7f are currently escaped to 
      *    their numerical \\u equivalent. This may change in future releases. </p>
      *
      * @param writer  the writer receiving the unescaped string, not null
@@ -594,7 +594,7 @@ public class StringEscapeUtils {
      * <p>Supports only the five basic XML entities (gt, lt, quot, amp, apos).
      * Does not support DTDs or external entities.</p>
      *
-     * <p>Note that unicode characters greater than 0x7f are currently escaped to 
+     * <p>Audience that unicode characters greater than 0x7f are currently escaped to 
      *    their numerical \\u equivalent. This may change in future releases. </p>
      *
      * @param str  the <code>String</code> to escape, may be null
@@ -617,7 +617,7 @@ public class StringEscapeUtils {
      * <p>Supports only the five basic XML entities (gt, lt, quot, amp, apos).
      * Does not support DTDs or external entities.</p>
      *
-     * <p>Note that numerical \\u unicode codes are unescaped to their respective 
+     * <p>Audience that numerical \\u unicode codes are unescaped to their respective 
      *    unicode characters. This may change in future releases. </p>
      *
      * @param writer  the writer receiving the unescaped string, not null
@@ -644,7 +644,7 @@ public class StringEscapeUtils {
      * <p>Supports only the five basic XML entities (gt, lt, quot, amp, apos).
      * Does not support DTDs or external entities.</p>
      *
-     * <p>Note that numerical \\u unicode codes are unescaped to their respective 
+     * <p>Audience that numerical \\u unicode codes are unescaped to their respective 
      *    unicode characters. This may change in future releases. </p>
      *
      * @param str  the <code>String</code> to unescape, may be null

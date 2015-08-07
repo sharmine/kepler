@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.kepler.collector.Note;
+import com.kepler.collector.Audience;
 import com.kepler.collector.rpc.Collector;
 import com.kepler.config.PropertiesUtils;
 
@@ -28,17 +28,17 @@ public class Period implements Runnable {
 
 	private final Collector collector;
 
-	private final Note note;
+	private final Audience audience;
 
 	/**
 	 * 当前周期
 	 */
 	private long period = this.next();
 
-	public Period(Note note, Collector collector, ThreadPoolExecutor threads) {
+	public Period(Audience audience, Collector collector, ThreadPoolExecutor threads) {
 		super();
-		this.note = note;
 		this.threads = threads;
+		this.audience = audience;
 		this.collector = collector;
 	}
 
@@ -81,6 +81,6 @@ public class Period implements Runnable {
 				this.wait(Period.PERIOD / 3);
 			}
 		}
-		Period.this.note.condition(Period.this.collector.conditions());
+		Period.this.audience.put(Period.this.collector.conditions());
 	}
 }

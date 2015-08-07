@@ -16,7 +16,7 @@ public class AckTimer implements Runnable {
 	/**
 	 * 超时监听线程
 	 */
-	private final static int THREADS = Integer.valueOf(PropertiesUtils.get(AckTimer.class.getName().toLowerCase() + ".executor", "2"));
+	private final static int THREADS = Integer.valueOf(PropertiesUtils.get(AckTimer.class.getName().toLowerCase() + ".executor", "1"));
 
 	private final static Log LOGGER = LogFactory.getLog(AckTimer.class);
 

@@ -1,5 +1,7 @@
 package com.kepler.admin.service;
 
+import java.util.List;
+
 
 
 /**
@@ -11,5 +13,5 @@ public interface ServiceContext {
 	
 	public Node del(String path) throws Exception;
 	
-	public Paths path(String path) throws Exception;
+	public List<Path> path(String path) throws Exception;
 }

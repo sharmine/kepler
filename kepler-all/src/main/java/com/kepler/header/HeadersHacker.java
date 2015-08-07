@@ -6,4 +6,6 @@ package com.kepler.header;
 public interface HeadersHacker {
 
 	public Headers put(Headers headers);
+
+	public int sort();
 }

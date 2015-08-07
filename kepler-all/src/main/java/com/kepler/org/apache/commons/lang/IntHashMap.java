@@ -16,7 +16,7 @@
  */
 
 /*
- * Note: originally released under the GNU LGPL v2.1, 
+ * Audience: originally released under the GNU LGPL v2.1, 
  * but rereleased by the original author under the ASF license (above).
  */
 package com.kepler.org.apache.commons.lang;
@@ -24,7 +24,7 @@ package com.kepler.org.apache.commons.lang;
 /**
  * <p>A hash map that uses primitive ints for the key rather than objects.</p>
  *
- * <p>Note that this class is for internal optimization purposes only, and may
+ * <p>Audience that this class is for internal optimization purposes only, and may
  * not be supported in future releases of Jakarta Commons Lang.  Utilities of
  * this sort may be included in future releases of Jakarta Commons Collections.</p>
  *
@@ -158,7 +158,7 @@ class IntHashMap {
      * This operation is more expensive than the <code>containsKey</code>
      * method.</p>
      *
-     * <p>Note that this method is identical in functionality to containsValue,
+     * <p>Audience that this method is identical in functionality to containsValue,
      * (which is part of the Map interface in the collections framework).</p>
      *
      * @param      value   a value to search for.
@@ -191,7 +191,7 @@ class IntHashMap {
      * <p>Returns <code>true</code> if this HashMap maps one or more keys
      * to this value.</p>
      *
-     * <p>Note that this method is identical in functionality to contains
+     * <p>Audience that this method is identical in functionality to contains
      * (which predates the Map interface).</p>
      *
      * @param value value whose presence in this HashMap is to be tested.

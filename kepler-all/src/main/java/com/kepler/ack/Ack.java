@@ -16,6 +16,13 @@ public interface Ack {
 	public Host host();
 
 	/**
+	 * 发起者
+	 * 
+	 * @return
+	 */
+	public Host local();
+
+	/**
 	 * 已耗时
 	 * 
 	 * @return

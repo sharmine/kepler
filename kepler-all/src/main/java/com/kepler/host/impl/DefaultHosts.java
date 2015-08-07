@@ -50,6 +50,7 @@ public class DefaultHosts implements Hosts, HostCollector {
 				this.bans.del(host);
 			}
 		}
+		DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " added ... ");
 	}
 
 	public void del(Host host) {
@@ -58,6 +59,7 @@ public class DefaultHosts implements Hosts, HostCollector {
 			this.tags.del(host);
 			this.bans.del(host);
 		}
+		DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " removed ... ");
 	}
 
 	public void ban(Host host) {
@@ -66,6 +68,7 @@ public class DefaultHosts implements Hosts, HostCollector {
 				this.bans.put(host);
 			}
 		}
+		DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " baned ... ");
 	}
 
 	public void unban(Host host) {
@@ -75,6 +78,7 @@ public class DefaultHosts implements Hosts, HostCollector {
 				this.hosts.add(host);
 			}
 		}
+		DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " unbaned ... ");
 	}
 
 	public boolean contain(Host host) {
@@ -130,7 +134,7 @@ public class DefaultHosts implements Hosts, HostCollector {
 		 */
 		public Tags put(Host host) {
 			List<Host> hosts = this.get(host.tag());
-			(hosts = hosts != DefaultHosts.EMPTY ? hosts : new ArrayList<Host>()).add(host);
+			(hosts = hosts != DefaultHosts.EMPTY ? hosts : new CopyOnWriteArrayList<Host>()).add(host);
 			this.tags.put(host.tag(), hosts);
 			return this;
 		}

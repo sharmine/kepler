@@ -1,5 +1,7 @@
 package com.kepler.mongo;
 
+import java.util.List;
+
 import com.mongodb.AggregationOutput;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -11,7 +13,7 @@ import com.mongodb.WriteResult;
  * @author kim 2014年1月22日
  */
 public interface MongoOperation {
-	
+
 	public WriteResult save(DBObject entity);
 
 	public WriteResult save(DBObject entity, WriteConcern concern);
@@ -39,4 +41,6 @@ public interface MongoOperation {
 	public DBObject findAndModify(DBObject query, DBObject fields, DBObject sort, boolean remove, DBObject update, boolean returnNew, boolean upsert);
 
 	public AggregationOutput aggregate(DBObject... ops);
+	
+	public List<Object> distinct(String key, DBObject query);
 }

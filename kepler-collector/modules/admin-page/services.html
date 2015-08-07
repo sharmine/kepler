@@ -8,7 +8,7 @@
 <meta name="apple-touch-fullscreen" content="yes">
 <meta http-equiv="Access-Control-Allow-Origin" content="*">
 <link rel="stylesheet" href="/css/base.css" />
-<title>--</title>
+<title>Kepler</title>
 </head>
 <body>
 	<header id="header" class="header-topbar">
@@ -23,10 +23,15 @@
 			<input type="text" id="route" placeholder="服务名称" value=""/>
 			</div>
 		</div>
-		<ul class="used-status">
-			<li><span id="order-unuse" class="current-span">按发布日期</span></li>
-			<li><span id="order-used" >按数据流量</span></li>
-			<li><span id="order-overdue">按请求数量</span></li>
+		<ul id="tab_normal" class="used-status">
+			<li><span id="normal-unuse" class="current-span">按发布日期</span></li>
+			<li><span id="normal-used" >按数据流量</span></li>
+			<li><span id="normal-overdue">按请求数量</span></li>
+		</ul>
+		<ul id="tab_detail" class="used-status" style="display:none">
+			<li><span id="detail-unuse" class="current-span">常规</span></li>
+			<li><span id="detail-used" >输入依赖</span></li>
+			<li><span id="detail-overdue">输出依赖</span></li>
 		</ul>
 		<div id="nodes">
 		</div>
@@ -58,9 +63,24 @@
 			<div class="reg-row">
 				<span id="submit-offline" class="submit">立即离线</span>
 			</div>
-			<div class="reg-row">
-				<span id="submit-goback" class="submit">继续查看</span>
-			</div>
+		</div>
+		
+		<div id="imported" class="user-body" style="display:none">
+			<ul>
+				<li>
+				</li>
+				<div id="imported_status">
+				</div>
+			</ul>
+		</div>
+		
+		<div id="exported" class="user-body" style="display:none">
+			<ul>
+				<li>
+				</li>
+				<div id="exported_status">
+				</div>
+			</ul>
 		</div>
 		<footer id="footer">
 		<ul id="foot-state">
@@ -73,33 +93,60 @@
 		<script src="/js/jquery-1.11.1.min.js"></script>
 		<script src="/js/jquery.timers-1.2.js"></script> 
 		<script type="text/javascript">
-		$('#order-unuse').on('click',function(){
-			$('#order-unuse').addClass('current-span');
-			$('#order-used').removeClass('current-span');
-			$('#order-overdue').removeClass('current-span');
+		$('#normal-unuse').on('click',function(){
+			$('#normal-unuse').addClass('current-span');
+			$('#normal-used').removeClass('current-span');
+			$('#normal-overdue').removeClass('current-span');
 			showUnuse();
 		});
 
-		$('#order-used').on('click',function(){
-			$('#order-unuse').removeClass('current-span');
-			$('#order-used').addClass('current-span');
-			$('#order-overdue').removeClass('current-span');
+		$('#normal-used').on('click',function(){
+			$('#normal-unuse').removeClass('current-span');
+			$('#normal-used').addClass('current-span');
+			$('#normal-overdue').removeClass('current-span');
 			showUsed();
 		});
 
-		$('#order-overdue').on('click',function(){
-			$('#order-unuse').removeClass('current-span');
-			$('#order-used').removeClass('current-span');
-			$('#order-overdue').addClass('current-span');
+		$('#normal-overdue').on('click',function(){
+			$('#normal-unuse').removeClass('current-span');
+			$('#normal-used').removeClass('current-span');
+			$('#normal-overdue').addClass('current-span');
 			showPast();
 		});
-		</script>
-		<script>
+		
+		$('#detail-unuse').on('click',function(){
+			$('#detail-unuse').addClass('current-span');
+			$('#detail-used').removeClass('current-span');
+			$('#detail-overdue').removeClass('current-span');
+			$('#detail').slideDown();
+			$('#imported').slideUp();
+			$('#exported').slideUp();
+		});
+
+		$('#detail-used').on('click',function(){
+			$('#detail-unuse').removeClass('current-span');
+			$('#detail-used').addClass('current-span');
+			$('#detail-overdue').removeClass('current-span');
+			$('#imported').slideDown();
+			$('#exported').slideUp();
+			$('#detail').slideUp();
+		});
+
+		$('#detail-overdue').on('click',function(){
+			$('#detail-unuse').removeClass('current-span');
+			$('#detail-used').removeClass('current-span');
+			$('#detail-overdue').addClass('current-span');
+			$('#exported').slideDown();
+			$('#imported').slideUp();
+			$('#detail').slideUp();
+		});
+
 		var status = false;
 		var current = "";
 		var previous = "";
 		var template_service = "<ul class='coupon-used-list'><li><div class='coupon-list-left'><h2>${service}</h2><h3>${path}</h3></div><div class='coupon-list-right'><div><h2 class='coupon-list-right-button' onclick='${action}'>${button}</h2></div><div></div></div></li></ul>"
-		var template_status = "<li><div><span class=\"info-left\">客户连接</span><span class=\"info-right\">${host}</span></div><div><span class=\"info-left\">A/T/E/RTT</span><span class=\"info-right\">${status}</span></div></li>"
+		var template_status = "<li><div><span class=\"info-left\">${method}</span><span class=\"info-right\">${host}</span></div><div><span class=\"info-left\">A/T/E/RTT</span><span class=\"info-right\">${status}</span></div></li>"
+		var template_relation = "<li><div><span class=\"info-left\">${host}</span></div></li>"
 		
 		String.prototype.replaceAll = function(s1, s2){
 		　　return this.replace(new RegExp(s1,"gm"),s2);
@@ -109,6 +156,8 @@
 			$('#detail').slideUp();
 			$('#empty').slideUp();
 			$('#nodes').slideDown();
+			$('#tab_detail').slideUp();
+			$('#tab_normal').slideDown();
 			status = false;
 			current = path;
 			previous = path.substring(0, path.lastIndexOf("/"));
@@ -139,14 +188,16 @@
 			previous = path.substring(0, path.lastIndexOf("/"));
 			$('#nodes').slideUp();
 			$('#detail').slideDown();
+			$('#tab_normal').slideUp();
+			$('#tab_detail').slideDown();
 			$('#detail_tag').text(nodes[index].tag);
 			$('#detail_host').val(nodes[index].host);
 			$('#detail_host_string').text(nodes[index].hostAsString);
 			$('#submit-offline').attr("path", nodes[index].path)
-			stat();
+			state();
 		}
 
-		function stat(){
+		function state(){
 			if(status) {
 				jQuery.ajax({
 					type: "GET",
@@ -155,12 +206,29 @@
 					success: function callbackFunction(data){
 						$("#status").empty();
 						$(data).each(function(index, element){
-							$("#status").append(template_status.replace("${host}", element.source.host + " / " + element.source.group).replace("${status}", element.total + "/" + element.timeout + "/" + element.exception + "/" + (element.rtt / element.total).toFixed(2)));
+							$(element.conditions).each(function(index, condition){
+								$("#status").append(template_status.replace("${method}", "METHOD: " + element.method).replace("${host}", condition.local.host + " / " + condition.local.group).replace("${status}", condition.total + "/" + condition.timeout + "/" + condition.exception + "/" + (condition.rtt / condition.total).toFixed(2)));
+							});
+						});
+						jQuery.ajax({
+							type: "GET",
+							url: "/api/relations",
+							data: {'host': $('#detail_host').val()},
+							success: function callbackFunction(data){
+								$("#imported_status").empty();
+								$("#exported_status").empty();
+								$(data.imported).each(function(index, element){
+									$("#imported_status").append(template_relation.replace("${host}", element));
+								});
+								$(data.exported).each(function(index, element){
+									$("#exported_status").append(template_relation.replace("${host}", element));
+								});
+							}
 						});
 					}
 				});
 			}
-			$("body").everyTime('10s', stat);
+			$("body").everyTime('60s', state);
 		}
 		
 		function offline(path){
@@ -179,12 +247,6 @@
 		});
 			
 		$("#go-back").click(function() {
-			route(previous);
-		});
-		
-		$("#submit-goback").click(function() {
-			$('#nodes').slideDown();
-			$('#detail').slideUp();
 			route(previous);
 		});
 		

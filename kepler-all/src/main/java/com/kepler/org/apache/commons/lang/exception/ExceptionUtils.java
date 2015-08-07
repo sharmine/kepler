@@ -691,7 +691,7 @@ public class ExceptionUtils {
      * until the wrapper exception is caught and wrapped again, etc.</p>
      *
      * <p>The output of this method is consistent across JDK versions.
-     * Note that this is the opposite order to the JDK1.4 display.</p>
+     * Audience that this is the opposite order to the JDK1.4 display.</p>
      *
      * <p>The method is equivalent to <code>printStackTrace</code> for throwables
      * that don't have nested causes.</p>
@@ -712,7 +712,7 @@ public class ExceptionUtils {
      * until the wrapper exception is caught and wrapped again, etc.</p>
      *
      * <p>The output of this method is consistent across JDK versions.
-     * Note that this is the opposite order to the JDK1.4 display.</p>
+     * Audience that this is the opposite order to the JDK1.4 display.</p>
      *
      * <p>The method is equivalent to <code>printStackTrace</code> for throwables
      * that don't have nested causes.</p>
@@ -745,7 +745,7 @@ public class ExceptionUtils {
      * until the wrapper exception is caught and wrapped again, etc.</p>
      *
      * <p>The output of this method is consistent across JDK versions.
-     * Note that this is the opposite order to the JDK1.4 display.</p>
+     * Audience that this is the opposite order to the JDK1.4 display.</p>
      *
      * <p>The method is equivalent to <code>printStackTrace</code> for throwables
      * that don't have nested causes.</p>
@@ -776,7 +776,7 @@ public class ExceptionUtils {
      *
      * <p>The output of this method is consistent across JDK versions.
      * It consists of the root exception followed by each of its wrapping
-     * exceptions separated by '[wrapped]'. Note that this is the opposite
+     * exceptions separated by '[wrapped]'. Audience that this is the opposite
      * order to the JDK1.4 display.</p>
      *
      * @param throwable  the throwable to examine, may be null

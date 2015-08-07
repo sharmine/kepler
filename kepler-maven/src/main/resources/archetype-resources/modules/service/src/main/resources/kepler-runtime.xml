@@ -7,11 +7,15 @@
 
 	<import resource="classpath:kepler-core.xml" />
 	<import resource="classpath:kepler-server.xml" />
+	<!-- 
+	<import resource="classpath:kepler-collector-period.xml" />
+	<bean id="kepler.collector.audience" class="com.kepler.service.imported.ImportedServiceFactory" parent="kepler.service.imported.abstract">
+		<constructor-arg index="0" value="com.kepler.collector.Audience" />
+	</bean>
+	-->
 
-	<bean class="com.kepler.service.exported.ExportedServiceFactory">
-		<constructor-arg ref="kepler.service.exported.broadcast" />
+	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
 		<constructor-arg index="1" value="com.kepler.TestApp" />
-		<constructor-arg index="2" value="0.0.1-SNAPSHOT" />
 		<constructor-arg ref="kepler.test" />
 	</bean>
 

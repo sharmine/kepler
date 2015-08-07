@@ -1,6 +1,7 @@
 package com.kepler.host.impl;
 
 import java.io.Serializable;
+import java.net.InetSocketAddress;
 
 import com.kepler.host.Host;
 
@@ -18,6 +19,10 @@ public class DefaultHost implements Host, Serializable {
 	private final String group;
 
 	private final String host;
+
+	public DefaultHost(InetSocketAddress address) {
+		this(Host.GROUP, Host.TAG, address.getHostName(), address.getPort());
+	}
 
 	public DefaultHost(String group, String tag, String host, int port) {
 		super();
@@ -65,12 +70,20 @@ public class DefaultHost implements Host, Serializable {
 		return this.host().equalsIgnoreCase(host.host());
 	}
 
+	public boolean loop(String host) {
+		return this.host().equalsIgnoreCase(host);
+	}
+
 	public String toString() {
 		return this.host + ":" + this.port;
 	}
 
 	public static DefaultHost valueOf(String strings) {
+		return DefaultHost.valueOf(strings, null);
+	}
+
+	public static DefaultHost valueOf(String strings, String group) {
 		String[] param = strings.split(":");
-		return new DefaultHost(Host.GROUP_DEFAULT, Host.TAG_DEFAULT, param[0], Integer.valueOf(param[1]));
+		return new DefaultHost(Host.GROUP_DEFAULT, group != null ? group : Host.TAG_DEFAULT, param[0], Integer.valueOf(param[1]));
 	}
 }

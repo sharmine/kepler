@@ -5,13 +5,15 @@ import java.io.Serializable;
 import com.kepler.host.Host;
 
 /**
+ * Host/Source, Host/Target维度
+ * 
  * @author kim 2015年7月24日
  */
 public interface Condition extends Serializable {
 
-	public Host source();
+	public Host host();
 
-	public Host target();
+	public Host local();
 
 	/**
 	 * Round trip time

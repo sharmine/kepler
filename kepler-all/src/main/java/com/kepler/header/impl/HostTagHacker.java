@@ -14,4 +14,9 @@ public class HostTagHacker implements HeadersHacker {
 		headers.put(Host.TAG_KEY, Host.TAG.trim());
 		return headers;
 	}
+
+	@Override
+	public int sort() {
+		return Integer.MIN_VALUE;
+	}
 }

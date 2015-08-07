@@ -27,7 +27,7 @@ public class DefaultResponse implements Response {
 		super();
 		this.ack = ack;
 		this.response = response;
-		this.throwable = throwable != null ? throwable.getMessage() : null;
+		this.throwable = throwable != null ? (throwable.getClass() + ": " + throwable.getMessage()) : null;
 	}
 
 	@Override

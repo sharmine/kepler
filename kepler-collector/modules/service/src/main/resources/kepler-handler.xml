@@ -5,19 +5,26 @@
     http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
+	<alias name="com.kepler.collector.handler" alias="kepler.collector.relations" />
 	<alias name="com.kepler.collector.handler" alias="kepler.collector.history" />
-	<alias name="com.kepler.collector.handler" alias="kepler.collector.note" />
+	<alias name="com.kepler.collector.handler" alias="kepler.collector.audience" />
 
 	<bean class="com.kepler.service.exported.ExportedServiceFactory">
 		<constructor-arg ref="kepler.service.exported.broadcast" />
-		<constructor-arg index="1" value="com.kepler.collector.Note" />
-		<constructor-arg ref="kepler.collector.note" />
+		<constructor-arg index="1" value="com.kepler.collector.Audience" />
+		<constructor-arg ref="kepler.collector.audience" />
 	</bean>
 
 	<bean class="com.kepler.service.exported.ExportedServiceFactory">
 		<constructor-arg ref="kepler.service.exported.broadcast" />
-		<constructor-arg index="1" value="com.kepler.collector.History" />
+		<constructor-arg index="1" value="com.kepler.collector.rpc.History" />
 		<constructor-arg ref="kepler.collector.history" />
+	</bean>
+
+	<bean class="com.kepler.service.exported.ExportedServiceFactory">
+		<constructor-arg ref="kepler.service.exported.broadcast" />
+		<constructor-arg index="1" value="com.kepler.collector.rpc.Relation" />
+		<constructor-arg ref="kepler.collector.relations" />
 	</bean>
 
 	<bean id="com.kepler.collector.handler" class="com.kepler.collector.MongoHandler">

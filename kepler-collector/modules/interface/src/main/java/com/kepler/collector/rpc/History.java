@@ -1,8 +1,7 @@
-package com.kepler.collector;
+package com.kepler.collector.rpc;
 
 import java.util.Collection;
 
-import com.kepler.collector.rpc.Condition;
 import com.kepler.service.annotation.Version;
 
 /**
@@ -17,5 +16,5 @@ public interface History {
 	 * @param host 服务所属主机
 	 * @return
 	 */
-	public Collection<Condition> last(String service, String version, String host);
+	public Collection<Conditions> history(String service, String version, String host);
 }

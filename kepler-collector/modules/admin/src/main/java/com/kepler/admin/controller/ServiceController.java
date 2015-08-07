@@ -1,12 +1,14 @@
 package com.kepler.admin.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kepler.admin.service.Node;
-import com.kepler.admin.service.Paths;
+import com.kepler.admin.service.Path;
 import com.kepler.admin.service.ServiceContext;
 
 /**
@@ -25,7 +27,7 @@ public class ServiceController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public Paths path(String path) throws Exception {
+	public List<Path> path(String path) throws Exception {
 		return this.context.path(path);
 	}
 

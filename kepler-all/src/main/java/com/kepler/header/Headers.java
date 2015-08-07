@@ -12,6 +12,8 @@ public interface Headers extends Serializable {
 	public String get(String key, String def);
 
 	/**
+	 * putIfAbsent
+	 * 
 	 * @param key
 	 * @param value
 	 * @return value

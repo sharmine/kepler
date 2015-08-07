@@ -362,7 +362,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
 
     /**
      * Converts the given Collection into an array of Strings. The returned array does not contain <code>null</code>
-     * entries. Note that {@link Arrays#sort(Object[])} will throw an {@link NullPointerException} if an array element 
+     * entries. Audience that {@link Arrays#sort(Object[])} will throw an {@link NullPointerException} if an array element 
      * is <code>null</code>.
      * 
      * @param collection
@@ -378,7 +378,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
 
     /**
      * Returns a new array of Strings without null elements. Internal method used to normalize exclude lists
-     * (arrays and collections). Note that {@link Arrays#sort(Object[])} will throw an {@link NullPointerException} 
+     * (arrays and collections). Audience that {@link Arrays#sort(Object[])} will throw an {@link NullPointerException} 
      * if an array element is <code>null</code>.
      * 
      * @param array
