@@ -32,11 +32,11 @@ public interface Dictionary {
 
 	public final static String FIELD_EXCEPTION = "exception";
 
-	public final static String FIELD_HOST_SOURCE = "host_source";
+	public final static String FIELD_HOST_LOCAL = "host_local";
 
 	public final static String FIELD_HOST_TARGET = "host_target";
 
-	public final static String FIELD_HOST_SOURCE_GROUP = "host_source_group";
+	public final static String FIELD_HOST_LOCAL_GROUP = "host_local_group";
 
 	public final static String FIELD_HOST_TARGET_GROUP = "host_target_group";
 

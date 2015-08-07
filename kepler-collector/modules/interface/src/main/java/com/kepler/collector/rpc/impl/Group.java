@@ -32,7 +32,7 @@ public class Group implements Serializable {
 	}
 
 	public boolean equals(Object ob) {
-		Group host = Group.class.cast(ob);
-		return this.getGroup().equals(host.getGroup()) && this.getHost().equals(host.getHost());
+		Group group = Group.class.cast(ob);
+		return this.getGroup().equals(group.getGroup()) && this.getHost().equals(group.getHost());
 	}
 }

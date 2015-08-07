@@ -8,7 +8,7 @@
 	<bean class="com.kepler.collector.rpc.impl.Period" init-method="init" destroy-method="destory">
 		<constructor-arg ref="kepler.threads" />
 		<constructor-arg ref="kepler.collector.rpc" />
-		<constructor-arg ref="kepler.collector.audience" />
+		<constructor-arg ref="kepler.collector.feeder" />
 	</bean>
 
 </beans>

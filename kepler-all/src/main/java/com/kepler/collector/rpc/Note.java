@@ -9,11 +9,11 @@ import com.kepler.host.Host;
  * 
  * @author kim 2015年7月24日
  */
-public interface Condition extends Serializable {
-
-	public Host host();
+public interface Note extends Serializable {
 
 	public Host local();
+
+	public Host target();
 
 	/**
 	 * Round trip time
@@ -43,5 +43,5 @@ public interface Condition extends Serializable {
 	 */
 	public long exception();
 
-	public void clear();
+	public void reset();
 }

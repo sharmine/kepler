@@ -8,7 +8,7 @@ import java.util.Collection;
  * 
  * @author kim 2015年7月24日
  */
-public interface Conditions extends Serializable {
+public interface Notes extends Serializable {
 
 	public String service();
 
@@ -16,5 +16,5 @@ public interface Conditions extends Serializable {
 
 	public String method();
 
-	public Collection<Condition> conditions();
+	public Collection<Note> notes();
 }

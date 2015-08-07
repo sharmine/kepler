@@ -7,7 +7,7 @@
 
 	<alias name="kepler.collector.rpc" alias="kepler.service.imported.collector" />
 
-	<bean id="kepler.collector.rpc" class="com.kepler.collector.rpc.impl.ImportedCollector">
+	<bean id="kepler.collector.rpc" class="com.kepler.collector.rpc.impl.DefaultCollector">
 		<constructor-arg ref="kepler.threads" />
 	</bean>
 

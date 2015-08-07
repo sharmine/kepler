@@ -32,6 +32,8 @@ public class ZkContext implements Imported, Exported {
 
 	public final static String ROOT = PropertiesUtils.get(Roadmap.class.getName().toLowerCase() + ".root", "/kepler");
 
+	public final static boolean WATCH = Boolean.valueOf(PropertiesUtils.get(Roadmap.class.getName().toLowerCase() + ".watch", "true"));
+
 	/**
 	 * 单线程防止线程冲突
 	 */
@@ -92,11 +94,11 @@ public class ZkContext implements Imported, Exported {
 	}
 
 	private void importing(String services) throws Exception {
-		for (String each : this.zoo.getChildren(services, true)) {
+		for (String each : this.zoo.getChildren(services, ZkContext.WATCH)) {
 			try {
 				String path = services + "/" + each;
 				// 监听指定版本, 无需node.version(version)
-				this.put(this.serial.serial(this.zoo.getData(path, true, null), ZkSerial.class), path);
+				this.put(this.serial.serial(this.zoo.getData(path, ZkContext.WATCH, null), ZkSerial.class), path);
 			} catch (Exception e) {
 				e.printStackTrace();
 				ZkContext.LOGGER.error(e.getMessage(), e);
@@ -106,10 +108,10 @@ public class ZkContext implements Imported, Exported {
 
 	@Override
 	public void subscribe(Class<?> service, String version) throws Exception {
-		for (String each : this.zoo.getChildren(this.road.roadmap(this.road.path(service, version)), true)) {
+		for (String each : this.zoo.getChildren(this.road.roadmap(this.road.path(service, version)), ZkContext.WATCH)) {
 			try {
 				String path = this.road.path(service, version, each);
-				ZkSerial node = this.serial.serial(this.zoo.getData(path, true, null), ZkSerial.class);
+				ZkSerial node = this.serial.serial(this.zoo.getData(path, ZkContext.WATCH, null), ZkSerial.class);
 				if (node.version(version)) {
 					this.put(node, path);
 				}
@@ -140,7 +142,7 @@ public class ZkContext implements Imported, Exported {
 			for (String each : path.split("/")) {
 				if (StringUtils.hasText(each)) {
 					String road = buffer.append("/").append(each).toString();
-					if (ZkContext.this.zoo.exists(road, true) == null) {
+					if (ZkContext.this.zoo.exists(road, ZkContext.WATCH) == null) {
 						ZkContext.this.zoo.create(road, new byte[] {}, Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
 					}
 				}

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kepler.collector.rpc.Conditions;
+import com.kepler.collector.rpc.Notes;
 import com.kepler.collector.rpc.History;
 
 /**
@@ -26,7 +26,7 @@ public class HistoryController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public Collection<Conditions> last(String path, String host) throws Exception {
+	public Collection<Notes> last(String path, String host) throws Exception {
 		return this.history.history(path.substring(0, path.lastIndexOf("/")).replaceAll("/", "."), path.substring(path.lastIndexOf("/") + 1), host);
 	}
 }

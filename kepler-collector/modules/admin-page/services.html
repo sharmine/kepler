@@ -48,7 +48,7 @@
 					<div>
 						<hidden id="detail_host" value=""/>
 						<span class="info-left">主机名称</span>
-                        <span id="detail_host_string" class="info-right"></span>
+                        <span id="detail_host_group" class="info-right"></span>
 					</div>
 				</li>
 				<li id="change-email">
@@ -192,7 +192,7 @@
 			$('#tab_detail').slideDown();
 			$('#detail_tag').text(nodes[index].tag);
 			$('#detail_host').val(nodes[index].host);
-			$('#detail_host_string').text(nodes[index].hostAsString);
+			$('#detail_host_group').text(nodes[index].host + " (" + nodes[index].group + ") ");
 			$('#submit-offline').attr("path", nodes[index].path)
 			state();
 		}
@@ -206,24 +206,9 @@
 					success: function callbackFunction(data){
 						$("#status").empty();
 						$(data).each(function(index, element){
-							$(element.conditions).each(function(index, condition){
-								$("#status").append(template_status.replace("${method}", "METHOD: " + element.method).replace("${host}", condition.local.host + " / " + condition.local.group).replace("${status}", condition.total + "/" + condition.timeout + "/" + condition.exception + "/" + (condition.rtt / condition.total).toFixed(2)));
+							$(element.notes).each(function(index, note){
+								$("#status").append(template_status.replace("${method}", "Method: " + element.method).replace("${host}", note.local.host + " / " + note.local.group).replace("${status}", note.total + "/" + note.timeout + "/" + note.exception + "/" + (note.rtt / note.total).toFixed(2)));
 							});
-						});
-						jQuery.ajax({
-							type: "GET",
-							url: "/api/relations",
-							data: {'host': $('#detail_host').val()},
-							success: function callbackFunction(data){
-								$("#imported_status").empty();
-								$("#exported_status").empty();
-								$(data.imported).each(function(index, element){
-									$("#imported_status").append(template_relation.replace("${host}", element));
-								});
-								$(data.exported).each(function(index, element){
-									$("#exported_status").append(template_relation.replace("${host}", element));
-								});
-							}
 						});
 					}
 				});

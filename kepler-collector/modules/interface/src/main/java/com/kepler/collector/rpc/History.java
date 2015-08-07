@@ -16,5 +16,5 @@ public interface History {
 	 * @param host 服务所属主机
 	 * @return
 	 */
-	public Collection<Conditions> history(String service, String version, String host);
+	public Collection<Notes> history(String service, String version, String host);
 }

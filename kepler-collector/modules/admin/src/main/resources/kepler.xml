@@ -8,6 +8,5 @@
 	<import resource="kepler-core.xml" />
 	<import resource="classpath:kepler-admin.xml" />
 	<import resource="classpath:kepler-history.xml" />
-	<import resource="classpath:kepler-relation.xml" />
 
 </beans>

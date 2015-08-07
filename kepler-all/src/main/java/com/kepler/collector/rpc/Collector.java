@@ -11,5 +11,5 @@ public interface Collector {
 
 	public void collect(Ack ack);
 
-	public Collection<Conditions> conditions();
+	public Collection<Notes> conditions();
 }

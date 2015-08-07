@@ -23,7 +23,7 @@ import com.kepler.zookeeper.ZkSerial;
 public class ServiceContextImpl implements ServiceContext {
 
 	private final static Log LOGGER = LogFactory.getLog(ServiceContextImpl.class);
-	
+
 	private final static List<Path> EMPTY = Collections.unmodifiableList(new ArrayList<Path>());
 
 	private final ZooKeeper zooKeeper;
@@ -39,7 +39,7 @@ public class ServiceContextImpl implements ServiceContext {
 	@Override
 	public List<Path> path(String path) {
 		try {
-			return new ZkPaths(path, this.zooKeeper.getChildren(ZkContext.ROOT + (StringUtils.isEmpty(path) ? "" : ("/" + path)), true));
+			return new ZkPaths(path, this.zooKeeper.getChildren(ZkContext.ROOT + (StringUtils.isEmpty(path) ? "" : ("/" + path)), false));
 		} catch (Exception e) {
 			ServiceContextImpl.LOGGER.info(e.getMessage(), e);
 			return ServiceContextImpl.EMPTY;
@@ -85,8 +85,8 @@ public class ServiceContextImpl implements ServiceContext {
 
 		public ZkPath(String service, String path) {
 			super();
-			this.service = service;
 			this.path = path;
+			this.service = service;
 			this.node = ServiceContextImpl.this.get(this.getPath());
 		}
 
@@ -136,8 +136,8 @@ public class ServiceContextImpl implements ServiceContext {
 		}
 
 		@Override
-		public String getHostAsString() {
-			return this.getHost() + " (" + this.host.group() + ")";
+		public String getGroup() {
+			return this.host.group();
 		}
 	}
 }

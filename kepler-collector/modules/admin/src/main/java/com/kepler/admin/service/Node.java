@@ -11,5 +11,5 @@ public interface Node {
 
 	public String getHost();
 	
-	public String getHostAsString();
+	public String getGroup();
 }

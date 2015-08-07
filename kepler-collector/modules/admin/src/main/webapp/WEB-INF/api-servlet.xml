@@ -23,9 +23,5 @@
 		<constructor-arg ref="kepler.collector.history" />
 	</bean>
 
-	<bean class="com.kepler.admin.controller.RelationController">
-		<constructor-arg ref="kepler.collector.relation" />
-	</bean>
-
 </beans>
 

@@ -2,8 +2,8 @@ package com.kepler.collector.rpc.impl;
 
 import java.util.Collection;
 
-import com.kepler.collector.rpc.Condition;
-import com.kepler.collector.rpc.Conditions;
+import com.kepler.collector.rpc.Note;
+import com.kepler.collector.rpc.Notes;
 import com.kepler.host.Host;
 import com.kepler.host.impl.DefaultHost;
 import com.kepler.org.apache.commons.collections.map.MultiKeyMap;
@@ -11,11 +11,11 @@ import com.kepler.org.apache.commons.collections.map.MultiKeyMap;
 /**
  * @author kim 2015年8月6日
  */
-public class GroupConditions implements Conditions {
+public class GroupNotes implements Notes {
 
 	private static final long serialVersionUID = 1L;
 
-	private final MultiKeyMap conditions = new MultiKeyMap();
+	private final MultiKeyMap notes = new MultiKeyMap();
 
 	private final String service;
 
@@ -25,7 +25,7 @@ public class GroupConditions implements Conditions {
 
 	private final int base;
 
-	public GroupConditions(int base, String service, String version, String method) {
+	public GroupNotes(int base, String service, String version, String method) {
 		super();
 		this.service = service;
 		this.version = version;
@@ -60,23 +60,23 @@ public class GroupConditions implements Conditions {
 		return this.method();
 	}
 
-	public GroupConditions put(Group local, Group host, long rtt, long total, long timeout, long exception) {
-		AvgCondition condition = AvgCondition.class.cast(this.conditions.get(local, host));
-		this.conditions.put(local, host, (condition = (condition != null ? condition : new AvgCondition().put(local, host, rtt, total, timeout, exception))));
+	@Override
+	@SuppressWarnings("unchecked")
+	public Collection<Note> notes() {
+		return this.notes.values();
+	}
+
+	public GroupNotes put(Group local, Group target, long rtt, long total, long timeout, long exception) {
+		AvgNote note = AvgNote.class.cast(this.notes.get(local, target));
+		this.notes.put(local, target, (note = (note != null ? note : new AvgNote().put(local, target, rtt, total, timeout, exception))));
 		return this;
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public Collection<Condition> conditions() {
-		return this.conditions.values();
+	public Collection<Note> getNotes() {
+		return this.notes();
 	}
 
-	public Collection<Condition> getConditions() {
-		return this.conditions();
-	}
-
-	private class AvgCondition implements Condition {
+	private class AvgNote implements Note {
 
 		private static final long serialVersionUID = 1L;
 
@@ -90,16 +90,16 @@ public class GroupConditions implements Conditions {
 
 		private Group local;
 
-		private Group host;
+		private Group target;
 
-		public AvgCondition put(Group local, Group host, long rtt, long total, long timeout, long exception) {
+		public AvgNote put(Group target, Group host, long rtt, long total, long timeout, long exception) {
 			this.rtt += rtt;
 			this.total += total;
 			this.timeout += timeout;
 			this.exception += exception;
 			// No check
-			this.local = local;
-			this.host = host;
+			this.local = target;
+			this.target = host;
 			return this;
 		}
 
@@ -114,18 +114,18 @@ public class GroupConditions implements Conditions {
 		}
 
 		@Override
-		public Host host() {
-			return DefaultHost.valueOf(this.host.getHost());
+		public Host target() {
+			return DefaultHost.valueOf(this.target.getHost());
 		}
 
 		@SuppressWarnings("unused")
 		public Group getGroup() {
-			return this.host;
+			return this.target;
 		}
 
 		@Override
 		public long rtt() {
-			return this.rtt / GroupConditions.this.base;
+			return this.rtt / GroupNotes.this.base;
 		}
 
 		@SuppressWarnings("unused")
@@ -135,7 +135,7 @@ public class GroupConditions implements Conditions {
 
 		@Override
 		public long total() {
-			return this.total / GroupConditions.this.base;
+			return this.total / GroupNotes.this.base;
 		}
 
 		@SuppressWarnings("unused")
@@ -145,7 +145,7 @@ public class GroupConditions implements Conditions {
 
 		@Override
 		public long timeout() {
-			return this.timeout / GroupConditions.this.base;
+			return this.timeout / GroupNotes.this.base;
 		}
 
 		@SuppressWarnings("unused")
@@ -155,7 +155,7 @@ public class GroupConditions implements Conditions {
 
 		@Override
 		public long exception() {
-			return this.exception / GroupConditions.this.base;
+			return this.exception / GroupNotes.this.base;
 		}
 
 		@SuppressWarnings("unused")
@@ -164,7 +164,7 @@ public class GroupConditions implements Conditions {
 		}
 
 		@Override
-		public void clear() {
+		public void reset() {
 		}
 	}
 }

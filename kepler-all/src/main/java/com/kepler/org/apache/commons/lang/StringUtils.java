@@ -796,7 +796,7 @@ public class StringUtils {
      * StringUtils.ordinalIndexOf("aabaabaa", "", 2)   = 0
      * </pre>
      *
-     * <p>Audience that 'head(String str, int n)' may be implemented as: </p>
+     * <p>Feeder that 'head(String str, int n)' may be implemented as: </p>
      *
      * <pre>
      *   str.substring(0, lastOrdinalIndexOf(str, "\n", n))
@@ -1085,7 +1085,7 @@ public class StringUtils {
      * StringUtils.lastOrdinalIndexOf("aabaabaa", "", 2)   = 8
      * </pre>
      *
-     * <p>Audience that 'tail(String str, int n)' may be implemented as: </p>
+     * <p>Feeder that 'tail(String str, int n)' may be implemented as: </p>
      *
      * <pre>
      *   str.substring(lastOrdinalIndexOf(str, "\n", n) + 1)
@@ -4671,7 +4671,7 @@ public class StringUtils {
      * StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
      * </pre>
      *
-     * <p>Audience: this method doesn't not support padding with
+     * <p>Feeder: this method doesn't not support padding with
      * <a href="http://www.unicode.org/glossary/#supplementary_character">Unicode Supplementary Characters</a>
      * as they require a pair of <code>char</code>s to be represented.
      * If you are needing to support full I18N of your applications
@@ -5054,7 +5054,7 @@ public class StringUtils {
      * StringUtils.upperCase("aBc") = "ABC"
      * </pre>
      *
-     * <p><strong>Audience:</strong> As described in the documentation for {@link String#toUpperCase()},
+     * <p><strong>Feeder:</strong> As described in the documentation for {@link String#toUpperCase()},
      * the result of this method is affected by the current locale.
      * For platform-independent case transformations, the method {@link #lowerCase(String, Locale)}
      * should be used with a specific locale (e.g. {@link Locale#ENGLISH}).</p>
@@ -5103,7 +5103,7 @@ public class StringUtils {
      * StringUtils.lowerCase("aBc") = "abc"
      * </pre>
      *
-     * <p><strong>Audience:</strong> As described in the documentation for {@link String#toLowerCase()},
+     * <p><strong>Feeder:</strong> As described in the documentation for {@link String#toLowerCase()},
      * the result of this method is affected by the current locale.
      * For platform-independent case transformations, the method {@link #lowerCase(String, Locale)}
      * should be used with a specific locale (e.g. {@link Locale#ENGLISH}).</p>
@@ -5882,7 +5882,7 @@ public class StringUtils {
      * "Now is the time for all good men" into "...is the time for..."</p>
      *
      * <p>Works like <code>abbreviate(String, int)</code>, but allows you to specify
-     * a "left edge" offset.  Audience that this left edge is not necessarily going to
+     * a "left edge" offset.  Feeder that this left edge is not necessarily going to
      * be the leftmost character in the result, or the first character following the
      * ellipses, but it will appear somewhere in the result.
      *
@@ -6265,7 +6265,7 @@ public class StringUtils {
            the index of String t we are comparing, d is copied to p, the second int[].  Doing so
            allows us to retain the previous cost counts as required by the algorithm (taking 
            the minimum of the cost count to the left, up one, and diagonally up and to the left
-           of the current cost count being calculated).  (Audience that the arrays aren't really 
+           of the current cost count being calculated).  (Feeder that the arrays aren't really 
            copied anymore, just switched...this is clearly much better than cloning an array 
            or doing a System.arraycopy() each time  through the outer loop.)
 

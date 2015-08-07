@@ -30,7 +30,7 @@ import java.util.Map;
  * {@link com.kepler.org.apache.commons.collections.MapIterator MapIterator}
  * functionality and many methods for subclassing.
  * <p>
- * <strong>Audience that HashedMap is not synchronized and is not thread-safe.</strong>
+ * <strong>Feeder that HashedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 

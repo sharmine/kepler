@@ -9,19 +9,19 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import com.kepler.ack.Ack;
 import com.kepler.collector.rpc.Collector;
-import com.kepler.collector.rpc.Conditions;
+import com.kepler.collector.rpc.Notes;
 import com.kepler.org.apache.commons.collections.map.MultiKeyMap;
 import com.kepler.service.Imported;
 
 /**
  * @author kim 2015年7月22日
  */
-public class ImportedCollector implements Runnable, Collector, Imported {
+public class DefaultCollector implements Runnable, Collector, Imported {
 
 	/**
 	 * 当前, 切换, 清理
 	 */
-	private MultiKeyMap[] conditions = new MultiKeyMap[] { new MultiKeyMap(), new MultiKeyMap(), new MultiKeyMap() };
+	private MultiKeyMap[] notes = new MultiKeyMap[] { new MultiKeyMap(), new MultiKeyMap(), new MultiKeyMap() };
 
 	/**
 	 * 当前分钟
@@ -35,7 +35,7 @@ public class ImportedCollector implements Runnable, Collector, Imported {
 
 	private final ThreadPoolExecutor threads;
 
-	public ImportedCollector(ThreadPoolExecutor threads) {
+	public DefaultCollector(ThreadPoolExecutor threads) {
 		super();
 		this.threads = threads;
 	}
@@ -43,24 +43,24 @@ public class ImportedCollector implements Runnable, Collector, Imported {
 	@Override
 	public void collect(Ack ack) {
 		// Service,Version,Method维度
-		DefaultConditions.class.cast(this.curr().get(ack.request().service().getName(), ack.request().version(), ack.request().method())).put(ack.local(), ack.host(), ack.status(), ack.elapse());
+		DefaultNotes.class.cast(this.curr().get(ack.request().service().getName(), ack.request().version(), ack.request().method())).put(ack.local(), ack.host(), ack.status(), ack.elapse());
 	}
 
 	@Override
 	public void subscribe(Class<?> service, String version) throws Exception {
-		for (int index = 0; index < this.conditions.length; index++) {
+		for (int index = 0; index < this.notes.length; index++) {
 			this.methods(service, version, index);
 		}
 	}
 
 	private void methods(Class<?> service, String version, int index) {
 		for (Method method : service.getMethods()) {
-			this.conditions[index].put(service.getName(), version, method.getName(), new DefaultConditions(service.getName(), version, method.getName()));
+			this.notes[index].put(service.getName(), version, method.getName(), new DefaultNotes(service.getName(), version, method.getName()));
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public Collection<Conditions> conditions() {
+	public Collection<Notes> conditions() {
 		// 同分钟内重复使用当前计数器, 否则切换
 		return this.minute() == this.minute.get() ? this.curr().values() : this.exchange().values();
 	}
@@ -82,7 +82,7 @@ public class ImportedCollector implements Runnable, Collector, Imported {
 	}
 
 	private MultiKeyMap index(int index) {
-		return this.conditions[((this.index.get() + index) & Byte.MAX_VALUE) % this.conditions.length];
+		return this.notes[((this.index.get() + index) & Byte.MAX_VALUE) % this.notes.length];
 	}
 
 	/**
@@ -98,8 +98,8 @@ public class ImportedCollector implements Runnable, Collector, Imported {
 	}
 
 	public void run() {
-		for (Object each : ImportedCollector.this.next().values()) {
-			DefaultConditions.class.cast(each).clear();
+		for (Object each : DefaultCollector.this.next().values()) {
+			DefaultNotes.class.cast(each).clear();
 		}
 	}
 }

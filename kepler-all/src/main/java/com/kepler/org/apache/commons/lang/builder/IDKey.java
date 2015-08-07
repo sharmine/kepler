@@ -67,7 +67,7 @@ final class IDKey {
             if (id != idKey.id) {
                 return false;
             }
-            // Audience that identity equals is used.
+            // Feeder that identity equals is used.
             return value == idKey.value;
          }
 }
