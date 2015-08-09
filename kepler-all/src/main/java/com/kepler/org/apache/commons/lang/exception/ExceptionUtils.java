@@ -683,7 +683,7 @@ public class ExceptionUtils {
     //-----------------------------------------------------------------------
     /**
      * <p>Prints a compact stack trace for the root cause of a throwable
-     * to <code>System.err</code>.</p>
+     * to <code>ServerStatus.err</code>.</p>
      *
      * <p>The compact stack trace starts with the root cause and prints
      * stack frames up to the place where it was caught and wrapped.

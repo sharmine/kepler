@@ -32,7 +32,7 @@ final public class PropertiesUtils {
 	}
 
 	/**
-	 * System.property -> Config File
+	 * ServerStatus.property -> Config File
 	 * 
 	 * @param key
 	 * @return
@@ -42,7 +42,7 @@ final public class PropertiesUtils {
 	}
 
 	/**
-	 * System.property -> Config File -> Def
+	 * ServerStatus.property -> Config File -> Def
 	 * 
 	 * @param key
 	 * @param def

@@ -78,7 +78,7 @@ import com.kepler.org.apache.commons.lang.ObjectUtils;
  * <p>You can also use the builder to debug 3rd party objects:</p>
  *
  * <pre>
- * System.out.println("An object: " + ToStringBuilder.reflectionToString(anObject));
+ * ServerStatus.out.println("An object: " + ToStringBuilder.reflectionToString(anObject));
  * </pre>
  * 
  * <p>The exact format of the <code>toString</code> is determined by
@@ -949,7 +949,7 @@ public class ToStringBuilder {
     /**
      * <p>Appends with the same format as the default <code>Object toString()
      * </code> method. Appends the class name followed by 
-     * {@link System#identityHashCode(java.lang.Object)}.</p>
+     * {@link ServerStatus#identityHashCode(java.lang.Object)}.</p>
      * 
      * @param object  the <code>Object</code> whose class name and id to output
      * @return this

@@ -55,7 +55,7 @@ import com.kepler.org.apache.commons.lang.ClassUtils;
  * </p>
  * 
  * <pre>
- * System.out.println("An object: " + ReflectionToStringBuilder.toString(anObject));</pre>
+ * ServerStatus.out.println("An object: " + ReflectionToStringBuilder.toString(anObject));</pre>
  * 
  * 
  * 

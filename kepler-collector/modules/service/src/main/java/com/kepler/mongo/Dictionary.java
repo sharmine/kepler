@@ -18,6 +18,8 @@ public interface Dictionary {
 
 	public final static String FIELD_RTT = "rtt";
 
+	public final static String FIELD_HOSTS = "hosts";
+
 	public final static String FIELD_TOTAL = "total";
 
 	public final static String FIELD_MINUTE = "minute";

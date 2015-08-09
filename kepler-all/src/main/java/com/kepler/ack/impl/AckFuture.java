@@ -57,7 +57,7 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 	private Response response;
 
 	/**
-	 * 是否已超时(内部While Note)
+	 * 是否已超时(内部While Transfer)
 	 */
 	private boolean timeout;
 

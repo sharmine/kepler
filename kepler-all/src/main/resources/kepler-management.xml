@@ -5,8 +5,10 @@
     http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<import resource="kepler-core.xml" />
-	<import resource="classpath:kepler-admin.xml" />
-	<import resource="classpath:kepler-remote.xml" />
+	<alias name="kepler.management.transfer" alias="kepler.service.imported.collector" />
+
+	<bean id="kepler.management.transfer" class="com.kepler.management.transfer.impl.DefaultCollector">
+		<constructor-arg ref="kepler.threads" />
+	</bean>
 
 </beans>

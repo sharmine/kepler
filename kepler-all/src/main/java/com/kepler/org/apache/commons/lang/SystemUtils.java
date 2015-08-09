@@ -26,7 +26,7 @@ import java.io.File;
  * <p>
  * If a system property cannot be read due to security restrictions,
  * the corresponding field in this class will be set to <code>null</code>
- * and a message will be written to <code>System.err</code>.
+ * and a message will be written to <code>ServerStatus.err</code>.
  * </p>
  * 
  * <p>
@@ -54,33 +54,33 @@ public class SystemUtils {
      */
     private final static String OS_NAME_WINDOWS_PREFIX = "Windows";
 
-    // System property constants
+    // ServerStatus property constants
     // -----------------------------------------------------------------------
     // These MUST be declared first. Other constants depend on this.
 
     /**
-     * The System property key for the user home directory.
+     * The ServerStatus property key for the user home directory.
      */
     private final static String USER_HOME_KEY = "user.home";
 
     /**
-     * The System property key for the user directory.
+     * The ServerStatus property key for the user directory.
      */
     private final static String USER_DIR_KEY = "user.dir";
 
     /**
-     * The System property key for the Java IO temporary directory.
+     * The ServerStatus property key for the Java IO temporary directory.
      */
     private final static String JAVA_IO_TMPDIR_KEY = "java.io.tmpdir";
 
     /**
-     * The System property key for the Java home directory.
+     * The ServerStatus property key for the Java home directory.
      */
     private final static String JAVA_HOME_KEY = "java.home";
 
     /**
      * <p>
-     * The <code>awt.toolkit</code> System Property.
+     * The <code>awt.toolkit</code> ServerStatus Property.
      * </p>
      * <p>
      * Holds a class name, on Windows XP this is <code>sun.awt.windows.WToolkit</code>.
@@ -95,9 +95,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value will
-     * be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value will
+     * be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since 2.1
@@ -106,7 +106,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>file.encoding</code> System Property.
+     * The <code>file.encoding</code> ServerStatus Property.
      * </p>
      * <p>
      * File encoding, such as <code>Cp1252</code>.
@@ -118,9 +118,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since 2.0
@@ -130,7 +130,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>file.separator</code> System Property. File separator (<code>&quot;/&quot;</code> on UNIX).
+     * The <code>file.separator</code> ServerStatus Property. File separator (<code>&quot;/&quot;</code> on UNIX).
      * </p>
      * 
      * <p>
@@ -139,9 +139,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -150,7 +150,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.awt.fonts</code> System Property.
+     * The <code>java.awt.fonts</code> ServerStatus Property.
      * </p>
      * 
      * <p>
@@ -159,9 +159,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since 2.1
@@ -170,7 +170,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.awt.graphicsenv</code> System Property.
+     * The <code>java.awt.graphicsenv</code> ServerStatus Property.
      * </p>
      * 
      * <p>
@@ -179,9 +179,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since 2.1
@@ -190,7 +190,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.awt.headless</code> System Property.
+     * The <code>java.awt.headless</code> ServerStatus Property.
      * The value of this property is the String <code>"true"</code> or <code>"false"</code>. 
      * </p>
      * 
@@ -200,9 +200,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @see #isJavaAwtHeadless()
@@ -213,7 +213,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.awt.printerjob</code> System Property.
+     * The <code>java.awt.printerjob</code> ServerStatus Property.
      * </p>
      * 
      * <p>
@@ -222,9 +222,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since 2.1
@@ -233,7 +233,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.class.path</code> System Property. Java class path.
+     * The <code>java.class.path</code> ServerStatus Property. Java class path.
      * </p>
      * 
      * <p>
@@ -242,9 +242,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -253,7 +253,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.class.version</code> System Property. Java class format version number.
+     * The <code>java.class.version</code> ServerStatus Property. Java class format version number.
      * </p>
      * 
      * <p>
@@ -262,9 +262,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -273,7 +273,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.compiler</code> System Property. Name of JIT compiler to use.
+     * The <code>java.compiler</code> ServerStatus Property. Name of JIT compiler to use.
      * First in JDK version 1.2. Not used in Sun JDKs after 1.2.
      * </p>
      * 
@@ -283,9 +283,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.2. Not used in Sun versions after 1.2.
@@ -294,7 +294,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.endorsed.dirs</code> System Property. Path of endorsed directory or directories.
+     * The <code>java.endorsed.dirs</code> ServerStatus Property. Path of endorsed directory or directories.
      * </p>
      * 
      * <p>
@@ -303,9 +303,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.4
@@ -314,7 +314,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.ext.dirs</code> System Property. Path of extension directory or directories.
+     * The <code>java.ext.dirs</code> ServerStatus Property. Path of extension directory or directories.
      * </p>
      * 
      * <p>
@@ -323,9 +323,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.3
@@ -334,7 +334,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.home</code> System Property. Java installation directory.
+     * The <code>java.home</code> ServerStatus Property. Java installation directory.
      * </p>
      * 
      * <p>
@@ -343,9 +343,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -354,7 +354,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.io.tmpdir</code> System Property. Default temp file path.
+     * The <code>java.io.tmpdir</code> ServerStatus Property. Default temp file path.
      * </p>
      * 
      * <p>
@@ -363,9 +363,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.2
@@ -374,7 +374,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.library.path</code> System Property. List of paths to search when loading libraries.
+     * The <code>java.library.path</code> ServerStatus Property. List of paths to search when loading libraries.
      * </p>
      * 
      * <p>
@@ -383,9 +383,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.2
@@ -394,7 +394,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.runtime.name</code> System Property. Java Runtime Environment name.
+     * The <code>java.runtime.name</code> ServerStatus Property. Java ServerStatus Environment name.
      * </p>
      * 
      * <p>
@@ -403,9 +403,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since 2.0
@@ -415,7 +415,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.runtime.version</code> System Property. Java Runtime Environment version.
+     * The <code>java.runtime.version</code> ServerStatus Property. Java ServerStatus Environment version.
      * </p>
      * 
      * <p>
@@ -424,9 +424,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since 2.0
@@ -436,7 +436,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.specification.name</code> System Property. Java Runtime Environment specification name.
+     * The <code>java.specification.name</code> ServerStatus Property. Java ServerStatus Environment specification name.
      * </p>
      * 
      * <p>
@@ -445,9 +445,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.2
@@ -456,7 +456,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.specification.vendor</code> System Property. Java Runtime Environment specification vendor.
+     * The <code>java.specification.vendor</code> ServerStatus Property. Java ServerStatus Environment specification vendor.
      * </p>
      * 
      * <p>
@@ -465,9 +465,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.2
@@ -476,7 +476,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.specification.version</code> System Property. Java Runtime Environment specification version.
+     * The <code>java.specification.version</code> ServerStatus Property. Java ServerStatus Environment specification version.
      * </p>
      * 
      * <p>
@@ -485,9 +485,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.3
@@ -496,7 +496,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.util.prefs.PreferencesFactory</code> System Property. A class name.
+     * The <code>java.util.prefs.PreferencesFactory</code> ServerStatus Property. A class name.
      * </p>
      * 
      * <p>
@@ -505,9 +505,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since 2.1
@@ -518,7 +518,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vendor</code> System Property. Java vendor-specific string.
+     * The <code>java.vendor</code> ServerStatus Property. Java vendor-specific string.
      * </p>
      * 
      * <p>
@@ -527,9 +527,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -538,7 +538,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vendor.url</code> System Property. Java vendor URL.
+     * The <code>java.vendor.url</code> ServerStatus Property. Java vendor URL.
      * </p>
      * 
      * <p>
@@ -547,9 +547,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -558,7 +558,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.version</code> System Property. Java version number.
+     * The <code>java.version</code> ServerStatus Property. Java version number.
      * </p>
      * 
      * <p>
@@ -567,9 +567,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -578,7 +578,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.info</code> System Property. Java Virtual Machine implementation info.
+     * The <code>java.vm.info</code> ServerStatus Property. Java Virtual Machine implementation info.
      * </p>
      * 
      * <p>
@@ -587,9 +587,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since 2.0
@@ -599,7 +599,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.name</code> System Property. Java Virtual Machine implementation name.
+     * The <code>java.vm.name</code> ServerStatus Property. Java Virtual Machine implementation name.
      * </p>
      * 
      * <p>
@@ -608,9 +608,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.2
@@ -619,7 +619,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.specification.name</code> System Property. Java Virtual Machine specification name.
+     * The <code>java.vm.specification.name</code> ServerStatus Property. Java Virtual Machine specification name.
      * </p>
      * 
      * <p>
@@ -628,9 +628,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.2
@@ -639,7 +639,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.specification.vendor</code> System Property. Java Virtual Machine specification vendor.
+     * The <code>java.vm.specification.vendor</code> ServerStatus Property. Java Virtual Machine specification vendor.
      * </p>
      * 
      * <p>
@@ -648,9 +648,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.2
@@ -659,7 +659,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.specification.version</code> System Property. Java Virtual Machine specification version.
+     * The <code>java.vm.specification.version</code> ServerStatus Property. Java Virtual Machine specification version.
      * </p>
      * 
      * <p>
@@ -668,9 +668,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.2
@@ -679,7 +679,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.vendor</code> System Property. Java Virtual Machine implementation vendor.
+     * The <code>java.vm.vendor</code> ServerStatus Property. Java Virtual Machine implementation vendor.
      * </p>
      * 
      * <p>
@@ -688,9 +688,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.2
@@ -699,7 +699,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.version</code> System Property. Java Virtual Machine implementation version.
+     * The <code>java.vm.version</code> ServerStatus Property. Java Virtual Machine implementation version.
      * </p>
      * 
      * <p>
@@ -708,9 +708,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.2
@@ -719,7 +719,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>line.separator</code> System Property. Line separator (<code>&quot;\n&quot;</code> on UNIX).
+     * The <code>line.separator</code> ServerStatus Property. Line separator (<code>&quot;\n&quot;</code> on UNIX).
      * </p>
      * 
      * <p>
@@ -728,9 +728,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -739,7 +739,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>os.arch</code> System Property. Operating system architecture.
+     * The <code>os.arch</code> ServerStatus Property. Operating system architecture.
      * </p>
      * 
      * <p>
@@ -748,9 +748,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -759,7 +759,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>os.name</code> System Property. Operating system name.
+     * The <code>os.name</code> ServerStatus Property. Operating system name.
      * </p>
      * 
      * <p>
@@ -768,9 +768,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -779,7 +779,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>os.version</code> System Property. Operating system version.
+     * The <code>os.version</code> ServerStatus Property. Operating system version.
      * </p>
      * 
      * <p>
@@ -788,9 +788,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -799,7 +799,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>path.separator</code> System Property. Path separator (<code>&quot;:&quot;</code> on UNIX).
+     * The <code>path.separator</code> ServerStatus Property. Path separator (<code>&quot;:&quot;</code> on UNIX).
      * </p>
      * 
      * <p>
@@ -808,9 +808,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -819,7 +819,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>user.country</code> or <code>user.region</code> System Property.
+     * The <code>user.country</code> or <code>user.region</code> ServerStatus Property.
      * User's country code, such as <code>GB</code>. First in
      * Java version 1.2 as <code>user.region</code>. Renamed to <code>user.country</code> in 1.4
      * </p>
@@ -830,9 +830,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since 2.0
@@ -844,7 +844,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>user.dir</code> System Property. User's current working directory.
+     * The <code>user.dir</code> ServerStatus Property. User's current working directory.
      * </p>
      * 
      * <p>
@@ -853,9 +853,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -864,7 +864,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>user.home</code> System Property. User's home directory.
+     * The <code>user.home</code> ServerStatus Property. User's home directory.
      * </p>
      * 
      * <p>
@@ -873,9 +873,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -884,7 +884,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>user.language</code> System Property. User's language code, such as <code>"en"</code>.
+     * The <code>user.language</code> ServerStatus Property. User's language code, such as <code>"en"</code>.
      * </p>
      * 
      * <p>
@@ -893,9 +893,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since 2.0
@@ -905,7 +905,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>user.name</code> System Property. User's account name.
+     * The <code>user.name</code> ServerStatus Property. User's account name.
      * </p>
      * 
      * <p>
@@ -914,9 +914,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since Java 1.1
@@ -925,7 +925,7 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>user.timezone</code> System Property. For example: <code>"America/Los_Angeles"</code>.
+     * The <code>user.timezone</code> ServerStatus Property. For example: <code>"America/Los_Angeles"</code>.
      * </p>
      * 
      * <p>
@@ -934,9 +934,9 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If {@link ServerStatus#setProperty(String,String)} or
+     * {@link ServerStatus#setProperties(java.util.Properties)} is called after this class is loaded, the value
+     * will be out of sync with that ServerStatus property.
      * </p>
      * 
      * @since 2.1
@@ -1363,7 +1363,7 @@ public class SystemUtils {
      * @return a directory
      * @throws SecurityException if a security manager exists and its
      * <code>checkPropertyAccess</code> method doesn't allow access to the specified system property.
-     * @see System#getProperty(String)
+     * @see ServerStatus#getProperty(String)
      * @since 2.1
      */
     public static File getJavaHome() {
@@ -1379,7 +1379,7 @@ public class SystemUtils {
      * @throws SecurityException if a security manager exists and its
      * <code>checkPropertyAccess</code> method doesn't allow access to the specified system
      *             property.
-     * @see System#getProperty(String)
+     * @see ServerStatus#getProperty(String)
      * @since 2.1
      */
     public static File getJavaIoTmpDir() {
@@ -1508,12 +1508,12 @@ public class SystemUtils {
     // -----------------------------------------------------------------------
     /**
      * <p>
-     * Gets a System property, defaulting to <code>null</code> if the property cannot be read.
+     * Gets a ServerStatus property, defaulting to <code>null</code> if the property cannot be read.
      * </p>
      * 
      * <p>
      * If a <code>SecurityException</code> is caught, the return value is <code>null</code> and a message is written to
-     * <code>System.err</code>.
+     * <code>ServerStatus.err</code>.
      * </p>
      * 
      * @param property
@@ -1539,7 +1539,7 @@ public class SystemUtils {
      * @return a directory
      * @throws SecurityException if a security manager exists and its
      * <code>checkPropertyAccess</code> method doesn't allow access to the specified system property.
-     * @see System#getProperty(String)
+     * @see ServerStatus#getProperty(String)
      * @since 2.1
      */
     public static File getUserDir() {
@@ -1554,7 +1554,7 @@ public class SystemUtils {
      * @return a directory
      * @throws SecurityException if a security manager exists and its
      * <code>checkPropertyAccess</code> method doesn't allow access to the specified system property.
-     * @see System#getProperty(String)
+     * @see ServerStatus#getProperty(String)
      * @since 2.1
      */
     public static File getUserHome() {

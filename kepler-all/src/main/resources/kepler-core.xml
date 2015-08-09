@@ -15,10 +15,11 @@
 	<import resource="kepler-channel.xml" />
 	<import resource="kepler-service.xml" />
 	<import resource="kepler-protocol.xml" />
-	<import resource="kepler-collector.xml" />
 	<import resource="kepler-closeable.xml" />
 	<import resource="kepler-extension.xml" />
 	<import resource="kepler-connection.xml" />
+	<import resource="kepler-management.xml" />
+	<import resource="kepler-management-status.xml" />
 	<import resource="kepler-zookeeper.xml" />
 	<import resource="kepler-zookeeper-imported.xml" />
 	<import resource="kepler-zookeeper-processor.xml" />

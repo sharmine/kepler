@@ -21,7 +21,7 @@ package com.kepler.org.apache.commons.lang.builder;
 // adapted from org.apache.axis.utils.IDKey
 
 /**
- * Wrap an identity key (System.identityHashCode()) 
+ * Wrap an identity key (ServerStatus.identityHashCode()) 
  * so that an object can only be equal() to itself.
  * 
  * This is necessary to disambiguate the occasional duplicate

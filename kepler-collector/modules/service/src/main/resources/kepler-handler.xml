@@ -5,23 +5,33 @@
     http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<alias name="com.kepler.collector.handler" alias="kepler.collector.history" />
-	<alias name="com.kepler.collector.handler" alias="kepler.collector.feeder" />
+	<alias name="kepler.management.handler" alias="kepler.management.feeder.transfer" />
+	<alias name="kepler.management.handler" alias="kepler.management.feeder.status" />
+	<alias name="kepler.management.handler" alias="kepler.management.relations" />
+	<alias name="kepler.management.handler" alias="kepler.management.history" />
 
-	<bean class="com.kepler.service.exported.ExportedServiceFactory">
-		<constructor-arg ref="kepler.service.exported.broadcast" />
-		<constructor-arg index="1" value="com.kepler.collector.Feeder" />
-		<constructor-arg ref="kepler.collector.feeder" />
+	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
+		<constructor-arg index="1" value="com.kepler.management.transfer.Relations" />
+		<constructor-arg ref="kepler.management.relations" />
 	</bean>
 
-	<bean class="com.kepler.service.exported.ExportedServiceFactory">
-		<constructor-arg ref="kepler.service.exported.broadcast" />
-		<constructor-arg index="1" value="com.kepler.collector.rpc.History" />
-		<constructor-arg ref="kepler.collector.history" />
+	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
+		<constructor-arg index="1" value="com.kepler.management.transfer.History" />
+		<constructor-arg ref="kepler.management.history" />
 	</bean>
 
-	<bean id="com.kepler.collector.handler" class="com.kepler.collector.MongoHandler">
-		<constructor-arg ref="kepler.mongo.config.collector" />
+	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
+		<constructor-arg index="1" value="com.kepler.management.transfer.Feeder" />
+		<constructor-arg ref="kepler.management.feeder.transfer" />
+	</bean>
+
+	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
+		<constructor-arg index="1" value="com.kepler.management.status.Feeder" />
+		<constructor-arg ref="kepler.management.feeder.status" />
+	</bean>
+
+	<bean id="kepler.management.handler" class="com.kepler.collector.MongoHandler">
+		<constructor-arg ref="kepler.mongo.config.transfer" />
 	</bean>
 
 </beans>

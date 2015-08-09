@@ -29,9 +29,9 @@
 			<li><span id="normal-overdue">按请求数量</span></li>
 		</ul>
 		<ul id="tab_detail" class="used-status" style="display:none">
-			<li><span id="detail-unuse" class="current-span">常规</span></li>
-			<li><span id="detail-used" >输入依赖</span></li>
-			<li><span id="detail-overdue">输出依赖</span></li>
+			<li><span id="detail-unuse" class="current-span">流量统计</span></li>
+			<li><span id="detail-used">客户连接</span></li>
+			<li><span id="detail-overdue">主机状况</span></li>
 		</ul>
 		<div id="nodes">
 		</div>
@@ -65,20 +65,20 @@
 			</div>
 		</div>
 		
-		<div id="imported" class="user-body" style="display:none">
+		<div id="relations" class="user-body" style="display:none">
 			<ul>
 				<li>
 				</li>
-				<div id="imported_status">
+				<div id="relations_list">
 				</div>
 			</ul>
 		</div>
 		
-		<div id="exported" class="user-body" style="display:none">
+		<div id="connections" class="user-body" style="display:none">
 			<ul>
 				<li>
 				</li>
-				<div id="exported_status">
+				<div id="connections_list">
 				</div>
 			</ul>
 		</div>
@@ -119,16 +119,16 @@
 			$('#detail-used').removeClass('current-span');
 			$('#detail-overdue').removeClass('current-span');
 			$('#detail').slideDown();
-			$('#imported').slideUp();
-			$('#exported').slideUp();
+			$('#relations').slideUp();
+			$('#connections').slideUp();
 		});
 
 		$('#detail-used').on('click',function(){
 			$('#detail-unuse').removeClass('current-span');
 			$('#detail-used').addClass('current-span');
 			$('#detail-overdue').removeClass('current-span');
-			$('#imported').slideDown();
-			$('#exported').slideUp();
+			$('#relations').slideDown();
+			$('#connections').slideUp();
 			$('#detail').slideUp();
 		});
 
@@ -136,8 +136,8 @@
 			$('#detail-unuse').removeClass('current-span');
 			$('#detail-used').removeClass('current-span');
 			$('#detail-overdue').addClass('current-span');
-			$('#exported').slideDown();
-			$('#imported').slideUp();
+			$('#connections').slideDown();
+			$('#relations').slideUp();
 			$('#detail').slideUp();
 		});
 
@@ -194,26 +194,58 @@
 			$('#detail_host').val(nodes[index].host);
 			$('#detail_host_group').text(nodes[index].host + " (" + nodes[index].group + ") ");
 			$('#submit-offline').attr("path", nodes[index].path)
-			state();
+			if(status) {
+				state();
+				relations();
+				connections();
+				$("body").everyTime('60s', state);
+				$("body").everyTime('300s', relations);
+				$("body").everyTime('30s', connections);
+			}
 		}
 
 		function state(){
-			if(status) {
-				jQuery.ajax({
-					type: "GET",
-					url: "/api/history",
-					data: {"path": previous, "host": $('#detail_host').val()},
-					success: function callbackFunction(data){
-						$("#status").empty();
-						$(data).each(function(index, element){
-							$(element.notes).each(function(index, note){
-								$("#status").append(template_status.replace("${method}", "Method: " + element.method).replace("${host}", note.local.host + " / " + note.local.group).replace("${status}", note.total + "/" + note.timeout + "/" + note.exception + "/" + (note.rtt / note.total).toFixed(2)));
-							});
+			jQuery.ajax({
+				type: "GET",
+				url: "/api/history",
+				data: {"path": previous, "host": $('#detail_host').val()},
+				success: function callbackFunction(data){
+					$("#status").empty();
+					$(data).each(function(index, element){
+						$(element.transfers).each(function(index, transfer){
+							$("#status").append(template_status.replace("${method}", "METHOD: " + element.method).replace("${host}", transfer.local.host + " / " + transfer.local.group).replace("${status}", transfer.total + "/" + transfer.timeout + "/" + transfer.exception + "/" + (transfer.rtt / transfer.total).toFixed(2)));
 						});
-					}
-				});
-			}
-			$("body").everyTime('60s', state);
+					});
+				}
+			});
+		}
+		
+		function relations(){
+			jQuery.ajax({
+				type: "GET",
+				url: "/api/relations",
+				data: {"path": previous, "host": $('#detail_host').val()},
+				success: function callbackFunction(data){
+					$("#relations_list").empty();
+					$(data).each(function(index, element){
+						$("#relations_list").append(template_relation.replace("${host}", element));
+					});
+				}
+			});
+		}
+		
+		function connections(){
+			jQuery.ajax({
+				type: "GET",
+				url: "/api/connections",
+				data: {"host": $('#detail_host').val()},
+				success: function callbackFunction(data){
+					$("#connections_list").empty();
+					$(data).each(function(index, element){
+						$("#connections_list").append(template_relation.replace("${host}", element));
+					});
+				}
+			});
 		}
 		
 		function offline(path){

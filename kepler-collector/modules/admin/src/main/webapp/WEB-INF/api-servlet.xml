@@ -19,8 +19,9 @@
 		<constructor-arg ref="kepler.admin.service.context" />
 	</bean>
 
-	<bean class="com.kepler.admin.controller.HistoryController">
-		<constructor-arg ref="kepler.collector.history" />
+	<bean class="com.kepler.admin.controller.RemoteController">
+		<constructor-arg ref="kepler.management.relations" />
+		<constructor-arg ref="kepler.management.history" />
 	</bean>
 
 </beans>

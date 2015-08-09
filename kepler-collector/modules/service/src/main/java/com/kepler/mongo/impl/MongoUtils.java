@@ -80,16 +80,6 @@ public class MongoUtils {
 		return value != null ? DBObject.class.cast(value) : null;
 	}
 
-	public static List<?> asList(DBObject db, String key) {
-		Object value = MongoUtils.as(db, key);
-		return value != null ? List.class.cast(value) : MongoUtils.LIST;
-	}
-
-	@SuppressWarnings("unchecked")
-	public static Map<String, Object> asMap(DBObject db) {
-		return db != null ? db.toMap() : MongoUtils.MAP;
-	}
-
 	public static Object as(DBObject db, String key) {
 		Object value = db != null ? db.get(key) : null;
 		return value != null ? value : null;
@@ -98,6 +88,17 @@ public class MongoUtils {
 	public static <T> T as(DBObject db, String key, Class<T> clazz) {
 		Object value = MongoUtils.as(db, key);
 		return value != null ? clazz.cast(value) : null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> List<T> asList(DBObject db, String key) {
+		Object value = MongoUtils.as(db, key);
+		return value != null ? List.class.cast(value) : MongoUtils.LIST;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> Map<String, T> asMap(DBObject db) {
+		return db != null ? db.toMap() : MongoUtils.MAP;
 	}
 
 	public static boolean effect(WriteResult result) {
