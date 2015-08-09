@@ -7,17 +7,23 @@
 
 	<alias name="kepler.management.handler" alias="kepler.management.feeder.transfer" />
 	<alias name="kepler.management.handler" alias="kepler.management.feeder.status" />
+	<alias name="kepler.management.handler" alias="kepler.management.properties" />
 	<alias name="kepler.management.handler" alias="kepler.management.relations" />
 	<alias name="kepler.management.handler" alias="kepler.management.history" />
+
+	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
+		<constructor-arg index="1" value="com.kepler.management.transfer.History" />
+		<constructor-arg ref="kepler.management.history" />
+	</bean>
 
 	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
 		<constructor-arg index="1" value="com.kepler.management.transfer.Relations" />
 		<constructor-arg ref="kepler.management.relations" />
 	</bean>
-
+	
 	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
-		<constructor-arg index="1" value="com.kepler.management.transfer.History" />
-		<constructor-arg ref="kepler.management.history" />
+		<constructor-arg index="1" value="com.kepler.management.status.Properties" />
+		<constructor-arg ref="kepler.management.properties" />
 	</bean>
 
 	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
@@ -32,6 +38,7 @@
 
 	<bean id="kepler.management.handler" class="com.kepler.collector.MongoHandler">
 		<constructor-arg ref="kepler.mongo.config.transfer" />
+		<constructor-arg ref="kepler.mongo.config.status" />
 	</bean>
 
 </beans>

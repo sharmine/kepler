@@ -13,4 +13,8 @@
 		<constructor-arg index="0" value="com.kepler.management.transfer.Relations" />
 	</bean>
 
+	<bean id="kepler.management.properties" class="com.kepler.service.imported.ImportedServiceFactory" parent="kepler.service.imported.abstract">
+		<constructor-arg index="0" value="com.kepler.management.status.Properties" />
+	</bean>
+
 </beans>

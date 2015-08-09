@@ -74,11 +74,11 @@
 			</ul>
 		</div>
 		
-		<div id="connections" class="user-body" style="display:none">
+		<div id="properties" class="user-body" style="display:none">
 			<ul>
 				<li>
 				</li>
-				<div id="connections_list">
+				<div id="properties_list">
 				</div>
 			</ul>
 		</div>
@@ -120,7 +120,7 @@
 			$('#detail-overdue').removeClass('current-span');
 			$('#detail').slideDown();
 			$('#relations').slideUp();
-			$('#connections').slideUp();
+			$('#properties').slideUp();
 		});
 
 		$('#detail-used').on('click',function(){
@@ -128,7 +128,7 @@
 			$('#detail-used').addClass('current-span');
 			$('#detail-overdue').removeClass('current-span');
 			$('#relations').slideDown();
-			$('#connections').slideUp();
+			$('#properties').slideUp();
 			$('#detail').slideUp();
 		});
 
@@ -136,7 +136,7 @@
 			$('#detail-unuse').removeClass('current-span');
 			$('#detail-used').removeClass('current-span');
 			$('#detail-overdue').addClass('current-span');
-			$('#connections').slideDown();
+			$('#properties').slideDown();
 			$('#relations').slideUp();
 			$('#detail').slideUp();
 		});
@@ -146,6 +146,7 @@
 		var previous = "";
 		var template_service = "<ul class='coupon-used-list'><li><div class='coupon-list-left'><h2>${service}</h2><h3>${path}</h3></div><div class='coupon-list-right'><div><h2 class='coupon-list-right-button' onclick='${action}'>${button}</h2></div><div></div></div></li></ul>"
 		var template_status = "<li><div><span class=\"info-left\">${method}</span><span class=\"info-right\">${host}</span></div><div><span class=\"info-left\">A/T/E/RTT</span><span class=\"info-right\">${status}</span></div></li>"
+		var template_properties = "<li><div><span class=\"info-left\">${key}</span><span class=\"info-right\">${value}</span></div></li>";
 		var template_relation = "<li><div><span class=\"info-left\">${host}</span></div></li>"
 		
 		String.prototype.replaceAll = function(s1, s2){
@@ -197,10 +198,10 @@
 			if(status) {
 				state();
 				relations();
-				connections();
+				properties();
 				$("body").everyTime('60s', state);
 				$("body").everyTime('300s', relations);
-				$("body").everyTime('30s', connections);
+				$("body").everyTime('30s', properties);
 			}
 		}
 
@@ -234,16 +235,16 @@
 			});
 		}
 		
-		function connections(){
+		function properties(){
 			jQuery.ajax({
 				type: "GET",
-				url: "/api/connections",
+				url: "/api/properties",
 				data: {"host": $('#detail_host').val()},
 				success: function callbackFunction(data){
-					$("#connections_list").empty();
-					$(data).each(function(index, element){
-						$("#connections_list").append(template_relation.replace("${host}", element));
-					});
+					$("#properties_list").empty();
+					for(key in data) {
+						$("#properties_list").append(template_properties.replace("${key}", key).replace("${value}", data[key]));
+					}
 				}
 			});
 		}

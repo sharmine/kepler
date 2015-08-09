@@ -20,6 +20,7 @@
 	</bean>
 
 	<bean class="com.kepler.admin.controller.RemoteController">
+		<constructor-arg ref="kepler.management.properties" />
 		<constructor-arg ref="kepler.management.relations" />
 		<constructor-arg ref="kepler.management.history" />
 	</bean>

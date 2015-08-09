@@ -16,9 +16,9 @@ import com.kepler.service.Exported;
 public class StatusPeriod extends Period implements Exported {
 
 	/**
-	 * 默认120秒, 最小60秒
+	 * 默认60秒, 最小30秒
 	 */
-	private final static int INTERVAL = Math.max(60000, Integer.valueOf(PropertiesUtils.get(StatusPeriod.class.getName().toLowerCase() + ".interval", "120000")));
+	private final static int INTERVAL = Math.max(30000, Integer.valueOf(PropertiesUtils.get(StatusPeriod.class.getName().toLowerCase() + ".interval", "60000")));
 
 	private final AtomicBoolean activate = new AtomicBoolean();
 

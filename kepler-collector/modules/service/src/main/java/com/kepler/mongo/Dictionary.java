@@ -21,6 +21,8 @@ public interface Dictionary {
 	public final static String FIELD_HOSTS = "hosts";
 
 	public final static String FIELD_TOTAL = "total";
+	
+	public final static String FIELD_STATUS = "status";
 
 	public final static String FIELD_MINUTE = "minute";
 

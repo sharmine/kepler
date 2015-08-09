@@ -128,6 +128,7 @@ public class MethodUtils {
 		int arguments = args.length;
 		Class[] parameterTypes = new Class[arguments];
 		for (int i = 0; i < arguments; i++) {
+			// TODO, Fix null point exception
 			parameterTypes[i] = args[i] != null ? args[i].getClass() : null;
 		}
 		return invokeMethod(object, methodName, args, parameterTypes);

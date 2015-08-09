@@ -9,6 +9,12 @@
 		<constructor-arg value="${mongo.host}" />
 	</bean>
 
+	<bean id="kepler.mongo.config.status" class="com.kepler.mongo.impl.MongoProxyConfig">
+		<constructor-arg value="kepler" />
+		<constructor-arg value="status" />
+		<constructor-arg ref="kepler.mongo" />
+	</bean>
+
 	<bean id="kepler.mongo.config.transfer" class="com.kepler.mongo.impl.MongoProxyConfig">
 		<constructor-arg value="kepler" />
 		<constructor-arg value="transfer" />
