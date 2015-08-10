@@ -2,7 +2,7 @@ package com.kepler.management.status;
 
 import java.util.Map;
 
-import com.kepler.service.annotation.Version;
+import com.kepler.annotation.Version;
 
 /**
  * @author kim 2015年8月8日

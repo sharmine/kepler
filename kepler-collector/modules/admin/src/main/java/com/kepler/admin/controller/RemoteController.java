@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kepler.management.status.Properties;
-import com.kepler.management.transfer.History;
-import com.kepler.management.transfer.Relations;
+import com.kepler.management.search.RoundTrip;
+import com.kepler.management.search.Exported;
+import com.kepler.management.search.Runtime;
 import com.kepler.management.transfer.Transfers;
 
 /**
@@ -19,34 +19,34 @@ import com.kepler.management.transfer.Transfers;
 @Controller
 public class RemoteController {
 
-	private final Properties properties;
+	private final Runtime runtime;
 
-	private final Relations relations;
+	private final Exported exported;
 
-	private final History history;
+	private final RoundTrip roundtrip;
 
-	public RemoteController(Properties properties, Relations relations, History history) {
+	public RemoteController(Runtime runtime, Exported exported, RoundTrip roundtrip) {
 		super();
-		this.properties = properties;
-		this.relations = relations;
-		this.history = history;
+		this.runtime = runtime;
+		this.exported = exported;
+		this.roundtrip = roundtrip;
 	}
 
-	@RequestMapping(value = "/relations", method = RequestMethod.GET)
+	@RequestMapping(value = "/exported", method = RequestMethod.GET)
 	@ResponseBody
 	public Collection<String> relations(String path, String host) throws Exception {
-		return this.relations.relations(path.substring(0, path.lastIndexOf("/")).replaceAll("/", "."), path.substring(path.lastIndexOf("/") + 1), host);
+		return this.exported.exported(path.substring(0, path.lastIndexOf("/")).replaceAll("/", "."), path.substring(path.lastIndexOf("/") + 1), host);
 	}
 
-	@RequestMapping(value = "/history", method = RequestMethod.GET)
+	@RequestMapping(value = "/roundtrip", method = RequestMethod.GET)
 	@ResponseBody
 	public Collection<Transfers> history(String path, String host) throws Exception {
-		return this.history.history(path.substring(0, path.lastIndexOf("/")).replaceAll("/", "."), path.substring(path.lastIndexOf("/") + 1), host);
+		return this.roundtrip.roundtrip(path.substring(0, path.lastIndexOf("/")).replaceAll("/", "."), path.substring(path.lastIndexOf("/") + 1), host);
 	}
 
-	@RequestMapping(value = "/properties", method = RequestMethod.GET)
+	@RequestMapping(value = "/runtime", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, String> properties(String host) throws Exception {
-		return this.properties.properties(host);
+		return this.runtime.runtime(host);
 	}
 }

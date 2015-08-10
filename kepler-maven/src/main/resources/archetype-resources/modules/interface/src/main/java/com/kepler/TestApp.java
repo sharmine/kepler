@@ -1,5 +1,5 @@
 package com.kepler;
-import com.kepler.service.annotation.Version;
+import com.kepler.annotation.Version;
 
 @Version("0.0.1-SNAPSHOT")
 public interface TestApp {

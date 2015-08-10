@@ -1,15 +1,15 @@
-package com.kepler.management.transfer;
+package com.kepler.management.search;
 
 import java.util.Collection;
 
+import com.kepler.annotation.Version;
 import com.kepler.management.transfer.Transfers;
-import com.kepler.service.annotation.Version;
 
 /**
  * @author kim 2015年7月25日
  */
 @Version("0.0.1")
-public interface History {
+public interface RoundTrip {
 
 	/**
 	 * @param service
@@ -17,5 +17,5 @@ public interface History {
 	 * @param host 服务所属主机
 	 * @return
 	 */
-	public Collection<Transfers> history(String service, String version, String host);
+	public Collection<Transfers> roundtrip(String service, String version, String host);
 }

@@ -7,23 +7,23 @@
 
 	<alias name="kepler.management.handler" alias="kepler.management.feeder.transfer" />
 	<alias name="kepler.management.handler" alias="kepler.management.feeder.status" />
-	<alias name="kepler.management.handler" alias="kepler.management.properties" />
-	<alias name="kepler.management.handler" alias="kepler.management.relations" />
-	<alias name="kepler.management.handler" alias="kepler.management.history" />
+	<alias name="kepler.management.handler" alias="kepler.management.roundtrip" />
+	<alias name="kepler.management.handler" alias="kepler.management.exported" />
+	<alias name="kepler.management.handler" alias="kepler.management.runtime" />
 
 	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
-		<constructor-arg index="1" value="com.kepler.management.transfer.History" />
-		<constructor-arg ref="kepler.management.history" />
+		<constructor-arg index="1" value="com.kepler.management.search.RoundTrip" />
+		<constructor-arg ref="kepler.management.roundtrip" />
 	</bean>
 
 	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
-		<constructor-arg index="1" value="com.kepler.management.transfer.Relations" />
-		<constructor-arg ref="kepler.management.relations" />
+		<constructor-arg index="1" value="com.kepler.management.search.Exported" />
+		<constructor-arg ref="kepler.management.exported" />
 	</bean>
 	
 	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
-		<constructor-arg index="1" value="com.kepler.management.status.Properties" />
-		<constructor-arg ref="kepler.management.properties" />
+		<constructor-arg index="1" value="com.kepler.management.search.Runtime" />
+		<constructor-arg ref="kepler.management.runtime" />
 	</bean>
 
 	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">

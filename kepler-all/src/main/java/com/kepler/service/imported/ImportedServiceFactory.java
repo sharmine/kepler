@@ -11,10 +11,10 @@ import net.sf.cglib.proxy.MethodProxy;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.core.annotation.AnnotationUtils;
 
+import com.kepler.annotation.Version;
 import com.kepler.invoker.Invoker;
 import com.kepler.protocol.RequestFactory;
 import com.kepler.service.Imported;
-import com.kepler.service.annotation.Version;
 
 /**
  * @author kim 2015年7月8日

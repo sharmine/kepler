@@ -39,7 +39,7 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 	private final long start = System.currentTimeMillis();
 
 	/**
-	 * 等待ACK线程
+	 * ACK创建线程
 	 */
 	private final Thread thread = Thread.currentThread();
 
@@ -49,6 +49,9 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 
 	private final Host host;
 
+	/**
+	 * ACK状态
+	 */
 	private Status stauts = Status.WAITING;
 
 	/**
@@ -57,14 +60,14 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 	private Response response;
 
 	/**
-	 * 是否已超时(内部While Transfer)
-	 */
-	private boolean timeout;
-
-	/**
-	 * 是否已取消(外部调用Cancel)
+	 * 是否已取消
 	 */
 	private boolean canceled;
+
+	/**
+	 * 是否已超时
+	 */
+	private boolean timeout;
 
 	public AckFuture(Host local, Host host, Request request) {
 		super();
@@ -174,7 +177,6 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 					this.wait(lease / 3);
 				}
 			} catch (Throwable e) {
-				// 中断并捕获,由while condition确认是否继续等待
 				e.printStackTrace();
 				AckFuture.LOGGER.debug(e.getMessage(), e);
 			}

@@ -1,4 +1,4 @@
-package com.kepler.management.transfer.impl;
+package com.kepler.management.search.impl;
 
 import java.io.Serializable;
 

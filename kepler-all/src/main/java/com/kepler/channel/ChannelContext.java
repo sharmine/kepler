@@ -1,7 +1,5 @@
 package com.kepler.channel;
 
-import java.util.Collection;
-
 import com.kepler.host.Host;
 
 /**
@@ -21,8 +19,6 @@ public interface ChannelContext {
 	 * @return
 	 */
 	public ChannelInvoker put(Host host, ChannelInvoker invoker);
-
-	public Collection<Host> hosts();
 
 	public boolean contain(Host host);
 }

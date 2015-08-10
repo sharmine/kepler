@@ -1,16 +1,14 @@
 package com.kepler.channel.impl;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import com.kepler.channel.ChannelContext;
 import com.kepler.channel.ChannelInvoker;
 import com.kepler.host.Host;
+import com.kepler.host.HostLocks;
 import com.kepler.host.HostsContext;
+import com.kepler.host.impl.SegmentLocks;
 
 /**
  * 主机 - 通道映射
@@ -19,12 +17,12 @@ import com.kepler.host.HostsContext;
  */
 public class DefaultContext implements ChannelContext {
 
-	private final static Log LOGGER = LogFactory.getLog(DefaultContext.class);
-
 	/**
 	 * Using ConcurrentHashMap for this.channels.keySet()
 	 */
 	private final Map<Host, ChannelInvoker> channels = new ConcurrentHashMap<Host, ChannelInvoker>();
+
+	private final HostLocks lock = new SegmentLocks();
 
 	private final HostsContext context;
 
@@ -38,19 +36,17 @@ public class DefaultContext implements ChannelContext {
 	}
 
 	public ChannelInvoker del(Host host) {
-		DefaultContext.LOGGER.warn("ChannelInvoker:" + host.getAsString() + " removed");
-		return this.channels.remove(host);
+		synchronized (this.lock.get(host)) {
+			return this.channels.remove(host);
+		}
 	}
 
 	public ChannelInvoker put(Host host, ChannelInvoker invoker) {
-		DefaultContext.LOGGER.warn("ChannelInvoker:" + host.getAsString() + " added");
-		this.channels.put(host, invoker);
-		this.context.unban(host);
+		synchronized (this.lock.get(host)) {
+			this.channels.put(host, invoker);
+			this.context.unban(host);
+		}
 		return invoker;
-	}
-
-	public Collection<Host> hosts() {
-		return this.channels.keySet();
 	}
 
 	public boolean contain(Host host) {

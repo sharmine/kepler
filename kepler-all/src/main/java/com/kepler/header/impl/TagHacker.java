@@ -7,7 +7,7 @@ import com.kepler.host.Host;
 /**
  * @author kim 2015年8月3日
  */
-public class HostTagHacker implements HeadersHacker {
+public class TagHacker implements HeadersHacker {
 
 	@Override
 	public Headers put(Headers headers) {
@@ -17,6 +17,7 @@ public class HostTagHacker implements HeadersHacker {
 
 	@Override
 	public int sort() {
+		// 最小优先级,最后执行
 		return Integer.MIN_VALUE;
 	}
 }

@@ -42,7 +42,7 @@ public class DefaultServer {
 	/**
 	 * 黏包最大长度
 	 */
-	private final static int MAX_FRAME_LENGTH = Integer.valueOf(PropertiesUtils.get(LengthFieldBasedFrameDecoder.class.getName().toLowerCase() + ".max_frame_length", String.valueOf(Integer.MAX_VALUE)));
+	private final static int MAX_FRAME_LENGTH = Integer.valueOf(PropertiesUtils.get(DefaultServer.class.getName().toLowerCase() + ".max_frame_length", String.valueOf(Integer.MAX_VALUE)));
 
 	private final static int TIMEOUT = Integer.valueOf(PropertiesUtils.get(DefaultServer.class.getName().toLowerCase() + ".timeout", String.valueOf(Integer.MAX_VALUE)));
 
@@ -136,7 +136,7 @@ public class DefaultServer {
 		// 任何未捕获异常(如OOM)均需要终止通道
 		public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 			cause.printStackTrace();
-			this.channelUnregistered(ctx);
+			this.channelInactive(ctx);
 		}
 
 		@Override
@@ -150,6 +150,9 @@ public class DefaultServer {
 
 			private final Request request;
 
+			/**
+			 * 实际开始执行时间
+			 */
 			private long start;
 
 			public Reply(ChannelHandlerContext ctx, Request request) {
@@ -160,6 +163,7 @@ public class DefaultServer {
 
 			private Reply init() {
 				this.start = System.currentTimeMillis();
+				// 线程Copy Header
 				DefaultServer.this.headers.put(this.request.headers());
 				return this;
 			}

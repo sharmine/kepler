@@ -5,16 +5,16 @@
     http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<bean id="kepler.management.history" class="com.kepler.service.imported.ImportedServiceFactory" parent="kepler.service.imported.abstract">
-		<constructor-arg index="0" value="com.kepler.management.transfer.History" />
+	<bean id="kepler.management.roundtrip" class="com.kepler.service.imported.ImportedServiceFactory" parent="kepler.service.imported.abstract">
+		<constructor-arg index="0" value="com.kepler.management.search.RoundTrip" />
 	</bean>
 
-	<bean id="kepler.management.relations" class="com.kepler.service.imported.ImportedServiceFactory" parent="kepler.service.imported.abstract">
-		<constructor-arg index="0" value="com.kepler.management.transfer.Relations" />
+	<bean id="kepler.management.exported" class="com.kepler.service.imported.ImportedServiceFactory" parent="kepler.service.imported.abstract">
+		<constructor-arg index="0" value="com.kepler.management.search.Exported" />
 	</bean>
 
-	<bean id="kepler.management.properties" class="com.kepler.service.imported.ImportedServiceFactory" parent="kepler.service.imported.abstract">
-		<constructor-arg index="0" value="com.kepler.management.status.Properties" />
+	<bean id="kepler.management.runtime" class="com.kepler.service.imported.ImportedServiceFactory" parent="kepler.service.imported.abstract">
+		<constructor-arg index="0" value="com.kepler.management.search.Runtime" />
 	</bean>
 
 </beans>

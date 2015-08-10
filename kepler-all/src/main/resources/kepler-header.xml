@@ -11,6 +11,6 @@
 
 	<bean id="kepler.header.hacker" class="com.kepler.header.impl.ChainedHacker" />
 
-	<bean class="com.kepler.header.impl.HostTagHacker" />
+	<bean class="com.kepler.header.impl.TagHacker" />
 
 </beans>

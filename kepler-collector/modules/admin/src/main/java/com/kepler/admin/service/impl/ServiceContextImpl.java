@@ -32,14 +32,14 @@ public class ServiceContextImpl implements ServiceContext {
 
 	public ServiceContextImpl(ZooKeeper zooKeeper, SerialFactory serial) {
 		super();
-		this.zooKeeper = zooKeeper;
 		this.serial = serial;
+		this.zooKeeper = zooKeeper;
 	}
 
 	@Override
 	public List<Path> path(String path) {
 		try {
-			return new ZkPaths(path, this.zooKeeper.getChildren(ZkContext.ROOT + (StringUtils.isEmpty(path) ? "" : ("/" + path)), false));
+			return new ZkPaths(path, this.zooKeeper.getChildren(ZkContext.ROOT + (StringUtils.isEmpty(path) ? "" : ("/" + path)), true));
 		} catch (Exception e) {
 			ServiceContextImpl.LOGGER.info(e.getMessage(), e);
 			return ServiceContextImpl.EMPTY;
@@ -49,7 +49,7 @@ public class ServiceContextImpl implements ServiceContext {
 	@Override
 	public Node get(String path) {
 		try {
-			return new ZkNode(path, this.serial.serial(this.zooKeeper.getData(ZkContext.ROOT + "/" + path, false, null), ZkSerial.class).host());
+			return new ZkNode(path, this.serial.serial(this.zooKeeper.getData(ZkContext.ROOT + "/" + path, true, null), ZkSerial.class).host());
 		} catch (Exception e) {
 			ServiceContextImpl.LOGGER.info(e.getMessage(), e);
 			return null;

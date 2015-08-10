@@ -26,6 +26,8 @@ public class LocalHost implements Host, Serializable {
 
 	private final static int PORT = Integer.valueOf(PropertiesUtils.get(LocalHost.class.getName().toLowerCase() + ".port", "9876"));
 
+	private final static int RANGE = Integer.valueOf(PropertiesUtils.get(LocalHost.class.getName().toLowerCase() + ".range", "1000"));
+
 	private final static int INTERVAL = Integer.valueOf(PropertiesUtils.get(LocalHost.class.getName().toLowerCase() + ".interval", "500"));
 
 	private final static boolean STABLE = Boolean.valueOf(PropertiesUtils.get(LocalHost.class.getName().toLowerCase() + ".stable", "false"));
@@ -52,11 +54,11 @@ public class LocalHost implements Host, Serializable {
 	}
 
 	private int free() throws Exception {
-		for (int index = LocalHost.PORT; index < LocalHost.PORT + 1000; index++) {
+		for (int index = LocalHost.PORT; index < LocalHost.PORT + LocalHost.RANGE; index++) {
 			try (Socket socket = new Socket()) {
 				socket.connect(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), index), LocalHost.INTERVAL);
 			} catch (IOException e) {
-				LocalHost.LOGGER.debug("Port " + index + " used ... ");
+				LocalHost.LOGGER.debug("Port (" + index + ") used ... ");
 				return index;
 			}
 		}

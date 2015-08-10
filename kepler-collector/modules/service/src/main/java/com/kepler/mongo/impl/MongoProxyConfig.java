@@ -21,6 +21,7 @@ import com.mongodb.WriteResult;
  * @author kim 2013-11-15
  */
 public class MongoProxyConfig implements MongoConfig {
+
 	/**
 	 * 重置数据集合(All)
 	 */

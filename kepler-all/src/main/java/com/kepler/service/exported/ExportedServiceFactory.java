@@ -3,8 +3,8 @@ package com.kepler.service.exported;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.core.annotation.AnnotationUtils;
 
+import com.kepler.annotation.Version;
 import com.kepler.service.Exported;
-import com.kepler.service.annotation.Version;
 
 /**
  * @author kim 2015年7月8日

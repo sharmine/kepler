@@ -86,7 +86,7 @@ public class ZkContext implements Imported, Exported {
 	private void put(ZkSerial node, String path) throws Exception {
 		// 加锁Service all version (粗粒度)
 		synchronized (node.service()) {
-			// 同步Context绑定Hosts过程
+			// 同步GetOrCreate
 			this.context.get(node.service(), node.version()).put(node.host());
 		}
 		this.imported.put(path, node.host());

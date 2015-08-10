@@ -2,8 +2,8 @@ package com.kepler.management.status;
 
 import java.util.Map;
 
+import com.kepler.annotation.Version;
 import com.kepler.host.Host;
-import com.kepler.service.annotation.Version;
 
 /**
  * @author kim 2015年8月8日

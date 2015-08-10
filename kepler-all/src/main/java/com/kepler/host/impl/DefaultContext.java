@@ -24,7 +24,7 @@ public class DefaultContext implements HostsContext, Extension, Router {
 	private final static String ROUTING = PropertiesUtils.get(DefaultHosts.class.getName().toLowerCase(), TagRouting.NAME);
 
 	/**
-	 * 服务/版本 - 主机映射
+	 * 服务 - 主机映射
 	 */
 	private final Map<Service, Hosts> hosts = new ConcurrentHashMap<Service, Hosts>();
 

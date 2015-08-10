@@ -2,7 +2,7 @@ package com.kepler.management.transfer;
 
 import java.util.Collection;
 
-import com.kepler.service.annotation.Version;
+import com.kepler.annotation.Version;
 
 /**
  * @author kim 2015年7月22日

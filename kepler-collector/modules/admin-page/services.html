@@ -65,20 +65,20 @@
 			</div>
 		</div>
 		
-		<div id="relations" class="user-body" style="display:none">
+		<div id="exported" class="user-body" style="display:none">
 			<ul>
 				<li>
 				</li>
-				<div id="relations_list">
+				<div id="exported_list">
 				</div>
 			</ul>
 		</div>
 		
-		<div id="properties" class="user-body" style="display:none">
+		<div id="runtime" class="user-body" style="display:none">
 			<ul>
 				<li>
 				</li>
-				<div id="properties_list">
+				<div id="runtime_list">
 				</div>
 			</ul>
 		</div>
@@ -119,16 +119,16 @@
 			$('#detail-used').removeClass('current-span');
 			$('#detail-overdue').removeClass('current-span');
 			$('#detail').slideDown();
-			$('#relations').slideUp();
-			$('#properties').slideUp();
+			$('#exported').slideUp();
+			$('#runtime').slideUp();
 		});
 
 		$('#detail-used').on('click',function(){
 			$('#detail-unuse').removeClass('current-span');
 			$('#detail-used').addClass('current-span');
 			$('#detail-overdue').removeClass('current-span');
-			$('#relations').slideDown();
-			$('#properties').slideUp();
+			$('#exported').slideDown();
+			$('#runtime').slideUp();
 			$('#detail').slideUp();
 		});
 
@@ -136,8 +136,8 @@
 			$('#detail-unuse').removeClass('current-span');
 			$('#detail-used').removeClass('current-span');
 			$('#detail-overdue').addClass('current-span');
-			$('#properties').slideDown();
-			$('#relations').slideUp();
+			$('#runtime').slideDown();
+			$('#exported').slideUp();
 			$('#detail').slideUp();
 		});
 
@@ -146,7 +146,7 @@
 		var previous = "";
 		var template_service = "<ul class='coupon-used-list'><li><div class='coupon-list-left'><h2>${service}</h2><h3>${path}</h3></div><div class='coupon-list-right'><div><h2 class='coupon-list-right-button' onclick='${action}'>${button}</h2></div><div></div></div></li></ul>"
 		var template_status = "<li><div><span class=\"info-left\">${method}</span><span class=\"info-right\">${host}</span></div><div><span class=\"info-left\">A/T/E/RTT</span><span class=\"info-right\">${status}</span></div></li>"
-		var template_properties = "<li><div><span class=\"info-left\">${key}</span><span class=\"info-right\">${value}</span></div></li>";
+		var template_runtime = "<li><div><span class=\"info-left\">${key}</span><span class=\"info-right\">${value}</span></div></li>";
 		var template_relation = "<li><div><span class=\"info-left\">${host}</span></div></li>"
 		
 		String.prototype.replaceAll = function(s1, s2){
@@ -197,53 +197,53 @@
 			$('#submit-offline').attr("path", nodes[index].path)
 			if(status) {
 				state();
-				relations();
-				properties();
+				exported();
+				runtime();
 				$("body").everyTime('60s', state);
-				$("body").everyTime('300s', relations);
-				$("body").everyTime('30s', properties);
+				$("body").everyTime('300s', exported);
+				$("body").everyTime('30s', runtime);
 			}
 		}
 
 		function state(){
 			jQuery.ajax({
 				type: "GET",
-				url: "/api/history",
+				url: "/api/roundtrip",
 				data: {"path": previous, "host": $('#detail_host').val()},
 				success: function callbackFunction(data){
 					$("#status").empty();
 					$(data).each(function(index, element){
-						$(element.transfers).each(function(index, transfer){
-							$("#status").append(template_status.replace("${method}", "METHOD: " + element.method).replace("${host}", transfer.local.host + " / " + transfer.local.group).replace("${status}", transfer.total + "/" + transfer.timeout + "/" + transfer.exception + "/" + (transfer.rtt / transfer.total).toFixed(2)));
+						$(element.transfers).each(function(index, roundtrip){
+							$("#status").append(template_status.replace("${method}", "METHOD: " + element.method).replace("${host}", roundtrip.local.host + " / " + roundtrip.local.group).replace("${status}", roundtrip.total + "/" + roundtrip.timeout + "/" + roundtrip.exception + "/" + (roundtrip.rtt / roundtrip.total).toFixed(2)));
 						});
 					});
 				}
 			});
 		}
 		
-		function relations(){
+		function exported(){
 			jQuery.ajax({
 				type: "GET",
-				url: "/api/relations",
+				url: "/api/exported",
 				data: {"path": previous, "host": $('#detail_host').val()},
 				success: function callbackFunction(data){
-					$("#relations_list").empty();
+					$("#exported_list").empty();
 					$(data).each(function(index, element){
-						$("#relations_list").append(template_relation.replace("${host}", element));
+						$("#exported_list").append(template_relation.replace("${host}", element));
 					});
 				}
 			});
 		}
 		
-		function properties(){
+		function runtime(){
 			jQuery.ajax({
 				type: "GET",
-				url: "/api/properties",
+				url: "/api/runtime",
 				data: {"host": $('#detail_host').val()},
 				success: function callbackFunction(data){
-					$("#properties_list").empty();
+					$("#runtime_list").empty();
 					for(key in data) {
-						$("#properties_list").append(template_properties.replace("${key}", key).replace("${value}", data[key]));
+						$("#runtime_list").append(template_runtime.replace("${key}", key).replace("${value}", data[key]));
 					}
 				}
 			});
@@ -265,6 +265,11 @@
 		});
 			
 		$("#go-back").click(function() {
+			$('#exported').attr("style", "display:none");
+			$('#runtime').attr("style", "display:none");
+			$('#detail-unuse').addClass('current-span');
+			$('#detail-used').removeClass('current-span');
+			$('#detail-overdue').removeClass('current-span');
 			route(previous);
 		});
 		

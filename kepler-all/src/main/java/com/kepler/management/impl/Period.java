@@ -28,9 +28,12 @@ abstract public class Period implements Runnable {
 		this.threads = threads;
 	}
 
-	abstract public void doPeriod();
+	/**
+	 * 实际操作
+	 */
+	abstract protected void doing();
 
-	abstract public long interval();
+	abstract protected long interval();
 
 	/**
 	 * 下个周期
@@ -54,7 +57,7 @@ abstract public class Period implements Runnable {
 		while (!this.shutdown.get()) {
 			try {
 				this.waiting();
-				Period.LOGGER.debug("Waiting next period ... ");
+				Period.LOGGER.debug("Waiting next period ... (" + this.getClass() + ")");
 			} catch (Throwable e) {
 				e.printStackTrace();
 				Period.LOGGER.error(e.getMessage(), e);
@@ -62,7 +65,7 @@ abstract public class Period implements Runnable {
 				this.period.set(this.next());
 			}
 		}
-		Period.LOGGER.warn(this.getClass() + " shutdown ...");
+		Period.LOGGER.warn(this.getClass() + " shutdown ... (" + this.getClass() + ")");
 	}
 
 	private void waiting() throws InterruptedException {
@@ -71,6 +74,6 @@ abstract public class Period implements Runnable {
 				this.wait(Period.this.interval() / 3);
 			}
 		}
-		Period.this.doPeriod();
+		this.doing();
 	}
 }

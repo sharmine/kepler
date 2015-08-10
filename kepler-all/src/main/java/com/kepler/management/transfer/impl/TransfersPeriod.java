@@ -28,12 +28,12 @@ public class TransfersPeriod extends Period {
 	}
 
 	@Override
-	public long interval() {
+	protected long interval() {
 		return TransfersPeriod.INTERVAL;
 	}
 
 	@Override
-	public void doPeriod() {
+	protected void doing() {
 		TransfersPeriod.this.feeder.feed(TransfersPeriod.this.collector.transfers());
 	}
 }

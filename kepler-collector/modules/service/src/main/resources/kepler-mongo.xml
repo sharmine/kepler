@@ -5,10 +5,8 @@
     http://www.springframework.org/schema/util
     http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<bean id="kepler.mongo" class="com.mongodb.MongoClient">
-		<constructor-arg value="${mongo.host}" />
-	</bean>
-
+	<bean id="kepler.mongo" class="com.kepler.mongo.MongoClientProxy"/>
+	
 	<bean id="kepler.mongo.config.status" class="com.kepler.mongo.impl.MongoProxyConfig">
 		<constructor-arg value="kepler" />
 		<constructor-arg value="status" />

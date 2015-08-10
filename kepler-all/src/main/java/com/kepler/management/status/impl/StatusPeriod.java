@@ -36,19 +36,20 @@ public class StatusPeriod extends Period implements Exported {
 	}
 
 	@Override
+	// 如果存在Exported则激活Status监控
 	public void exported(Class<?> service, String version, Object instance) throws Exception {
-		this.activate.set(true);
+		if (this.activate.compareAndSet(false, true)) {
+			super.init();
+		}
 	}
 
 	@Override
-	public long interval() {
+	protected long interval() {
 		return StatusPeriod.INTERVAL;
 	}
 
 	@Override
-	public void doPeriod() {
-		if (this.activate.get()) {
-			StatusPeriod.this.feeder.feed(this.local, StatusPeriod.this.status.get());
-		}
+	protected void doing() {
+		StatusPeriod.this.feeder.feed(this.local, StatusPeriod.this.status.get());
 	}
 }
