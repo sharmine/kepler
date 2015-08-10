@@ -2,6 +2,7 @@ package com.kepler.mongo.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,7 +101,7 @@ public class MongoUtils {
 	public static <T> Map<String, T> asMap(DBObject db) {
 		return db != null ? db.toMap() : MongoUtils.MAP;
 	}
-
+	
 	public static boolean effect(WriteResult result) {
 		return result.getN() != 0;
 	}

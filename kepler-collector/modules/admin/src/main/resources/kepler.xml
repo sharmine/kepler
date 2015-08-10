@@ -6,6 +6,7 @@
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 	<import resource="kepler-core.xml" />
+	<import resource="classpath:kepler-management-transfer.xml" />
 	<import resource="classpath:kepler-admin.xml" />
 	<import resource="classpath:kepler-remote.xml" />
 

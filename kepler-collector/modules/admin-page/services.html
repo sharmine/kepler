@@ -243,7 +243,7 @@
 				success: function callbackFunction(data){
 					$("#runtime_list").empty();
 					for(key in data) {
-						$("#runtime_list").append(template_runtime.replace("${key}", key).replace("${value}", data[key]));
+						$("#runtime_list").append(template_runtime.replace("${key}", key.length < 40 ? key : (key.substring(0, 10) + "..." + key.substring(key.length - 27))).replace("${value}", data[key]));
 					}
 				}
 			});

@@ -1450,7 +1450,7 @@ public abstract class ToStringStyle implements Serializable {
     }
 
     /**
-     * <p>Append the {@link ServerStatus#identityHashCode(java.lang.Object)}.</p>
+     * <p>Append the {@link JmxStatus#identityHashCode(java.lang.Object)}.</p>
      *
      * @param buffer  the <code>StringBuffer</code> to populate
      * @param object  the <code>Object</code> whose id to output

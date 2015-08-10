@@ -15,7 +15,7 @@ import com.kepler.management.status.Status;
 /**
  * @author kim 2015年8月8日
  */
-public class ServerStatus implements Status {
+public class JmxStatus implements Status {
 
 	private final List<GarbageCollectorMXBean> gc = ManagementFactory.getGarbageCollectorMXBeans();
 
@@ -33,7 +33,7 @@ public class ServerStatus implements Status {
 		this.runtime().system();
 	}
 
-	private ServerStatus system() {
+	private JmxStatus system() {
 		this.fixed.put("S_ARCH", this.system.getArch());
 		this.fixed.put("S_NAME", this.system.getName());
 		this.fixed.put("S_VERSION", this.system.getVersion());
@@ -41,12 +41,12 @@ public class ServerStatus implements Status {
 		return this;
 	}
 
-	private ServerStatus system(Map<String, Object> variable) {
+	private JmxStatus system(Map<String, Object> variable) {
 		variable.put("S_LOAD_AVERAGE", this.system.getSystemLoadAverage());
 		return this;
 	}
 
-	private ServerStatus runtime() {
+	private JmxStatus runtime() {
 		this.fixed.put("R_NAME", this.runtime.getName());
 		this.fixed.put("R_VM_NAME", this.runtime.getVmName());
 		this.fixed.put("R_VM_VERSION", this.runtime.getVmVersion());
@@ -55,12 +55,12 @@ public class ServerStatus implements Status {
 		return this;
 	}
 
-	private ServerStatus runtime(Map<String, Object> variable) {
+	private JmxStatus runtime(Map<String, Object> variable) {
 		variable.put("R_UPTIME", this.runtime.getUptime());
 		return this;
 	}
 
-	private ServerStatus memory(Map<String, Object> variable) {
+	private JmxStatus memory(Map<String, Object> variable) {
 		variable.put("M_USAGE_MAX", this.usage.getMax());
 		variable.put("M_USAGE_USED", this.usage.getUsed());
 		variable.put("M_USAGE_INIT", this.usage.getInit());
@@ -68,7 +68,7 @@ public class ServerStatus implements Status {
 		return this;
 	}
 
-	private ServerStatus gc(Map<String, Object> variable) {
+	private JmxStatus gc(Map<String, Object> variable) {
 		for (GarbageCollectorMXBean each : this.gc) {
 			variable.put("G_TIMES" + each.getName().toUpperCase(), each.getCollectionTime());
 			variable.put("G_COUNT" + each.getName().toUpperCase(), each.getCollectionCount());
@@ -83,6 +83,6 @@ public class ServerStatus implements Status {
 
 	@Override
 	public Map<String, Object> get() {
-		return this.variable(new TreeMap<String, Object>(this.fixed));
+		return this.variable(this.fixed);
 	}
 }

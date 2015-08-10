@@ -3,6 +3,7 @@ package com.kepler.collector;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
@@ -66,8 +67,7 @@ public class MongoHandler implements com.kepler.management.transfer.Feeder, com.
 
 	@Override
 	public Map<String, String> runtime(String host) {
-		DBCursor cursor = this.status.collection().find(BasicDBObjectBuilder.start().add(Dictionary.FIELD_HOST_LOCAL, host).add(Dictionary.FIELD_MINUTE, BasicDBObjectBuilder.start("$gte", TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS) - MongoHandler.LIMIT_RUNTIME).get()).get()).sort(MongoHandler.FILTER).limit(1);
-		return MongoUtils.asMap(MongoUtils.asDBObject(cursor.hasNext() ? cursor.next() : null, Dictionary.FIELD_STATUS));
+		return new Runtimes(this.status.collection().find(BasicDBObjectBuilder.start().add(Dictionary.FIELD_HOST_LOCAL, host).add(Dictionary.FIELD_MINUTE, BasicDBObjectBuilder.start("$gte", TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS) - MongoHandler.LIMIT_RUNTIME).get()).get()).sort(MongoHandler.FILTER).limit(1)).runtimes();
 	}
 
 	public Collection<Transfers> roundtrip(String service, String version, String host) {
@@ -77,6 +77,19 @@ public class MongoHandler implements com.kepler.management.transfer.Feeder, com.
 	@Override
 	public Collection<String> exported(String service, String version, String host) {
 		return new Exporteds(this.transfers.collection().find(BasicDBObjectBuilder.start().add(Dictionary.FIELD_SERVICE, service).add(Dictionary.FIELD_VERSION, version).add(Dictionary.FIELD_HOST_TARGET, host).add(Dictionary.FIELD_MINUTE, BasicDBObjectBuilder.start("$gte", TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS) - MongoHandler.LIMIT_EXPORTED).get()).get())).exported();
+	}
+
+	private class Runtimes {
+
+		private final Map<String, String> runtimes = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
+
+		public Runtimes(DBCursor cursor) {
+			this.runtimes.putAll(MongoUtils.<String> asMap(MongoUtils.asDBObject(cursor.hasNext() ? cursor.next() : null, Dictionary.FIELD_STATUS)));
+		}
+
+		public Map<String, String> runtimes() {
+			return this.runtimes;
+		}
 	}
 
 	private class Exporteds {

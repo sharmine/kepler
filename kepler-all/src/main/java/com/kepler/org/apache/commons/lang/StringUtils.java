@@ -6267,7 +6267,7 @@ public class StringUtils {
            the minimum of the cost count to the left, up one, and diagonally up and to the left
            of the current cost count being calculated).  (Feeder that the arrays aren't really 
            copied anymore, just switched...this is clearly much better than cloning an array 
-           or doing a ServerStatus.arraycopy() each time  through the outer loop.)
+           or doing a JmxStatus.arraycopy() each time  through the outer loop.)
 
            Effectively, the difference between the two implementations is this one does not 
            cause an out of memory condition when calculating the LD over two very large strings.
