@@ -33,7 +33,7 @@ public class EmptyMapIterator extends AbstractEmptyIterator implements MapIterat
      * Singleton instance of the iterator.
      * @since Commons Collections 3.1
      */
-    public static final MapIterator INSTANCE = new EmptyMapIterator();
+    public final static MapIterator INSTANCE = new EmptyMapIterator();
 
     /**
      * Constructor.

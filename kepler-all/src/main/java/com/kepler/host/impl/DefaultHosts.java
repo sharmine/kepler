@@ -50,26 +50,26 @@ public class DefaultHosts implements Hosts, HostCollector {
 				this.tags.put(host);
 				this.bans.del(host);
 			}
+			DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " added ... ");
 		}
-		DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " added ... ");
 	}
 
 	public void del(Host host) {
 		synchronized (this.locks.get(host)) {
-			this.hosts.remove(host);
-			this.tags.del(host);
-			this.bans.del(host);
+			// 从Host/Tag删除或从Ban删除
+			if ((this.hosts.remove(host) && this.tags.del(host)) || this.bans.del(host)) {
+				DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " removed ... ");
+			}
 		}
-		DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " removed ... ");
 	}
 
 	public void ban(Host host) {
 		synchronized (this.locks.get(host)) {
 			if (this.hosts.remove(host) && this.tags.del(host)) {
 				this.bans.put(host);
+				DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " baned ... ");
 			}
 		}
-		DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " baned ... ");
 	}
 
 	public void unban(Host host) {
@@ -77,9 +77,9 @@ public class DefaultHosts implements Hosts, HostCollector {
 			if (this.bans.del(host)) {
 				this.tags.put(host);
 				this.hosts.add(host);
+				DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " unbaned ... ");
 			}
 		}
-		DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " unbaned ... ");
 	}
 
 	public boolean contain(Host host) {
@@ -151,13 +151,13 @@ public class DefaultHosts implements Hosts, HostCollector {
 
 		public void put(Host host) {
 			this.bans.add(host);
-			DefaultHosts.LOGGER.info("Host: " + host.getAsString() + " added ... ");
+			DefaultHosts.LOGGER.info("Host(Ban): " + host.getAsString() + " added ... ");
 		}
 
 		public boolean del(Host host) {
 			boolean removed = this.bans.remove(host);
 			if (removed) {
-				DefaultHosts.LOGGER.info("Host: " + host.getAsString() + " removed ... ");
+				DefaultHosts.LOGGER.info("Host(Ban): " + host.getAsString() + " removed ... ");
 			}
 			return removed;
 		}

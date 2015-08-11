@@ -6,9 +6,9 @@ import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
 import java.lang.management.OperatingSystemMXBean;
 import java.lang.management.RuntimeMXBean;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import com.kepler.management.status.Status;
 
@@ -27,7 +27,7 @@ public class JmxStatus implements Status {
 
 	private final MemoryUsage usage = this.memory.getHeapMemoryUsage();
 
-	private final TreeMap<String, Object> fixed = new TreeMap<String, Object>(String.CASE_INSENSITIVE_ORDER);
+	private final Map<String, Object> fixed = new HashMap<String, Object>();
 
 	public void init() {
 		this.runtime().system();
@@ -70,8 +70,8 @@ public class JmxStatus implements Status {
 
 	private JmxStatus gc(Map<String, Object> variable) {
 		for (GarbageCollectorMXBean each : this.gc) {
-			variable.put("G_TIMES" + each.getName().toUpperCase(), each.getCollectionTime());
-			variable.put("G_COUNT" + each.getName().toUpperCase(), each.getCollectionCount());
+			variable.put("G_TIMES_" + each.getName().toUpperCase(), each.getCollectionTime());
+			variable.put("G_COUNT_" + each.getName().toUpperCase(), each.getCollectionCount());
 		}
 		return this;
 	}

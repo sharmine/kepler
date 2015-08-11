@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class Group implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private final static long serialVersionUID = 1L;
 
 	private final String group;
 

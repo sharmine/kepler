@@ -45,7 +45,7 @@ public class HashedMap
         extends AbstractHashedMap implements Serializable, Cloneable {
 
     /** Serialisation version */
-    private static final long serialVersionUID = -1788199231038721040L;
+    private final static long serialVersionUID = -1788199231038721040L;
     
     /**
      * Constructs a new empty map with default size and load factor.

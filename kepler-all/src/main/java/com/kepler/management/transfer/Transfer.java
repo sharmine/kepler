@@ -43,5 +43,7 @@ public interface Transfer extends Serializable {
 	 */
 	public long exception();
 
+	public boolean pause();
+	
 	public void reset();
 }

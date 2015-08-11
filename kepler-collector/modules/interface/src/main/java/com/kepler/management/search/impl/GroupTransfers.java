@@ -13,7 +13,7 @@ import com.kepler.org.apache.commons.collections.map.MultiKeyMap;
  */
 public class GroupTransfers implements Transfers {
 
-	private static final long serialVersionUID = 1L;
+	private final static long serialVersionUID = 1L;
 
 	private final MultiKeyMap transfers = new MultiKeyMap();
 
@@ -78,7 +78,7 @@ public class GroupTransfers implements Transfers {
 
 	private class AvgTransfer implements Transfer {
 
-		private static final long serialVersionUID = 1L;
+		private final static long serialVersionUID = 1L;
 
 		private long rtt;
 
@@ -161,6 +161,10 @@ public class GroupTransfers implements Transfers {
 		@SuppressWarnings("unused")
 		public long getException() {
 			return this.exception();
+		}
+
+		public boolean pause() {
+			return false;
 		}
 
 		@Override

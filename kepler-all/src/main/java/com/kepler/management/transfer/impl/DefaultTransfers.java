@@ -1,7 +1,11 @@
 package com.kepler.management.transfer.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicLong;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.kepler.ack.Status;
 import com.kepler.host.Host;
@@ -14,7 +18,11 @@ import com.kepler.org.apache.commons.collections.map.MultiKeyMap;
  */
 public class DefaultTransfers implements Transfers {
 
-	private static final long serialVersionUID = 1L;
+	private final static long serialVersionUID = 1L;
+
+	private final static Log LOGGER = LogFactory.getLog(DefaultTransfers.class);
+
+	private final Collection<Transfer> removed = new ArrayList<Transfer>();
 
 	private final MultiKeyMap transfers = new MultiKeyMap();
 
@@ -50,19 +58,36 @@ public class DefaultTransfers implements Transfers {
 
 	public void clear() {
 		for (Object condition : this.transfers.values()) {
-			Transfer.class.cast(condition).reset();
+			this.clear(Transfer.class.cast(condition));
 		}
 	}
 
+	/**
+	 * Remove or clean
+	 * 
+	 * @param transfer
+	 */
+	private void clear(Transfer transfer) {
+		if (transfer.pause()) {
+			this.removed.add(transfer);
+		} else {
+			transfer.reset();
+		}
+	}
+	
+	private void remote(){
+		
+	}
+
 	// 并发情况下, 首次初始化会存在丢失
-	public void put(Host local, Host host, Status status, long rtt) {
-		WriteableTransfer transfer = WriteableTransfer.class.cast(this.transfers.get(local, host));
-		this.transfers.put(local, host, (transfer = (transfer != null ? transfer : new WriteableTransfer(local, host))).touch().rtt(rtt).timeout(status).exception(status));
+	public void put(Host local, Host target, Status status, long rtt) {
+		WriteableTransfer transfer = WriteableTransfer.class.cast(this.transfers.get(local, target));
+		this.transfers.put(local, target, (transfer = (transfer != null ? transfer : new WriteableTransfer(local, target))).touch().rtt(rtt).timeout(status).exception(status));
 	}
 
 	private class WriteableTransfer implements Transfer {
 
-		private static final long serialVersionUID = 1L;
+		private final static long serialVersionUID = 1L;
 
 		private final AtomicLong rtt = new AtomicLong();
 
@@ -130,6 +155,10 @@ public class DefaultTransfers implements Transfers {
 				this.exception.incrementAndGet();
 			}
 			return this;
+		}
+
+		public boolean pause() {
+			return this.total.get() == 0;
 		}
 
 		public void reset() {

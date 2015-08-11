@@ -21,7 +21,7 @@ public class DefaultCollector implements Collector, Runnable, Imported {
 	/**
 	 * 当前, 切换, 清理
 	 */
-	private MultiKeyMap[] transfers = new MultiKeyMap[] { new MultiKeyMap(), new MultiKeyMap(), new MultiKeyMap() };
+	private final MultiKeyMap[] transfers = new MultiKeyMap[] { new MultiKeyMap(), new MultiKeyMap(), new MultiKeyMap() };
 
 	/**
 	 * 当前分钟
