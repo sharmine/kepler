@@ -5,7 +5,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.kepler.config.PropertiesUtils;
-import com.kepler.host.Host;
 
 /**
  * @author kim 2015年7月13日
@@ -19,7 +18,7 @@ public class Start {
 			ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:" + PropertiesUtils.get(Start.class.getName().toLowerCase() + ".xml"));
 			Runtime.getRuntime().addShutdownHook(new Shutdown(context));
 			Start.wait(context);
-			Start.LOGGER.warn("Kepler + (" + context.getBean(Host.class).getAsString() + ") closed ...");
+			Start.LOGGER.warn("Kepler closed ...");
 		} catch (Throwable e) {
 			e.printStackTrace();
 			Start.LOGGER.fatal(e.getMessage(), e);

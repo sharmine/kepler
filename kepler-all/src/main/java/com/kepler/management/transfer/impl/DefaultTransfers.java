@@ -2,6 +2,7 @@ package com.kepler.management.transfer.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.logging.Log;
@@ -60,6 +61,7 @@ public class DefaultTransfers implements Transfers {
 		for (Object condition : this.transfers.values()) {
 			this.clear(Transfer.class.cast(condition));
 		}
+		this.remove();
 	}
 
 	/**
@@ -74,9 +76,19 @@ public class DefaultTransfers implements Transfers {
 			transfer.reset();
 		}
 	}
-	
-	private void remote(){
-		
+
+	private void remove() {
+		Iterator<Transfer> removed = this.removed.iterator();
+		while (removed.hasNext()) {
+			this.remove(removed.next());
+			removed.remove();
+		}
+	}
+
+	private void remove(Transfer each) {
+		if (this.transfers.remove(each.local(), each.target()) != null) {
+			DefaultTransfers.LOGGER.warn("Transfer: (" + each.local().getAsString() + " to " + each.target().getAsString() + ") removed ...");
+		}
 	}
 
 	// 并发情况下, 首次初始化会存在丢失
