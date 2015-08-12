@@ -1,14 +1,16 @@
 package com.kepler.management.transfer.impl;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.kepler.ack.Status;
+import com.kepler.config.PropertiesUtils;
 import com.kepler.host.Host;
 import com.kepler.management.transfer.Transfer;
 import com.kepler.management.transfer.Transfers;
@@ -23,7 +25,11 @@ public class DefaultTransfers implements Transfers {
 
 	private final static Log LOGGER = LogFactory.getLog(DefaultTransfers.class);
 
-	private final Collection<Transfer> removed = new ArrayList<Transfer>();
+	private final static int FREEZE = Integer.valueOf(PropertiesUtils.get(DefaultTransfers.class.getName().toLowerCase() + ".freeze", "5"));
+
+	private final Collection<Transfer> removed = new HashSet<Transfer>();
+
+	private final String uuid = UUID.randomUUID().toString();
 
 	private final MultiKeyMap transfers = new MultiKeyMap();
 
@@ -53,15 +59,15 @@ public class DefaultTransfers implements Transfers {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Collection<Transfer> transfer() {
+	public Collection<Transfer> transfers() {
 		return this.transfers.values();
 	}
 
 	public void clear() {
 		for (Object condition : this.transfers.values()) {
-			this.clear(Transfer.class.cast(condition));
+			this.clear(WriteableTransfer.class.cast(condition));
 		}
-		this.remove();
+		this.trim();
 	}
 
 	/**
@@ -69,15 +75,15 @@ public class DefaultTransfers implements Transfers {
 	 * 
 	 * @param transfer
 	 */
-	private void clear(Transfer transfer) {
-		if (transfer.pause()) {
+	private void clear(WriteableTransfer transfer) {
+		if (transfer.freezed()) {
 			this.removed.add(transfer);
 		} else {
 			transfer.reset();
 		}
 	}
 
-	private void remove() {
+	private void trim() {
 		Iterator<Transfer> removed = this.removed.iterator();
 		while (removed.hasNext()) {
 			this.remove(removed.next());
@@ -86,12 +92,13 @@ public class DefaultTransfers implements Transfers {
 	}
 
 	private void remove(Transfer each) {
-		if (this.transfers.remove(each.local(), each.target()) != null) {
-			DefaultTransfers.LOGGER.warn("Transfer: (" + each.local().getAsString() + " to " + each.target().getAsString() + ") removed ...");
+		Transfer removed = Transfer.class.cast(this.transfers.remove(each.local(), each.target()));
+		if (removed != null) {
+			DefaultTransfers.LOGGER.warn("Transfer: (" + removed.local().getAsString() + " (" + removed.local().group() + ") to " + removed.target().getAsString() + " (" + removed.target().group() + ") removed ... (" + this + ")");
 		}
 	}
 
-	// 并发情况下, 首次初始化会存在丢失
+	// 并发情况下出现允许范围内的丢失 (进出现在首次初始化时)
 	public void put(Host local, Host target, Status status, long rtt) {
 		WriteableTransfer transfer = WriteableTransfer.class.cast(this.transfers.get(local, target));
 		this.transfers.put(local, target, (transfer = (transfer != null ? transfer : new WriteableTransfer(local, target))).touch().rtt(rtt).timeout(status).exception(status));
@@ -105,6 +112,8 @@ public class DefaultTransfers implements Transfers {
 
 		private final AtomicLong total = new AtomicLong();
 
+		private final AtomicLong freeze = new AtomicLong();
+
 		private final AtomicLong timeout = new AtomicLong();
 
 		private final AtomicLong exception = new AtomicLong();
@@ -117,6 +126,7 @@ public class DefaultTransfers implements Transfers {
 			super();
 			this.local = local;
 			this.target = target;
+			DefaultTransfers.LOGGER.warn("WriteableTransfer (" + DefaultTransfers.this.uuid + ") created: " + local.getAsString() + " (" + local.group() + " / " + target.getAsString() + " (" + target.group() + ") for (" + DefaultTransfers.this.service() + " / " + DefaultTransfers.this.version() + ")");
 		}
 
 		@Override
@@ -169,15 +179,20 @@ public class DefaultTransfers implements Transfers {
 			return this;
 		}
 
-		public boolean pause() {
-			return this.total.get() == 0;
-		}
-
 		public void reset() {
 			this.rtt.set(0);
 			this.total.set(0);
 			this.timeout.set(0);
 			this.exception.set(0);
+		}
+
+		public boolean freezed() {
+			return this.total.get() == 0 ? this.freeze.incrementAndGet() > DefaultTransfers.FREEZE : this.warm();
+		}
+
+		private boolean warm() {
+			this.freeze.set(0);
+			return false;
 		}
 	}
 }

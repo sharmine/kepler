@@ -13,10 +13,13 @@ public class Group implements Serializable {
 
 	private final String host;
 
-	public Group(String group, String host) {
+	private final String pid;
+
+	public Group(String group, String host, String pid) {
 		super();
 		this.group = group;
 		this.host = host;
+		this.pid = pid;
 	}
 
 	public String getGroup() {
@@ -25,6 +28,10 @@ public class Group implements Serializable {
 
 	public String getHost() {
 		return this.host;
+	}
+
+	public String pid() {
+		return this.pid;
 	}
 
 	public int hashCode() {

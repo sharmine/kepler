@@ -62,7 +62,7 @@ public class GroupTransfers implements Transfers {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public Collection<Transfer> transfer() {
+	public Collection<Transfer> transfers() {
 		return this.transfers.values();
 	}
 
@@ -73,7 +73,7 @@ public class GroupTransfers implements Transfers {
 	}
 
 	public Collection<Transfer> getTransfers() {
-		return this.transfer();
+		return this.transfers();
 	}
 
 	private class AvgTransfer implements Transfer {
@@ -105,7 +105,7 @@ public class GroupTransfers implements Transfers {
 
 		@Override
 		public Host local() {
-			return DefaultHost.valueOf(this.local.getHost());
+			return DefaultHost.valueOf(this.local.getHost(), this.local.getGroup(), "");
 		}
 
 		@SuppressWarnings("unused")
@@ -115,7 +115,7 @@ public class GroupTransfers implements Transfers {
 
 		@Override
 		public Host target() {
-			return DefaultHost.valueOf(this.target.getHost());
+			return DefaultHost.valueOf(this.target.getHost(), this.target.getGroup(), "");
 		}
 
 		@SuppressWarnings("unused")
@@ -163,7 +163,7 @@ public class GroupTransfers implements Transfers {
 			return this.exception();
 		}
 
-		public boolean pause() {
+		public boolean offline() {
 			return false;
 		}
 

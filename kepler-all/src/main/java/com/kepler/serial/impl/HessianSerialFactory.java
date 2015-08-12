@@ -53,6 +53,7 @@ public class HessianSerialFactory implements SerialFactory {
 
 		@Override
 		public void close() throws IOException {
+			// Hessian会级联关闭
 			this.input.close();
 		}
 	}
@@ -75,6 +76,7 @@ public class HessianSerialFactory implements SerialFactory {
 
 		@Override
 		public void close() throws IOException {
+			// Output不会级联关闭
 			this.arrays.close();
 			this.output.close();
 		}

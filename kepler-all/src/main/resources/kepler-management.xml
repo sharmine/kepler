@@ -7,6 +7,18 @@
 
 	<alias name="kepler.management.transfer" alias="kepler.service.imported.collector" />
 
+	<bean id="kepler.management.status" class="com.kepler.management.status.impl.ChainedStatus">
+		<constructor-arg>
+			<util:list>
+				<bean class="com.kepler.management.status.impl.ThreadStatus">
+					<constructor-arg ref="kepler.threads" />
+				</bean>
+				<bean class="com.kepler.management.status.impl.JmxStatus" init-method="init" />
+				<bean class="com.kepler.management.status.impl.PropertiesStatus" init-method="init" />
+			</util:list>
+		</constructor-arg>
+	</bean>
+
 	<bean id="kepler.management.transfer" class="com.kepler.management.transfer.impl.DefaultCollector">
 		<constructor-arg ref="kepler.threads" />
 	</bean>

@@ -31,7 +31,7 @@ public class DefaultCollector implements Collector, Runnable, Imported {
 	/**
 	 * Start from 1
 	 */
-	private final AtomicInteger index = new AtomicInteger(1);
+	private final AtomicInteger indexes = new AtomicInteger(1);
 
 	private final ThreadPoolExecutor threads;
 
@@ -42,7 +42,7 @@ public class DefaultCollector implements Collector, Runnable, Imported {
 
 	@Override
 	public void collect(Ack ack) {
-		// Service,Version,Method维度
+		// Service, Version, Method维度
 		DefaultTransfers.class.cast(this.curr().get(ack.request().service().getName(), ack.request().version(), ack.request().method())).put(ack.local(), ack.host(), ack.status(), ack.elapse());
 	}
 
@@ -82,7 +82,7 @@ public class DefaultCollector implements Collector, Runnable, Imported {
 	}
 
 	private MultiKeyMap index(int index) {
-		return this.transfers[((this.index.get() + index) & Byte.MAX_VALUE) % this.transfers.length];
+		return this.transfers[((this.indexes.get() + index) & Byte.MAX_VALUE) % this.transfers.length];
 	}
 
 	/**
@@ -91,8 +91,8 @@ public class DefaultCollector implements Collector, Runnable, Imported {
 	 * @return
 	 */
 	private MultiKeyMap exchange() {
-		this.index.incrementAndGet();
 		this.minute.set(this.minute());
+		this.indexes.incrementAndGet();
 		this.threads.execute(this);
 		return this.prev();
 	}

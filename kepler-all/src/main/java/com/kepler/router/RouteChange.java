@@ -10,7 +10,7 @@ public interface RouteChange {
 		PUSH, DEL;
 	}
 
-	public String path();
+	public String route();
 
 	public Action action();
 }

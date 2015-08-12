@@ -34,7 +34,7 @@ public class Acks {
 		return this.timeouts.remove(future) ? future : null;
 	}
 
-	public AckFuture timeout() throws InterruptedException {
+	public AckFuture timeout() throws Exception {
 		return this.timeouts.take();
 	}
 }

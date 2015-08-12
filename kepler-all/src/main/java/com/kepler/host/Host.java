@@ -1,11 +1,13 @@
 package com.kepler.host;
 
+import java.io.Serializable;
+
 import com.kepler.config.PropertiesUtils;
 
 /**
  * @author kim 2015年7月8日
  */
-public interface Host {
+public interface Host extends Serializable {
 
 	public final static String LOOP = "localhost";
 
@@ -26,16 +28,18 @@ public interface Host {
 	public final static String GROUP = PropertiesUtils.get(Host.class.getName().toLowerCase() + ".group", System.getenv("USER") != null ? System.getenv("USER") : Host.GROUP_DEFAULT);
 
 	public int port();
+	
+	public String pid();
 
 	public String tag();
 
 	public String host();
 
 	public String group();
-
+	
 	public String getAsString();
 
 	public boolean loop(Host host);
-	
+
 	public boolean loop(String host);
 }

@@ -1,6 +1,7 @@
 package com.kepler.collector;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -29,7 +30,7 @@ import com.mongodb.DBObject;
  * @author kim 2015年7月22日
  */
 @Version("0.0.1")
-public class MongoHandler implements com.kepler.management.transfer.Feeder, com.kepler.management.status.Feeder, RoundTrip, Runtime, Exported {
+public class MongoHandler implements com.kepler.management.invoker.Feeder, com.kepler.management.transfer.Feeder, com.kepler.management.status.Feeder, RoundTrip, Runtime, Exported {
 
 	private final static Integer LIMIT_ROUNDTRIP = Integer.valueOf(PropertiesUtils.get(MongoHandler.class.getName().toLowerCase() + ".roundtrip", "5"));
 
@@ -41,42 +42,69 @@ public class MongoHandler implements com.kepler.management.transfer.Feeder, com.
 
 	private final MongoConfig transfers;
 
+	private final MongoConfig invoker;
+
 	private final MongoConfig status;
 
-	public MongoHandler(MongoConfig transfers, MongoConfig status) {
+	public MongoHandler(MongoConfig transfers, MongoConfig invoker, MongoConfig status) {
 		super();
 		this.transfers = transfers;
+		this.invoker = invoker;
 		this.status = status;
 	}
 
 	@Override
-	// db.transfer.ensureIndex({"servce":1,"version":1,"host_target":1,"minute":1,"method":1,"host_local":1})
+	// db.invoker.ensureIndex({"minute":1, "host_local":1})
+	public void feed(Host local, Collection<Host> invokers) {
+		this.invoker.collection().update(BasicDBObjectBuilder.start().add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).add(Dictionary.FIELD_HOST_LOCAL, local.getAsString()).get(), BasicDBObjectBuilder.start("$set", BasicDBObjectBuilder.start().add(Dictionary.FIELD_HOST_LOCAL, local.getAsString()).add(Dictionary.FIELD_HOST_LOCAL_PID, local.pid()).add(Dictionary.FIELD_HOST_LOCAL_GROUP, local.group()).add(Dictionary.FIELD_HOSTS, new Hosts(invokers)).add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).get()).get(), true, false);
+	}
+
+	@Override
+	// db.transfer.ensureIndex({"minute":1, "servce":1, "version":1, "host_target":1, "method":1, "host_local":1})
 	public void feed(Collection<Transfers> transfers) {
 		for (Transfers each : transfers) {
-			for (Transfer transfer : each.transfer()) {
-				this.transfers.collection().update(BasicDBObjectBuilder.start().add(Dictionary.FIELD_SERVICE, each.service()).add(Dictionary.FIELD_VERSION, each.version()).add(Dictionary.FIELD_HOST_TARGET, transfer.target().getAsString()).add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).add(Dictionary.FIELD_METHOD, each.method()).add(Dictionary.FIELD_HOST_LOCAL, transfer.local().getAsString()).get(), BasicDBObjectBuilder.start("$set", BasicDBObjectBuilder.start(Dictionary.FIELD_SERVICE, each.service()).add(Dictionary.FIELD_VERSION, each.version()).add(Dictionary.FIELD_METHOD, each.method()).add(Dictionary.FIELD_HOST_LOCAL, transfer.local().getAsString()).add(Dictionary.FIELD_HOST_LOCAL_GROUP, transfer.local().group()).add(Dictionary.FIELD_HOST_TARGET, transfer.target().getAsString()).add(Dictionary.FIELD_HOST_TARGET_GROUP, transfer.target().group()).add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).add(Dictionary.FIELD_RTT, transfer.rtt()).add(Dictionary.FIELD_TIMEOUT, transfer.timeout()).add(Dictionary.FIELD_TOTAL, transfer.total()).add(Dictionary.FIELD_EXCEPTION, transfer.exception()).get()).get(), true, false);
+			for (Transfer transfer : each.transfers()) {
+				// Query: minute, service, version, host_target, method, host_local
+				this.transfers.collection().update(BasicDBObjectBuilder.start().add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).add(Dictionary.FIELD_SERVICE, each.service()).add(Dictionary.FIELD_VERSION, each.version()).add(Dictionary.FIELD_HOST_TARGET, transfer.target().getAsString()).add(Dictionary.FIELD_METHOD, each.method()).add(Dictionary.FIELD_HOST_LOCAL, transfer.local().getAsString()).get(), BasicDBObjectBuilder.start("$set", BasicDBObjectBuilder.start(Dictionary.FIELD_SERVICE, each.service()).add(Dictionary.FIELD_VERSION, each.version()).add(Dictionary.FIELD_METHOD, each.method()).add(Dictionary.FIELD_HOST_LOCAL, transfer.local().getAsString()).add(Dictionary.FIELD_HOST_LOCAL_PID, transfer.local().pid()).add(Dictionary.FIELD_HOST_LOCAL_GROUP, transfer.local().group()).add(Dictionary.FIELD_HOST_TARGET, transfer.target().getAsString()).add(Dictionary.FIELD_HOST_TARGET_PID, transfer.target().pid()).add(Dictionary.FIELD_HOST_TARGET_GROUP, transfer.target().group()).add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).add(Dictionary.FIELD_RTT, transfer.rtt()).add(Dictionary.FIELD_TIMEOUT, transfer.timeout()).add(Dictionary.FIELD_TOTAL, transfer.total()).add(Dictionary.FIELD_EXCEPTION, transfer.exception()).get()).get(), true, false);
 			}
 		}
 	}
 
 	@Override
-	// db.status.ensureIndex({"host_local":1,"minute":1})
+	// db.status.ensureIndex({"minute":1, "host_local":1})
 	public void feed(Host local, Map<String, Object> status) {
-		this.status.collection().update(BasicDBObjectBuilder.start().add(Dictionary.FIELD_HOST_LOCAL, local.getAsString()).add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).get(), BasicDBObjectBuilder.start("$set", BasicDBObjectBuilder.start().add(Dictionary.FIELD_HOST_LOCAL, local.getAsString()).add(Dictionary.FIELD_HOST_LOCAL_GROUP, local.group()).add(Dictionary.FIELD_STATUS, status).add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).get()).get(), true, false);
+		this.status.collection().update(BasicDBObjectBuilder.start().add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).add(Dictionary.FIELD_HOST_LOCAL, local.getAsString()).get(), BasicDBObjectBuilder.start("$set", BasicDBObjectBuilder.start().add(Dictionary.FIELD_HOST_LOCAL, local.getAsString()).add(Dictionary.FIELD_HOST_LOCAL_PID, local.pid()).add(Dictionary.FIELD_HOST_LOCAL_GROUP, local.group()).add(Dictionary.FIELD_STATUS, status).add(Dictionary.FIELD_MINUTE, TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS)).get()).get(), true, false);
 	}
 
 	@Override
 	public Map<String, String> runtime(String host) {
-		return new Runtimes(this.status.collection().find(BasicDBObjectBuilder.start().add(Dictionary.FIELD_HOST_LOCAL, host).add(Dictionary.FIELD_MINUTE, BasicDBObjectBuilder.start("$gte", TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS) - MongoHandler.LIMIT_RUNTIME).get()).get()).sort(MongoHandler.FILTER).limit(1)).runtimes();
+		// 指定时间范围内的最后1条
+		return new Runtimes(this.status.collection().find(BasicDBObjectBuilder.start().add(Dictionary.FIELD_MINUTE, BasicDBObjectBuilder.start("$gte", TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS) - MongoHandler.LIMIT_RUNTIME).get()).add(Dictionary.FIELD_HOST_LOCAL, host).get()).sort(MongoHandler.FILTER).limit(1)).runtimes();
 	}
 
 	public Collection<Transfers> roundtrip(String service, String version, String host) {
-		return new MethodTransfers(service, version, this.transfers.collection().find(BasicDBObjectBuilder.start().add(Dictionary.FIELD_SERVICE, service).add(Dictionary.FIELD_VERSION, version).add(Dictionary.FIELD_HOST_TARGET, host).add(Dictionary.FIELD_MINUTE, BasicDBObjectBuilder.start("$gte", TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS) - MongoHandler.LIMIT_ROUNDTRIP).get()).get())).transfers();
+		// 指定时间范围内的平均值
+		return new MethodTransfers(service, version, this.transfers.collection().find(BasicDBObjectBuilder.start().add(Dictionary.FIELD_MINUTE, BasicDBObjectBuilder.start("$gte", TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS) - MongoHandler.LIMIT_ROUNDTRIP).get()).add(Dictionary.FIELD_SERVICE, service).add(Dictionary.FIELD_VERSION, version).add(Dictionary.FIELD_HOST_TARGET, host).get())).transfers();
 	}
 
 	@Override
 	public Collection<String> exported(String service, String version, String host) {
-		return new Exporteds(this.transfers.collection().find(BasicDBObjectBuilder.start().add(Dictionary.FIELD_SERVICE, service).add(Dictionary.FIELD_VERSION, version).add(Dictionary.FIELD_HOST_TARGET, host).add(Dictionary.FIELD_MINUTE, BasicDBObjectBuilder.start("$gte", TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS) - MongoHandler.LIMIT_EXPORTED).get()).get())).exported();
+		return new Exporteds(this.invoker.collection().find(BasicDBObjectBuilder.start().add(Dictionary.FIELD_MINUTE, BasicDBObjectBuilder.start("$gte", TimeUnit.MINUTES.convert(System.currentTimeMillis(), TimeUnit.MILLISECONDS) - MongoHandler.LIMIT_EXPORTED).get()).add(Dictionary.FIELD_SERVICE, service).add(Dictionary.FIELD_VERSION, version).add(Dictionary.FIELD_HOST_TARGET, host).get())).exported();
+	}
+
+	private class Hosts extends HashSet<String> {
+
+		private static final long serialVersionUID = 1L;
+
+		public Hosts(Collection<Host> hosts) {
+			for (Host each : hosts) {
+				super.add(this.host(each));
+			}
+		}
+
+		private String host(Host host) {
+			return new StringBuffer().append(host.host()).append("@").append(host.pid()).append(" (").append(host.group()).append(") ").toString();
+		}
 	}
 
 	private class Runtimes {
@@ -124,7 +152,7 @@ public class MongoHandler implements com.kepler.management.transfer.Feeder, com.
 
 		private void each(String service, String version, DBObject db) {
 			GroupTransfers transfers = GroupTransfers.class.cast(this.transfers.get(MongoUtils.asString(db, Dictionary.FIELD_METHOD)));
-			this.transfers.put(MongoUtils.asString(db, Dictionary.FIELD_METHOD), MongoUtils.asString(db, Dictionary.FIELD_HOST_LOCAL), (transfers = (transfers != null ? transfers : new GroupTransfers(MongoHandler.LIMIT_ROUNDTRIP, service, version, MongoUtils.asString(db, Dictionary.FIELD_METHOD)).put(new Group(MongoUtils.asString(db, Dictionary.FIELD_HOST_LOCAL_GROUP), MongoUtils.asString(db, Dictionary.FIELD_HOST_LOCAL)), new Group(MongoUtils.asString(db, Dictionary.FIELD_HOST_TARGET_GROUP), MongoUtils.asString(db, Dictionary.FIELD_HOST_TARGET)), MongoUtils.asLong(db, Dictionary.FIELD_RTT), MongoUtils.asLong(db, Dictionary.FIELD_TOTAL), MongoUtils.asLong(db, Dictionary.FIELD_TIMEOUT), MongoUtils.asLong(db, Dictionary.FIELD_EXCEPTION)))));
+			this.transfers.put(MongoUtils.asString(db, Dictionary.FIELD_METHOD), MongoUtils.asString(db, Dictionary.FIELD_HOST_LOCAL), (transfers = (transfers != null ? transfers : new GroupTransfers(MongoHandler.LIMIT_ROUNDTRIP, service, version, MongoUtils.asString(db, Dictionary.FIELD_METHOD)).put(new Group(MongoUtils.asString(db, Dictionary.FIELD_HOST_LOCAL_GROUP), MongoUtils.asString(db, Dictionary.FIELD_HOST_LOCAL), MongoUtils.asString(db, Dictionary.FIELD_HOST_LOCAL_PID)), new Group(MongoUtils.asString(db, Dictionary.FIELD_HOST_TARGET_GROUP), MongoUtils.asString(db, Dictionary.FIELD_HOST_TARGET), MongoUtils.asString(db, Dictionary.FIELD_HOST_TARGET_GROUP)), MongoUtils.asLong(db, Dictionary.FIELD_RTT), MongoUtils.asLong(db, Dictionary.FIELD_TOTAL), MongoUtils.asLong(db, Dictionary.FIELD_TIMEOUT), MongoUtils.asLong(db, Dictionary.FIELD_EXCEPTION)))));
 		}
 
 		@SuppressWarnings("unchecked")

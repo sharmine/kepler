@@ -10,7 +10,7 @@
 
 	<properties>
 		<maven.project.name>${artifactId}-service</maven.project.name>
-		<maven.project.entry>com.kepler.service.Start</maven.project.entry>
+		<maven.project.entry>com.kepler.main.impl.Start</maven.project.entry>
 	</properties>
 
 	<dependencies>

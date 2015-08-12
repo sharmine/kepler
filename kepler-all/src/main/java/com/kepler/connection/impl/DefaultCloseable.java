@@ -28,12 +28,12 @@ public class DefaultCloseable implements Closeable {
 
 	@Override
 	public void close(Host host) throws Exception {
-		this.hosts.ban(host);
 		// 如果多个请求(Request)同时出现故障并关闭将使Invoker返回Null
 		ChannelInvoker invoker = this.channels.del(host);
 		if (invoker != null) {
+			this.hosts.ban(host);
 			invoker.close();
+			DefaultCloseable.LOGGER.warn("Host:" + host.getAsString() + " closed and attempt reconnect ...");
 		}
-		DefaultCloseable.LOGGER.warn("Host:" + host.getAsString() + " closed and attempt reconnect ...");
 	}
 }

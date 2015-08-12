@@ -20,6 +20,9 @@ final public class PropertiesUtils {
 
 	private final static Properties PROPERTIES = new Properties();
 
+	/**
+	 * 已被使用的配置
+	 */
 	private final static Map<String, String> USED = new HashMap<String, String>();
 
 	static {
@@ -35,18 +38,12 @@ final public class PropertiesUtils {
 		}
 	}
 
-	/**
-	 * JmxStatus.property -> Config File
-	 * 
-	 * @param key
-	 * @return
-	 */
 	public static String get(String key) {
 		return PropertiesUtils.get(key, null);
 	}
 
 	/**
-	 * JmxStatus.property -> Config File -> Def
+	 * System.getProperty -> Config File -> Def
 	 * 
 	 * @param key
 	 * @param def
@@ -55,7 +52,6 @@ final public class PropertiesUtils {
 	public static String get(String key, String def) {
 		String value = System.getProperty(key, PropertiesUtils.PROPERTIES.getProperty(key, def));
 		PropertiesUtils.USED.put(key, value);
-		PropertiesUtils.LOGGER.info("Loading properties: " + key + " / " + value);
 		return value;
 	}
 

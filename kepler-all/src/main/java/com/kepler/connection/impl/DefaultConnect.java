@@ -37,6 +37,7 @@ import com.kepler.host.HostLocks;
 import com.kepler.host.impl.DefaultHost;
 import com.kepler.host.impl.SegmentLocks;
 import com.kepler.invoker.Invoker;
+import com.kepler.main.Pid;
 import com.kepler.management.transfer.Collector;
 import com.kepler.protocol.Request;
 import com.kepler.protocol.Response;
@@ -74,6 +75,8 @@ public class DefaultConnect implements Connect {
 
 	private final HostLocks locks = new SegmentLocks();
 
+	private final Pid pid;
+
 	private final Acks acks;
 
 	private final Host local;
@@ -90,8 +93,9 @@ public class DefaultConnect implements Connect {
 
 	private final ThreadPoolExecutor threads;
 
-	public DefaultConnect(Acks acks, Host local, Connects connects, Closeable closeable, ChannelContext channels, SerialFactory serial, Collector collector, ThreadPoolExecutor threads) {
+	public DefaultConnect(Pid pid, Acks acks, Host local, Connects connects, Closeable closeable, ChannelContext channels, SerialFactory serial, Collector collector, ThreadPoolExecutor threads) {
 		super();
+		this.pid = pid;
 		this.acks = acks;
 		this.local = local;
 		this.serial = serial;
@@ -179,27 +183,27 @@ public class DefaultConnect implements Connect {
 	// 非共享
 	private class InvokerHandler extends ChannelInboundHandlerAdapter implements Invoker {
 
-		private final Host host;
-
-		private ChannelHandlerContext ctx;
+		private final Host target;
 
 		private Host local;
 
-		public InvokerHandler(Host host) {
+		private ChannelHandlerContext ctx;
+
+		public InvokerHandler(Host target) {
 			super();
-			this.host = host;
+			this.target = target;
 		}
 
 		public void channelActive(ChannelHandlerContext ctx) throws Exception {
-			// 1, localAddress -> is loop ? remoteaddress/localport : localAddress
-			this.local = (this.local = new DefaultHost(InetSocketAddress.class.cast((this.ctx = ctx).channel().localAddress()))).loop(Host.LOOP) ? new DefaultHost(Host.GROUP, Host.TAG, DefaultConnect.this.local.host(), this.local.port()) : this.local;
+			// 1, LocalAddress -> is loop ? RemoteAddress/LocalPort : LocalAddress
+			this.local = (this.local = new DefaultHost(InetSocketAddress.class.cast((this.ctx = ctx).channel().localAddress()), DefaultConnect.this.pid.pid())).loop(Host.LOOP) ? new DefaultHost(Host.GROUP, Host.TAG, DefaultConnect.this.pid.pid(), DefaultConnect.this.local.host(), this.local.port()) : this.local;
+			DefaultConnect.LOGGER.warn("Connect binding (" + this.local + " to " + this.target.getAsString() + ") ...");
 			this.ctx.fireChannelActive();
-			DefaultConnect.LOGGER.warn("Connect binding (" + this.local + " to " + this.host.getAsString() + ") ...");
 		}
 
 		public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-			DefaultConnect.LOGGER.warn("Connect closing (" + this.local + " to " + this.host.getAsString() + ") ...");
-			DefaultConnect.this.closeable.close(this.host);
+			DefaultConnect.this.closeable.close(this.target);
+			DefaultConnect.LOGGER.warn("Connect closing (" + this.local + " to " + this.target.getAsString() + ") ...");
 			ctx.fireChannelInactive();
 		}
 
@@ -209,7 +213,7 @@ public class DefaultConnect implements Connect {
 		}
 
 		public Object invoke(Request request) {
-			return this.invoke(new AckFuture(this.local, this.host, request));
+			return this.invoke(new AckFuture(this.local, this.target, request));
 		}
 
 		private Object invoke(AckFuture future) {
@@ -230,7 +234,7 @@ public class DefaultConnect implements Connect {
 			if (ack != null) {
 				ack.response(response);
 			} else {
-				DefaultConnect.LOGGER.warn("Missing future for ack: " + response.ack() + " (" + this.host.getAsString() + "), may be timeout ...");
+				DefaultConnect.LOGGER.warn("Missing data for ack: " + response.ack() + " (" + this.target.getAsString() + "), may be timeout ...");
 			}
 		}
 	}

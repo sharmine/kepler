@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import com.kepler.KeplerException;
 import com.kepler.config.PropertiesUtils;
 import com.kepler.host.Host;
+import com.kepler.main.Pid;
 
 /**
  * @author kim 2015年7月8日
@@ -34,8 +35,8 @@ public class LocalHost implements Host, Serializable {
 
 	private final Host local;
 
-	public LocalHost() throws Exception {
-		this.local = new DefaultHost(Host.GROUP, Host.TAG, this.address(), LocalHost.STABLE ? LocalHost.PORT : this.free());
+	public LocalHost(Pid pid) throws Exception {
+		this.local = new DefaultHost(Host.GROUP, Host.TAG, pid.pid(), this.address(), LocalHost.STABLE ? LocalHost.PORT : this.free());
 	}
 
 	private String address() throws Exception {
@@ -56,9 +57,9 @@ public class LocalHost implements Host, Serializable {
 	private int free() throws Exception {
 		for (int index = LocalHost.PORT; index < LocalHost.PORT + LocalHost.RANGE; index++) {
 			try (Socket socket = new Socket()) {
-				socket.connect(new InetSocketAddress(InetAddress.getByName("127.0.0.1"), index), LocalHost.INTERVAL);
+				socket.connect(new InetSocketAddress(InetAddress.getByName("localhost"), index), LocalHost.INTERVAL);
 			} catch (IOException e) {
-				LocalHost.LOGGER.debug("Port (" + index + ") used ... ");
+				LocalHost.LOGGER.debug("Port " + index + " used ... ");
 				return index;
 			}
 		}
@@ -70,6 +71,15 @@ public class LocalHost implements Host, Serializable {
 		return this.local.port();
 	}
 
+	public String pid() {
+		return this.local.pid();
+	}
+
+	@Override
+	public String tag() {
+		return this.local.tag();
+	}
+
 	@Override
 	public String host() {
 		return this.local.host();
@@ -78,11 +88,6 @@ public class LocalHost implements Host, Serializable {
 	@Override
 	public String group() {
 		return this.local.group();
-	}
-
-	@Override
-	public String tag() {
-		return this.local.tag();
 	}
 
 	public String getAsString() {

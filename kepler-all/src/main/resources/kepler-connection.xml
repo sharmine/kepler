@@ -11,6 +11,7 @@
 		<constructor-arg ref="kepler.serial" />
 		<constructor-arg ref="kepler.threads" />
 		<constructor-arg ref="kepler.ack.acks" />
+		<constructor-arg ref="kepler.main.pid" />
 		<constructor-arg ref="kepler.host.local" />
 		<constructor-arg ref="kepler.channel.context" />
 		<constructor-arg ref="kepler.management.transfer" />

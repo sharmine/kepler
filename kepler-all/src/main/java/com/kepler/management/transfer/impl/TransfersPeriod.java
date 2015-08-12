@@ -3,7 +3,7 @@ package com.kepler.management.transfer.impl;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import com.kepler.config.PropertiesUtils;
-import com.kepler.management.impl.Period;
+import com.kepler.management.Period;
 import com.kepler.management.transfer.Collector;
 import com.kepler.management.transfer.Feeder;
 
@@ -13,9 +13,9 @@ import com.kepler.management.transfer.Feeder;
 public class TransfersPeriod extends Period {
 
 	/**
-	 * 默认30秒, 最小15秒
+	 * 默认60秒, 最小30秒
 	 */
-	private final static int INTERVAL = Math.max(15000, Integer.valueOf(PropertiesUtils.get(TransfersPeriod.class.getName().toLowerCase() + ".interval", "30000")));
+	private final static int INTERVAL = Math.max(30000, Integer.valueOf(PropertiesUtils.get(TransfersPeriod.class.getName().toLowerCase() + ".interval", "60000")));
 
 	private final Collector collector;
 
@@ -33,7 +33,7 @@ public class TransfersPeriod extends Period {
 	}
 
 	@Override
-	protected void doing() {
-		TransfersPeriod.this.feeder.feed(TransfersPeriod.this.collector.transfers());
+	protected void trigger() {
+		this.feeder.feed(this.collector.transfers());
 	}
 }

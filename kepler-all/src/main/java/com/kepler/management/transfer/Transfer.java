@@ -10,7 +10,7 @@ import com.kepler.host.Host;
  * @author kim 2015年7月24日
  */
 public interface Transfer extends Serializable {
-
+	
 	public Host local();
 
 	public Host target();
@@ -43,7 +43,5 @@ public interface Transfer extends Serializable {
 	 */
 	public long exception();
 
-	public boolean pause();
-	
 	public void reset();
 }

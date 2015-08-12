@@ -1,4 +1,4 @@
-package com.kepler.management.impl;
+package com.kepler.management;
 
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -31,8 +31,13 @@ abstract public class Period implements Runnable {
 	/**
 	 * 实际操作
 	 */
-	abstract protected void doing();
+	abstract protected void trigger();
 
+	/**
+	 * 周期间隔
+	 * 
+	 * @return
+	 */
 	abstract protected long interval();
 
 	/**
@@ -74,6 +79,6 @@ abstract public class Period implements Runnable {
 				this.wait(Period.this.interval() / 3);
 			}
 		}
-		this.doing();
+		this.trigger();
 	}
 }

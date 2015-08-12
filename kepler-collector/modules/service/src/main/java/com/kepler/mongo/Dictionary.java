@@ -21,7 +21,7 @@ public interface Dictionary {
 	public final static String FIELD_HOSTS = "hosts";
 
 	public final static String FIELD_TOTAL = "total";
-	
+
 	public final static String FIELD_STATUS = "status";
 
 	public final static String FIELD_MINUTE = "minute";
@@ -42,7 +42,11 @@ public interface Dictionary {
 
 	public final static String FIELD_HOST_LOCAL_GROUP = "host_local_group";
 
+	public final static String FIELD_HOST_LOCAL_PID = "host_local_pid";
+
 	public final static String FIELD_HOST_TARGET_GROUP = "host_target_group";
+
+	public final static String FIELD_HOST_TARGET_PID = "host_source_pid";
 
 	public Object get(String key);
 }

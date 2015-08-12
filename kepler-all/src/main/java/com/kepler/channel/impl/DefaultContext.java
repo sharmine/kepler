@@ -1,5 +1,6 @@
 package com.kepler.channel.impl;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -9,13 +10,14 @@ import com.kepler.host.Host;
 import com.kepler.host.HostLocks;
 import com.kepler.host.HostsContext;
 import com.kepler.host.impl.SegmentLocks;
+import com.kepler.management.invoker.Invokers;
 
 /**
  * 主机 - 通道映射
  * 
  * @author kim 2015年7月9日
  */
-public class DefaultContext implements ChannelContext {
+public class DefaultContext implements Invokers, ChannelContext {
 
 	/**
 	 * Using ConcurrentHashMap for this.channels.keySet()
@@ -44,9 +46,14 @@ public class DefaultContext implements ChannelContext {
 	public ChannelInvoker put(Host host, ChannelInvoker invoker) {
 		synchronized (this.lock.get(host)) {
 			this.channels.put(host, invoker);
+			// 从黑名单移除(如果有)
 			this.context.unban(host);
 		}
 		return invoker;
+	}
+
+	public Collection<Host> hosts() {
+		return this.channels.keySet();
 	}
 
 	public boolean contain(Host host) {

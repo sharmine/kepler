@@ -8,7 +8,6 @@
 	<bean id="kepler.service.exported.broadcast" class="com.kepler.service.exported.BroadcastExported">
 		<constructor-arg>
 			<list>
-				<ref bean="kepler.service.exported.status" />
 				<ref bean="kepler.service.exported.context" />
 				<ref bean="kepler.service.exported.zookeeper" />
 			</list>

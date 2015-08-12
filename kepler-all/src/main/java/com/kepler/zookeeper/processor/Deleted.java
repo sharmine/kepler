@@ -32,7 +32,7 @@ public class Deleted extends Processor {
 			this.path = path;
 		}
 
-		public String path() {
+		public String route() {
 			return this.path;
 		}
 

@@ -16,5 +16,5 @@ public interface Transfers extends Serializable {
 
 	public String method();
 
-	public Collection<Transfer> transfer();
+	public Collection<Transfer> transfers();
 }

@@ -1,6 +1,7 @@
 package com.kepler.host.impl;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,7 +32,7 @@ public class DefaultContext implements HostsContext, Extension, Router {
 	/**
 	 * 路由策略
 	 */
-	private final Map<String, Routing> routes = new ConcurrentHashMap<String, Routing>();
+	private final Map<String, Routing> routes = new HashMap<String, Routing>();
 
 	/**
 	 * 重连
@@ -52,7 +53,7 @@ public class DefaultContext implements HostsContext, Extension, Router {
 	public Hosts get(Class<?> service, String version) {
 		Service vs = new Service(service, version);
 		Hosts hosts = this.hosts.get(vs);
-		return hosts != null ? hosts : this.put(vs, new DefaultHosts(this.routes.get(DefaultContext.ROUTING)));
+		return hosts != null ? hosts : this.put(vs, new DefaultHosts(service.getName(), version, this.routes.get(DefaultContext.ROUTING)));
 	}
 
 	public Collection<Hosts> hosts() {

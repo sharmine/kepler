@@ -47,7 +47,7 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 
 	private final Host local;
 
-	private final Host host;
+	private final Host target;
 
 	/**
 	 * ACK状态
@@ -69,10 +69,10 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 	 */
 	private boolean timeout;
 
-	public AckFuture(Host local, Host host, Request request) {
+	public AckFuture(Host local, Host target, Request request) {
 		super();
-		this.host = host;
 		this.local = local;
+		this.target = target;
 		this.request = request;
 	}
 
@@ -85,7 +85,7 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 		// 外部取消表示为超时
 		if (this.canceled || this.timeout) {
 			this.stauts = Status.TIMEOUT;
-			throw new KeplerException("ACK: " + this.request.ack() + " for (" + this.request.service() + " / " + this.request.version() + ") to " + this.host.getAsString() + " timeout after: " + this.elapse());
+			throw new KeplerException("ACK: " + this.request.ack() + " for (" + this.request.service() + " / " + this.request.version() + ") to " + this.target.getAsString() + " timeout after: " + this.elapse());
 		}
 		return this;
 	}
@@ -104,7 +104,7 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 	}
 
 	public Host host() {
-		return this.host;
+		return this.target;
 	}
 
 	public Host local() {
@@ -144,9 +144,9 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 	 */
 	public boolean cancel(boolean mayInterruptIfRunning) {
 		if (!this.canceled) {
-			AckFuture.LOGGER.warn("ACK: " + this.request.ack() + " (Using" + this.elapse() + ") will be canceled ...");
 			this.canceled = true;
 			this.thread.interrupt();
+			AckFuture.LOGGER.warn("ACK: " + this.request.ack() + " (Using" + this.elapse() + ") canceled ...");
 		}
 		return this.canceled;
 	}
@@ -185,7 +185,7 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 	}
 
 	/**
-	 * Response尚未回调并且等待尚未被外部取消
+	 * Response尚未回调并且等待尚未取消
 	 * 
 	 * @return
 	 */

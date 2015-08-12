@@ -13,11 +13,11 @@ import com.kepler.config.PropertiesUtils;
  */
 public class ThreadFactory implements FactoryBean<ThreadPoolExecutor> {
 
-	private final static int MAX = Integer.valueOf(PropertiesUtils.get(ThreadFactory.class.getName().toLowerCase() + ".max", "50"));
+	private final static int MAX = Integer.valueOf(PropertiesUtils.get(ThreadFactory.class.getName().toLowerCase() + ".max", "100"));
 
 	private final static int CORE = Integer.valueOf(PropertiesUtils.get(ThreadFactory.class.getName().toLowerCase() + ".core", "25"));
 
-	private final static int QUEUE = Integer.valueOf(PropertiesUtils.get(ThreadFactory.class.getName().toLowerCase() + ".queue", "20"));
+	private final static int QUEUE = Integer.valueOf(PropertiesUtils.get(ThreadFactory.class.getName().toLowerCase() + ".queue", "50"));
 
 	private final static int KEEPALIVE = Integer.valueOf(PropertiesUtils.get(ThreadFactory.class.getName().toLowerCase() + ".keepalive", "60000"));
 

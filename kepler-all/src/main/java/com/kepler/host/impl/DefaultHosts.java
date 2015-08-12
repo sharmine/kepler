@@ -39,9 +39,19 @@ public class DefaultHosts implements Hosts, HostCollector {
 
 	private final Routing routing;
 
-	public DefaultHosts(Routing routing) {
+	private final String service;
+
+	private final String version;
+
+	public DefaultHosts(String service, String version, Routing routing) {
 		super();
 		this.routing = routing;
+		this.service = service;
+		this.version = version;
+	}
+
+	private String detail(Host host, String action) {
+		return new StringBuffer().append("Host: ").append(host.getAsString()).append(" (").append(host.group()).append(") ").append(action).append(" ... (").append(this.service).append(" / ").append(this.version).append(") ").toString();
 	}
 
 	public void put(Host host) {
@@ -50,7 +60,7 @@ public class DefaultHosts implements Hosts, HostCollector {
 				this.tags.put(host);
 				this.bans.del(host);
 			}
-			DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " added ... ");
+			DefaultHosts.LOGGER.warn(this.detail(host, "added"));
 		}
 	}
 
@@ -58,7 +68,7 @@ public class DefaultHosts implements Hosts, HostCollector {
 		synchronized (this.locks.get(host)) {
 			// 从Host/Tag删除或从Ban删除
 			if ((this.hosts.remove(host) && this.tags.del(host)) || this.bans.del(host)) {
-				DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " removed ... ");
+				DefaultHosts.LOGGER.warn(this.detail(host, "removed"));
 			}
 		}
 	}
@@ -67,7 +77,7 @@ public class DefaultHosts implements Hosts, HostCollector {
 		synchronized (this.locks.get(host)) {
 			if (this.hosts.remove(host) && this.tags.del(host)) {
 				this.bans.put(host);
-				DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " baned ... ");
+				DefaultHosts.LOGGER.warn(this.detail(host, "baned"));
 			}
 		}
 	}
@@ -77,7 +87,7 @@ public class DefaultHosts implements Hosts, HostCollector {
 			if (this.bans.del(host)) {
 				this.tags.put(host);
 				this.hosts.add(host);
-				DefaultHosts.LOGGER.warn("Host: " + host.getAsString() + " unbaned ... ");
+				DefaultHosts.LOGGER.warn(this.detail(host, "unbaned"));
 			}
 		}
 	}
@@ -135,7 +145,7 @@ public class DefaultHosts implements Hosts, HostCollector {
 		 */
 		public Tags put(Host host) {
 			List<Host> hosts = this.get(host.tag());
-			(hosts = hosts != DefaultHosts.EMPTY ? hosts : new CopyOnWriteArrayList<Host>()).add(host);
+			(hosts = hosts != DefaultHosts.EMPTY ? hosts : new ArrayList<Host>()).add(host);
 			this.tags.put(host.tag(), hosts);
 			return this;
 		}
@@ -151,13 +161,13 @@ public class DefaultHosts implements Hosts, HostCollector {
 
 		public void put(Host host) {
 			this.bans.add(host);
-			DefaultHosts.LOGGER.info("Host(Ban): " + host.getAsString() + " added ... ");
+			DefaultHosts.LOGGER.warn(DefaultHosts.this.detail(host, "added (Bans) "));
 		}
 
 		public boolean del(Host host) {
 			boolean removed = this.bans.remove(host);
 			if (removed) {
-				DefaultHosts.LOGGER.info("Host(Ban): " + host.getAsString() + " removed ... ");
+				DefaultHosts.LOGGER.warn(DefaultHosts.this.detail(host, "removed (Bans) "));
 			}
 			return removed;
 		}

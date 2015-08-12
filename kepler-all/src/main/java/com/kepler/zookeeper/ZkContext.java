@@ -195,10 +195,10 @@ public class ZkContext implements Imported, Exported {
 					RouteChange change = ZkContext.this.changes.get();
 					switch (change.action()) {
 					case PUSH:
-						ZkContext.this.importing(change.path());
+						ZkContext.this.importing(change.route());
 						continue;
 					case DEL:
-						ZkContext.this.imported.destory(change.path());
+						ZkContext.this.imported.destory(change.route());
 						continue;
 					}
 				} catch (Throwable e) {

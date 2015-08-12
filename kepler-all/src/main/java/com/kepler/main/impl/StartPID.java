@@ -1,17 +1,19 @@
-package com.kepler.service;
+package com.kepler.main.impl;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.lang.management.ManagementFactory;
 import java.text.MessageFormat;
 
 import com.kepler.config.PropertiesUtils;
+import com.kepler.main.Pid;
 
 /**
  * @author kim 2015年7月15日
  */
-public class StartPID {
+public class StartPID implements Pid{
 
 	private final static String FILENAME = PropertiesUtils.get(StartPID.class.getName().toLowerCase() + ".file", "kepler") + "_{0}";
 
@@ -26,17 +28,16 @@ public class StartPID {
 	}
 
 	public void init() throws IOException {
-		this.pid(this.pid);
-	}
-
-	private StartPID pid(String pid) throws IOException {
-		try (FileWriter writer = new FileWriter(this.file)) {
-			writer.write(pid);
+		try (Writer writer = new FileWriter(this.file)) {
+			writer.write(this.pid);
 		}
-		return this;
 	}
 
 	public void destory() {
 		this.file.delete();
+	}
+
+	public String pid() {
+		return this.pid;
 	}
 }

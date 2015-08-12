@@ -1,6 +1,5 @@
 package com.kepler.host.impl;
 
-import java.io.Serializable;
 import java.net.InetSocketAddress;
 
 import com.kepler.host.Host;
@@ -8,28 +7,31 @@ import com.kepler.host.Host;
 /**
  * @author kim 2015年7月8日
  */
-public class DefaultHost implements Host, Serializable {
+public class DefaultHost implements Host {
 
 	private final static long serialVersionUID = 1L;
 
 	private final int port;
 
-	private final String tag;
+	private final String pid;
 
-	private final String group;
+	private final String tag;
 
 	private final String host;
 
-	public DefaultHost(InetSocketAddress address) {
-		this(Host.GROUP, Host.TAG, address.getHostName(), address.getPort());
+	private final String group;
+
+	public DefaultHost(InetSocketAddress address, String pid) {
+		this(Host.GROUP, Host.TAG, pid, address.getHostName(), address.getPort());
 	}
 
-	public DefaultHost(String group, String tag, String host, int port) {
+	public DefaultHost(String group, String tag, String pid, String host, int port) {
 		super();
 		this.group = group;
 		this.host = host;
 		this.port = port;
 		this.tag = tag;
+		this.pid = pid;
 	}
 
 	@Override
@@ -45,6 +47,10 @@ public class DefaultHost implements Host, Serializable {
 	@Override
 	public String tag() {
 		return this.tag;
+	}
+
+	public String pid() {
+		return this.pid;
 	}
 
 	@Override
@@ -78,12 +84,8 @@ public class DefaultHost implements Host, Serializable {
 		return this.host + ":" + this.port;
 	}
 
-	public static DefaultHost valueOf(String strings) {
-		return DefaultHost.valueOf(strings, null);
-	}
-
-	public static DefaultHost valueOf(String strings, String group) {
+	public static DefaultHost valueOf(String strings, String group, String pid) {
 		String[] param = strings.split(":");
-		return new DefaultHost(Host.GROUP_DEFAULT, group != null ? group : Host.TAG_DEFAULT, param[0], Integer.valueOf(param[1]));
+		return new DefaultHost(Host.GROUP_DEFAULT, group != null ? group : Host.TAG_DEFAULT, pid, param[0], Integer.valueOf(param[1]));
 	}
 }

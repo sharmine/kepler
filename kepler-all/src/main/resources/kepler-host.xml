@@ -6,9 +6,11 @@
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 	<alias name="kepler.host.context" alias="kepler.router" />
-	<alias name="kepler.host.context" alias="kepler.extension.router"/>
-	
-	<bean id="kepler.host.local" class="com.kepler.host.impl.LocalHost" />
+	<alias name="kepler.host.context" alias="kepler.extension.router" />
+
+	<bean id="kepler.host.local" class="com.kepler.host.impl.LocalHost">
+		<constructor-arg ref="kepler.main.pid" />
+	</bean>
 
 	<bean id="kepler.host.context" class="com.kepler.host.impl.DefaultContext">
 		<constructor-arg ref="kepler.connection.connects" />

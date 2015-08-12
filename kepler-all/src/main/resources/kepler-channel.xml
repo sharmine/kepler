@@ -4,6 +4,8 @@
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
     http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	
+	<alias name="kepler.channel.context" alias="kepler.management.invoker.invokers"/>
 
 	<bean id="kepler.channel.context" class="com.kepler.channel.impl.DefaultContext">
 		<constructor-arg ref="kepler.host.context" />

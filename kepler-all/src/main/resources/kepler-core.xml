@@ -7,6 +7,7 @@
 
 	<import resource="kepler-ack.xml" />
 	<import resource="kepler-host.xml" />
+	<import resource="kepler-main.xml" />
 	<import resource="kepler-header.xml" />
 	<import resource="kepler-router.xml" />
 	<import resource="kepler-thread.xml" />
@@ -19,7 +20,6 @@
 	<import resource="kepler-extension.xml" />
 	<import resource="kepler-connection.xml" />
 	<import resource="kepler-management.xml" />
-	<import resource="kepler-management-status.xml" />
 	<import resource="kepler-zookeeper.xml" />
 	<import resource="kepler-zookeeper-imported.xml" />
 	<import resource="kepler-zookeeper-processor.xml" />

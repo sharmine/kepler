@@ -5,27 +5,7 @@
     http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<alias name="kepler.management.status.period" alias="kepler.service.exported.status" />
-
-	<bean id="kepler.management.status" class="com.kepler.management.status.impl.ChainedStatus">
-		<constructor-arg>
-			<util:list>
-				<ref bean="kepler.management.status.jmx" />
-				<ref bean="kepler.management.status.thread" />
-				<ref bean="kepler.management.status.properties" />
-			</util:list>
-		</constructor-arg>
-	</bean>
-
-	<bean id="kepler.management.status.thread" class="com.kepler.management.status.impl.ThreadStatus">
-		<constructor-arg ref="kepler.threads" />
-	</bean>
-
-	<bean id="kepler.management.status.jmx" class="com.kepler.management.status.impl.JmxStatus" init-method="init" />
-
-	<bean id="kepler.management.status.properties" class="com.kepler.management.status.impl.PropertiesStatus" init-method="init" />
-
-	<bean id="kepler.management.status.period" class="com.kepler.management.status.impl.StatusPeriod" destroy-method="destory">
+	<bean id="kepler.management.status.period" class="com.kepler.management.status.impl.StatusPeriod" init-method="init" destroy-method="destory">
 		<constructor-arg ref="kepler.threads" />
 		<constructor-arg ref="kepler.host.local" />
 		<constructor-arg ref="kepler.management.status" />

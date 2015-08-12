@@ -6,6 +6,7 @@
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 	<alias name="kepler.management.handler" alias="kepler.management.feeder.transfer" />
+	<alias name="kepler.management.handler" alias="kepler.management.feeder.invoker" />
 	<alias name="kepler.management.handler" alias="kepler.management.feeder.status" />
 	<alias name="kepler.management.handler" alias="kepler.management.roundtrip" />
 	<alias name="kepler.management.handler" alias="kepler.management.exported" />
@@ -20,7 +21,7 @@
 		<constructor-arg index="1" value="com.kepler.management.search.Exported" />
 		<constructor-arg ref="kepler.management.exported" />
 	</bean>
-	
+
 	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
 		<constructor-arg index="1" value="com.kepler.management.search.Runtime" />
 		<constructor-arg ref="kepler.management.runtime" />
@@ -30,7 +31,12 @@
 		<constructor-arg index="1" value="com.kepler.management.transfer.Feeder" />
 		<constructor-arg ref="kepler.management.feeder.transfer" />
 	</bean>
-
+	
+	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
+		<constructor-arg index="1" value="com.kepler.management.invoker.Feeder" />
+		<constructor-arg ref="kepler.management.feeder.invoker" />
+	</bean>
+	
 	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
 		<constructor-arg index="1" value="com.kepler.management.status.Feeder" />
 		<constructor-arg ref="kepler.management.feeder.status" />
@@ -38,6 +44,7 @@
 
 	<bean id="kepler.management.handler" class="com.kepler.collector.MongoHandler">
 		<constructor-arg ref="kepler.mongo.config.transfer" />
+		<constructor-arg ref="kepler.mongo.config.invoker" />
 		<constructor-arg ref="kepler.mongo.config.status" />
 	</bean>
 

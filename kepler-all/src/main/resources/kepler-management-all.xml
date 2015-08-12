@@ -5,17 +5,8 @@
     http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<import resource="classpath:kepler-core.xml" />
-	<import resource="classpath:kepler-server.xml" />
-	<!-- 
-	<import resource="classpath:kepler-management-all.xml" />
-	-->
-
-	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
-		<constructor-arg index="1" value="com.kepler.TestApp" />
-		<constructor-arg ref="kepler.test" />
-	</bean>
-
-	<bean id="kepler.test" class="com.kepler.impl.TestAppImpl" />
+	<import resource="kepler-management-status.xml" />
+	<import resource="kepler-management-invoker.xml" />
+	<import resource="kepler-management-transfer.xml" />
 
 </beans>

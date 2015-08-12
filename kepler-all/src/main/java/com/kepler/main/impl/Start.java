@@ -1,4 +1,4 @@
-package com.kepler.service;
+package com.kepler.main.impl;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -46,11 +46,9 @@ public class Start {
 		@Override
 		public void run() {
 			synchronized (this.context) {
-				synchronized (context) {
-					// 先关闭后唤醒
-					this.context.close();
-					this.context.notifyAll();
-				}
+				// 先关闭后唤醒
+				this.context.close();
+				this.context.notifyAll();
 			}
 		}
 	}

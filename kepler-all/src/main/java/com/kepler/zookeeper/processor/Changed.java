@@ -32,7 +32,7 @@ public class Changed extends Processor {
 			this.path = path;
 		}
 
-		public String path() {
+		public String route() {
 			return this.path;
 		}
 
