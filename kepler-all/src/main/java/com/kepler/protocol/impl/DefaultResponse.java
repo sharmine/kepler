@@ -1,11 +1,14 @@
 package com.kepler.protocol.impl;
 
+import com.kepler.config.PropertiesUtils;
 import com.kepler.protocol.Response;
 
 /**
  * @author kim 2015年7月8日
  */
 public class DefaultResponse implements Response {
+
+	private final static boolean TRACE = Boolean.valueOf(PropertiesUtils.get(DefaultResponse.class.getName().toLowerCase() + ".trace", "false"));
 
 	private final static long serialVersionUID = 1L;
 
@@ -27,7 +30,12 @@ public class DefaultResponse implements Response {
 		super();
 		this.ack = ack;
 		this.response = response;
-		this.throwable = throwable != null ? (throwable.getClass() + ": " + throwable.getMessage()) : null;
+		this.throwable = throwable != null ? new StringBuffer().append(throwable.getClass()).append(": ").append(throwable.getMessage()).append(DefaultResponse.TRACE ? this.trace(throwable) : "").toString() : null;
+	}
+
+	private String trace(Throwable throwable) {
+		StackTraceElement[] element = throwable.getStackTrace();
+		return element != null && element.length > 0 ? new StringBuffer().append(" (Class: ").append(element[0].getClassName()).append(" ,Method: ").append(element[0].getMethodName()).append(" ,Line: ").append(element[0].getLineNumber()).append(") ").toString() : "";
 	}
 
 	@Override
