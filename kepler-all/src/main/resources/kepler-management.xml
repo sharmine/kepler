@@ -5,7 +5,7 @@
     http://www.springframework.org/schema/util
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<alias name="kepler.management.transfer" alias="kepler.service.imported.collector" />
+	<alias name="kepler.management.transfer.collector" alias="kepler.service.imported.collector" />
 
 	<bean id="kepler.management.status" class="com.kepler.management.status.impl.ChainedStatus">
 		<constructor-arg>
@@ -19,7 +19,7 @@
 		</constructor-arg>
 	</bean>
 
-	<bean id="kepler.management.transfer" class="com.kepler.management.transfer.impl.DefaultCollector">
+	<bean id="kepler.management.transfer.collector" class="com.kepler.management.transfer.impl.DefaultCollector">
 		<constructor-arg ref="kepler.threads" />
 	</bean>
 

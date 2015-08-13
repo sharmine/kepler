@@ -20,9 +20,9 @@
 	</bean>
 
 	<bean class="com.kepler.admin.controller.RemoteController">
-		<constructor-arg ref="kepler.management.runtime" />
 		<constructor-arg ref="kepler.management.exported" />
 		<constructor-arg ref="kepler.management.roundtrip" />
+		<constructor-arg ref="kepler.management.properties" />
 	</bean>
 
 </beans>

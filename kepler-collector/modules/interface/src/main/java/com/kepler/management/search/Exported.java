@@ -3,6 +3,7 @@ package com.kepler.management.search;
 import java.util.Collection;
 
 import com.kepler.annotation.Version;
+import com.kepler.host.Host;
 
 /**
  * @author kim 2015年8月8日
@@ -10,5 +11,5 @@ import com.kepler.annotation.Version;
 @Version("0.0.1")
 public interface Exported {
 
-	public Collection<String> exported(String service, String version, String host);
+	public Collection<Host> exported(String host);
 }

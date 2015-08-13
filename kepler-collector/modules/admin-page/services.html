@@ -57,7 +57,7 @@
 						<span id="detail_tag" class="info-right"></span>
 					</div>
 				</li>
-				<div id="status">
+				<div id="roundtrip">
 				</div>
 			</ul>
 			<div class="reg-row">
@@ -74,11 +74,11 @@
 			</ul>
 		</div>
 		
-		<div id="runtime" class="user-body" style="display:none">
+		<div id="properties" class="user-body" style="display:none">
 			<ul>
 				<li>
 				</li>
-				<div id="runtime_list">
+				<div id="properties_list">
 				</div>
 			</ul>
 		</div>
@@ -120,7 +120,7 @@
 			$('#detail-overdue').removeClass('current-span');
 			$('#detail').slideDown();
 			$('#exported').slideUp();
-			$('#runtime').slideUp();
+			$('#properties').slideUp();
 		});
 
 		$('#detail-used').on('click',function(){
@@ -128,7 +128,7 @@
 			$('#detail-used').addClass('current-span');
 			$('#detail-overdue').removeClass('current-span');
 			$('#exported').slideDown();
-			$('#runtime').slideUp();
+			$('#properties').slideUp();
 			$('#detail').slideUp();
 		});
 
@@ -136,18 +136,17 @@
 			$('#detail-unuse').removeClass('current-span');
 			$('#detail-used').removeClass('current-span');
 			$('#detail-overdue').addClass('current-span');
-			$('#runtime').slideDown();
+			$('#properties').slideDown();
 			$('#exported').slideUp();
 			$('#detail').slideUp();
 		});
 
-		var status = false;
 		var current = "";
 		var previous = "";
+		var roundtrip = false;
 		var template_service = "<ul class='coupon-used-list'><li><div class='coupon-list-left'><h2>${service}</h2><h3>${path}</h3></div><div class='coupon-list-right'><div><h2 class='coupon-list-right-button' onclick='${action}'>${button}</h2></div><div></div></div></li></ul>"
-		var template_status = "<li><div><span class=\"info-left\">${method}</span><span class=\"info-right\">${host}</span></div><div><span class=\"info-left\">A/T/E/RTT</span><span class=\"info-right\">${status}</span></div></li>"
-		var template_runtime = "<li><div><span class=\"info-left\">${key}</span><span class=\"info-right\">${value}</span></div></li>";
-		var template_relation = "<li><div><span class=\"info-left\">${host}</span></div></li>"
+		var template_roundtrip = "<li><div><span class=\"info-left\">${method}</span><span class=\"info-right\">${host}</span></div><div><span class=\"info-left\">A/T/E/RTT</span><span class=\"info-right\">${roundtrip}</span></div></li>"
+		var template_pair = "<li><div><span class=\"info-left\">${key}</span><span class=\"info-right\">${value}</span></div></li>";
 		
 		String.prototype.replaceAll = function(s1, s2){
 		　　return this.replace(new RegExp(s1,"gm"),s2);
@@ -159,7 +158,7 @@
 			$('#nodes').slideDown();
 			$('#tab_detail').slideUp();
 			$('#tab_normal').slideDown();
-			status = false;
+			roundtrip = false;
 			current = path;
 			previous = path.substring(0, path.lastIndexOf("/"));
 			$("body").everyTime('9999s', function(){});
@@ -185,7 +184,7 @@
 		}
 
 		function node(path, index){
-			status = true;
+			roundtrip = true;
 			previous = path.substring(0, path.lastIndexOf("/"));
 			$('#nodes').slideUp();
 			$('#detail').slideDown();
@@ -195,26 +194,26 @@
 			$('#detail_host').val(nodes[index].host);
 			$('#detail_host_group').text(nodes[index].host + " (" + nodes[index].group + ") ");
 			$('#submit-offline').attr("path", nodes[index].path)
-			if(status) {
-				state();
+			if(roundtrip) {
+				rtt();
 				exported();
-				runtime();
-				$("body").everyTime('60s', state);
-				$("body").everyTime('300s', exported);
-				$("body").everyTime('30s', runtime);
+				properties();
+				$("body").everyTime('60s', rtt);
+				$("body").everyTime('120s', exported);
+				$("body").everyTime('30s', properties);
 			}
 		}
 
-		function state(){
+		function rtt(){
 			jQuery.ajax({
 				type: "GET",
 				url: "/api/roundtrip",
 				data: {"path": previous, "host": $('#detail_host').val()},
 				success: function callbackFunction(data){
-					$("#status").empty();
+					$("#roundtrip").empty();
 					$(data).each(function(index, element){
 						$(element.transfers).each(function(index, roundtrip){
-							$("#status").append(template_status.replace("${method}", "METHOD: " + element.method).replace("${host}", roundtrip.local.host + " / " + roundtrip.local.group).replace("${status}", roundtrip.total + "/" + roundtrip.timeout + "/" + roundtrip.exception + "/" + (roundtrip.rtt / roundtrip.total).toFixed(2)));
+							$("#roundtrip").append(template_roundtrip.replace("${method}", "METHOD: " + element.method).replace("${host}", roundtrip.local.host + " / " + roundtrip.local.group).replace("${roundtrip}", (roundtrip.total / roundtrip.base).toFixed(2) + "/" + (roundtrip.timeout / roundtrip.base).toFixed(2) + "/" + (roundtrip.exception / roundtrip.base).toFixed(2) + "/" + (roundtrip.rtt / roundtrip.total).toFixed(2)));
 						});
 					});
 				}
@@ -225,25 +224,25 @@
 			jQuery.ajax({
 				type: "GET",
 				url: "/api/exported",
-				data: {"path": previous, "host": $('#detail_host').val()},
+				data: {"host": $('#detail_host').val()},
 				success: function callbackFunction(data){
 					$("#exported_list").empty();
 					$(data).each(function(index, element){
-						$("#exported_list").append(template_relation.replace("${host}", element));
+						$("#exported_list").append(template_pair.replace("${key}", element.group).replace("${value}", element.host + "@" + element.pid));
 					});
 				}
 			});
 		}
 		
-		function runtime(){
+		function properties(){
 			jQuery.ajax({
 				type: "GET",
-				url: "/api/runtime",
+				url: "/api/properties",
 				data: {"host": $('#detail_host').val()},
 				success: function callbackFunction(data){
-					$("#runtime_list").empty();
+					$("#properties_list").empty();
 					for(key in data) {
-						$("#runtime_list").append(template_runtime.replace("${key}", key.length < 40 ? key : (key.substring(0, 10) + "..." + key.substring(key.length - 27))).replace("${value}", data[key]));
+						$("#properties_list").append(template_pair.replace("${key}", key.length < 30 ? key : (key.substring(0, 5) + "..." + key.substring(key.length - 22))).replace("${value}", data[key]));
 					}
 				}
 			});
@@ -266,7 +265,7 @@
 			
 		$("#go-back").click(function() {
 			$('#exported').attr("style", "display:none");
-			$('#runtime').attr("style", "display:none");
+			$('#properties').attr("style", "display:none");
 			$('#detail-unuse').addClass('current-span');
 			$('#detail-used').removeClass('current-span');
 			$('#detail-overdue').removeClass('current-span');

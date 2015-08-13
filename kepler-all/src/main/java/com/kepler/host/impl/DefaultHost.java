@@ -84,8 +84,8 @@ public class DefaultHost implements Host {
 		return this.host + ":" + this.port;
 	}
 
-	public static DefaultHost valueOf(String strings, String group, String pid) {
+	public static DefaultHost valueOf(String strings, String group, String tag, String pid) {
 		String[] param = strings.split(":");
-		return new DefaultHost(Host.GROUP_DEFAULT, group != null ? group : Host.TAG_DEFAULT, pid, param[0], Integer.valueOf(param[1]));
+		return new DefaultHost(group, tag, pid, param[0], param.length == 2 ? Integer.valueOf(param[1]) : -1);
 	}
 }

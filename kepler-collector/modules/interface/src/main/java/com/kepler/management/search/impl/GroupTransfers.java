@@ -103,9 +103,14 @@ public class GroupTransfers implements Transfers {
 			return this;
 		}
 
+		@SuppressWarnings("unused")
+		public int getBase() {
+			return GroupTransfers.this.base;
+		}
+
 		@Override
 		public Host local() {
-			return DefaultHost.valueOf(this.local.getHost(), this.local.getGroup(), "");
+			return DefaultHost.valueOf(this.local.getHost(), this.local.getGroup(), Host.TAG_DEFAULT, null);
 		}
 
 		@SuppressWarnings("unused")
@@ -115,7 +120,7 @@ public class GroupTransfers implements Transfers {
 
 		@Override
 		public Host target() {
-			return DefaultHost.valueOf(this.target.getHost(), this.target.getGroup(), "");
+			return DefaultHost.valueOf(this.target.getHost(), this.target.getGroup(), Host.TAG_DEFAULT, null);
 		}
 
 		@SuppressWarnings("unused")
@@ -125,7 +130,7 @@ public class GroupTransfers implements Transfers {
 
 		@Override
 		public long rtt() {
-			return this.rtt / GroupTransfers.this.base;
+			return this.rtt;
 		}
 
 		@SuppressWarnings("unused")
@@ -135,7 +140,7 @@ public class GroupTransfers implements Transfers {
 
 		@Override
 		public long total() {
-			return this.total / GroupTransfers.this.base;
+			return this.total;
 		}
 
 		@SuppressWarnings("unused")
@@ -145,7 +150,7 @@ public class GroupTransfers implements Transfers {
 
 		@Override
 		public long timeout() {
-			return this.timeout / GroupTransfers.this.base;
+			return this.timeout;
 		}
 
 		@SuppressWarnings("unused")
@@ -155,16 +160,12 @@ public class GroupTransfers implements Transfers {
 
 		@Override
 		public long exception() {
-			return this.exception / GroupTransfers.this.base;
+			return this.exception;
 		}
 
 		@SuppressWarnings("unused")
 		public long getException() {
 			return this.exception();
-		}
-
-		public boolean offline() {
-			return false;
 		}
 
 		@Override

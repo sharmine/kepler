@@ -38,15 +38,19 @@ public interface Dictionary {
 
 	public final static String FIELD_HOST_LOCAL = "host_local";
 
-	public final static String FIELD_HOST_TARGET = "host_target";
+	public final static String FIELD_HOST_LOCAL_PID = "host_local_pid";
+
+	public final static String FIELD_HOST_LOCAL_TAG = "host_local_tag";
 
 	public final static String FIELD_HOST_LOCAL_GROUP = "host_local_group";
 
-	public final static String FIELD_HOST_LOCAL_PID = "host_local_pid";
-
-	public final static String FIELD_HOST_TARGET_GROUP = "host_target_group";
+	public final static String FIELD_HOST_TARGET = "host_target";
 
 	public final static String FIELD_HOST_TARGET_PID = "host_source_pid";
+
+	public final static String FIELD_HOST_TARGET_TAG = "host_source_tag";
+
+	public final static String FIELD_HOST_TARGET_GROUP = "host_target_group";
 
 	public Object get(String key);
 }

@@ -7,8 +7,8 @@
 
 	<bean class="com.kepler.management.transfer.impl.TransfersPeriod" init-method="init" destroy-method="destory">
 		<constructor-arg ref="kepler.threads" />
-		<constructor-arg ref="kepler.management.transfer" />
 		<constructor-arg ref="kepler.management.transfer.feeder" />
+		<constructor-arg ref="kepler.management.transfer.collector" />
 	</bean>
 
 	<bean id="kepler.management.transfer.feeder" class="com.kepler.service.imported.ImportedServiceFactory" parent="kepler.service.imported.abstract">
