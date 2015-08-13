@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+    http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<alias name="kepler.invoker.threshold" alias="kepler.invoker" />
+
+	<bean id="kepler.invoker.threshold" class="com.kepler.invoker.impl.ThresholdInvoker">
+		<constructor-arg ref="kepler.invoker.actual" />
+	</bean>
+
+	<bean id="kepler.invoker.actual" class="com.kepler.invoker.impl.ActualInvoker">
+		<constructor-arg ref="kepler.router" />
+		<constructor-arg ref="kepler.channel.context" />
+	</bean>
+
+</beans>

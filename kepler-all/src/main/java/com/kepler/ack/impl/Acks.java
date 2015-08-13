@@ -35,6 +35,7 @@ public class Acks {
 	}
 
 	public AckFuture timeout() throws Exception {
-		return this.timeouts.take();
+		// 超时检测队列触发时Waiting队列需同时Remove成功则表示真正超时
+		return this.waitings.remove(this.timeouts.take().request().ack());
 	}
 }
