@@ -71,7 +71,6 @@ public class InvokerHandler implements Feeder, Exported {
 		}
 
 		public Collection<Host> exported() {
-			System.out.println(this.exported.size());
 			return this.exported;
 		}
 	}

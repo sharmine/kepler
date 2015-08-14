@@ -1,9 +1,13 @@
 package com.kepler.thread;
 
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.FactoryBean;
 
 import com.kepler.config.PropertiesUtils;
@@ -13,11 +17,15 @@ import com.kepler.config.PropertiesUtils;
  */
 public class ThreadFactory implements FactoryBean<ThreadPoolExecutor> {
 
+	private final static Log LOGGER = LogFactory.getLog(ThreadFactory.class);
+
 	private final static int MAX = Integer.valueOf(PropertiesUtils.get(ThreadFactory.class.getName().toLowerCase() + ".max", "100"));
 
 	private final static int CORE = Integer.valueOf(PropertiesUtils.get(ThreadFactory.class.getName().toLowerCase() + ".core", "25"));
 
 	private final static int QUEUE = Integer.valueOf(PropertiesUtils.get(ThreadFactory.class.getName().toLowerCase() + ".queue", "50"));
+
+	private final static int INTERVAL = Integer.valueOf(PropertiesUtils.get(ThreadFactory.class.getName().toLowerCase() + ".interval", "10"));
 
 	private final static int KEEPALIVE = Integer.valueOf(PropertiesUtils.get(ThreadFactory.class.getName().toLowerCase() + ".keepalive", "60000"));
 
@@ -42,7 +50,16 @@ public class ThreadFactory implements FactoryBean<ThreadPoolExecutor> {
 		this.threads = new ThreadPoolExecutor(ThreadFactory.CORE, ThreadFactory.MAX, ThreadFactory.KEEPALIVE, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(ThreadFactory.QUEUE), new ThreadPoolExecutor.CallerRunsPolicy());
 	}
 
-	public void destory() {
-		this.threads.shutdown();
+	public void destory() throws Exception {
+		this.destory(this.threads.shutdownNow());
+		while (!this.threads.awaitTermination(ThreadFactory.INTERVAL, TimeUnit.SECONDS)) {
+			ThreadFactory.LOGGER.warn("Threads closing ... (" + new Date() + " )");
+		}
+	}
+
+	private void destory(List<Runnable> runnables) {
+		for (Runnable each : runnables) {
+			ThreadFactory.LOGGER.warn("Threads shutdown, lossing " + each.getClass() + " ... ");
+		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.kepler.connection.handler;
 
-import io.netty.buffer.Unpooled;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
@@ -15,6 +15,8 @@ import com.kepler.serial.SerialFactory;
 @Sharable
 public class DecoderHandler extends ChannelOutboundHandlerAdapter {
 
+	private final PooledByteBufAllocator allocator = PooledByteBufAllocator.DEFAULT;
+
 	private final SerialFactory serial;
 
 	public DecoderHandler(SerialFactory serial) {
@@ -23,6 +25,10 @@ public class DecoderHandler extends ChannelOutboundHandlerAdapter {
 	}
 
 	public void write(ChannelHandlerContext ctx, final Object msg, ChannelPromise promise) throws Exception {
-		ctx.writeAndFlush(Unpooled.wrappedBuffer(this.serial.serial(msg))).addListener(ExceptionListener.TRACE);
+		this.writeAndFlush(ctx, this.serial.serial(msg));
+	}
+
+	private void writeAndFlush(ChannelHandlerContext ctx, byte[] serial) {
+		ctx.writeAndFlush(this.allocator.heapBuffer(serial.length).writeBytes(serial)).addListener(ExceptionListener.TRACE);
 	}
 }

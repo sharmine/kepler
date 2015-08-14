@@ -146,7 +146,7 @@ public class AckFuture implements Future<Object>, Ack, Cancel {
 		if (!this.canceled) {
 			this.canceled = true;
 			this.thread.interrupt();
-			AckFuture.LOGGER.warn("ACK: " + this.request.ack() + " (Using" + this.elapse() + ") canceled ...");
+			AckFuture.LOGGER.warn("ACK: " + this.request.ack() + " (Using " + this.elapse() + ") canceled ...");
 		}
 		return this.canceled;
 	}
