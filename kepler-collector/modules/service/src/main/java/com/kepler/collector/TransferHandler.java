@@ -35,7 +35,7 @@ public class TransferHandler implements Feeder, RoundTrip {
 	}
 
 	@Override
-	// db.transfer.ensureIndex({"servce":1, "version":1, "minute":1, "host_target":1, "method":1, "host_local":1})
+	// db.transfer.ensureIndex({"service":1, "version":1, "minute":1, "host_target":1, "method":1, "host_local":1})
 	public void feed(Collection<Transfers> transfers) {
 		for (Transfers each : transfers) {
 			for (Transfer transfer : each.transfers()) {

@@ -22,7 +22,7 @@ import com.kepler.service.impl.Service;
  */
 public class DefaultContext implements HostsContext, Extension, Router {
 
-	private final static String ROUTING = PropertiesUtils.get(DefaultHosts.class.getName().toLowerCase(), TagRouting.NAME);
+	private final static String ROUTING = PropertiesUtils.get(DefaultHosts.class.getName().toLowerCase() + ".routing", TagRouting.NAME);
 
 	/**
 	 * 服务 - 主机映射

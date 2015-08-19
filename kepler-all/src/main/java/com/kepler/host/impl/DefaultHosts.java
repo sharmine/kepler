@@ -161,15 +161,10 @@ public class DefaultHosts implements Hosts, HostCollector {
 
 		public void put(Host host) {
 			this.bans.add(host);
-			DefaultHosts.LOGGER.warn(DefaultHosts.this.detail(host, "added (Bans) "));
 		}
 
 		public boolean del(Host host) {
-			boolean removed = this.bans.remove(host);
-			if (removed) {
-				DefaultHosts.LOGGER.warn(DefaultHosts.this.detail(host, "removed (Bans) "));
-			}
-			return removed;
+			return this.bans.remove(host);
 		}
 
 		public boolean contains(Host host) {
