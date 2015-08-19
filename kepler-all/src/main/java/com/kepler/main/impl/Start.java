@@ -18,7 +18,7 @@ public class Start {
 			ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:" + PropertiesUtils.get(Start.class.getName().toLowerCase() + ".xml"));
 			Runtime.getRuntime().addShutdownHook(new Shutdown(context));
 			Start.wait(context);
-			Start.LOGGER.warn("Kepler closed ...");
+			Start.LOGGER.warn("Service closed ...");
 		} catch (Throwable e) {
 			e.printStackTrace();
 			Start.LOGGER.fatal(e.getMessage(), e);

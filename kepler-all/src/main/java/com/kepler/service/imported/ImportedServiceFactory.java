@@ -11,7 +11,7 @@ import net.sf.cglib.proxy.MethodProxy;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.core.annotation.AnnotationUtils;
 
-import com.kepler.annotation.Version;
+import com.kepler.annotation.Service;
 import com.kepler.invoker.Invoker;
 import com.kepler.protocol.RequestFactory;
 import com.kepler.service.Imported;
@@ -36,7 +36,7 @@ public class ImportedServiceFactory<T> implements FactoryBean<T> {
 	private final String version;
 
 	public ImportedServiceFactory(Class<T> service, Invoker invoker, RequestFactory factory, Imported imported) {
-		this(service, AnnotationUtils.findAnnotation(service, Version.class).value(), invoker, factory, imported);
+		this(service, AnnotationUtils.findAnnotation(service, Service.class).version(), invoker, factory, imported);
 	}
 
 	public ImportedServiceFactory(Class<T> service, String version, Invoker invoker, RequestFactory factory, Imported imported) {

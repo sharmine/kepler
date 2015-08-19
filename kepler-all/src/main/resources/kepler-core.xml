@@ -14,12 +14,13 @@
 	<import resource="kepler-serial.xml" />
 	<import resource="kepler-invoker.xml" />
 	<import resource="kepler-channel.xml" />
-	<import resource="kepler-service.xml" />
 	<import resource="kepler-protocol.xml" />
 	<import resource="kepler-closeable.xml" />
 	<import resource="kepler-extension.xml" />
 	<import resource="kepler-connection.xml" />
 	<import resource="kepler-management.xml" />
+	<import resource="kepler-service-imported.xml" />
+	<import resource="kepler-service-exported.xml" />
 	<import resource="kepler-zookeeper.xml" />
 	<import resource="kepler-zookeeper-imported.xml" />
 	<import resource="kepler-zookeeper-processor.xml" />

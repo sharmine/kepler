@@ -1,7 +1,7 @@
 package com.kepler;
-import com.kepler.annotation.Version;
+import com.kepler.annotation.Service;
 
-@Version("0.0.1-${artifactId}")
+@Service(version = "0.0.1-${artifactId}")
 public interface TestApp {
 
 	public String test(String kepler) throws Exception;

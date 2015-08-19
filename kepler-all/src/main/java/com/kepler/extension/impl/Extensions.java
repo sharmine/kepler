@@ -34,7 +34,7 @@ public class Extensions implements BeanPostProcessor {
 		for (Extension each : this.extensions) {
 			if (each.interested().isAssignableFrom(bean.getClass()) && !this.same(bean, each)) {
 				each.install(bean);
-				Extensions.LOGGER.info(each + " installed " + bean + " ... ");
+				Extensions.LOGGER.debug(each + " installed " + bean + " ... ");
 			}
 		}
 		return bean;

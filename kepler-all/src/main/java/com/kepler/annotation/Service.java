@@ -12,7 +12,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Inherited
-public @interface Version {
+public @interface Service {
 
-	String value();
+	String version();
+
+	boolean autowired() default false;
 }

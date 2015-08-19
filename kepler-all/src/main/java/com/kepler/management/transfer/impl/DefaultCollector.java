@@ -42,7 +42,7 @@ public class DefaultCollector implements Collector, Runnable, Imported {
 
 	@Override
 	public void collect(Ack ack) {
-		// Service, Version, Method维度
+		// Service, Service, Method维度
 		DefaultTransfers.class.cast(this.curr().get(ack.request().service().getName(), ack.request().version(), ack.request().method())).put(ack.local(), ack.host(), ack.status(), ack.elapse());
 	}
 

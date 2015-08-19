@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
- * Service, Version, Method维度
+ * Service, Service, Method维度
  * 
  * @author kim 2015年7月24日
  */

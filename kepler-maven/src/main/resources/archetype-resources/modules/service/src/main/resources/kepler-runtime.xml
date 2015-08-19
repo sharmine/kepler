@@ -11,11 +11,6 @@
 	<import resource="classpath:kepler-management-all.xml" />
 	-->
 
-	<bean class="com.kepler.service.exported.ExportedServiceFactory" parent="kepler.service.exproted.abstract">
-		<constructor-arg index="1" value="com.kepler.TestApp" />
-		<constructor-arg ref="kepler.test" />
-	</bean>
-
-	<bean id="kepler.test" class="com.kepler.impl.TestAppImpl" />
+	<bean class="com.kepler.impl.TestAppImpl" />
 
 </beans>
