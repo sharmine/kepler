@@ -2,13 +2,13 @@ package com.kepler.management.search;
 
 import java.util.Collection;
 
-import com.kepler.annotation.Version;
+import com.kepler.annotation.Service;
 import com.kepler.management.transfer.Transfers;
 
 /**
  * @author kim 2015年7月25日
  */
-@Version("0.0.1")
+@Service(version = "0.0.1")
 public interface RoundTrip {
 
 	/**

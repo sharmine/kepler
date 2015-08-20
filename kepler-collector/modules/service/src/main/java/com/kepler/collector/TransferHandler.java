@@ -3,7 +3,7 @@ package com.kepler.collector;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
-import com.kepler.annotation.Version;
+import com.kepler.annotation.Service;
 import com.kepler.config.PropertiesUtils;
 import com.kepler.management.search.RoundTrip;
 import com.kepler.management.search.impl.Group;
@@ -22,7 +22,7 @@ import com.mongodb.DBObject;
 /**
  * @author kim 2015年7月22日
  */
-@Version("0.0.1")
+@Service(version = "0.0.1", autowired = true)
 public class TransferHandler implements Feeder, RoundTrip {
 
 	private final static Integer LIMIT_TRANSFER = Integer.valueOf(PropertiesUtils.get(TransferHandler.class.getName().toLowerCase() + ".limit", "5"));

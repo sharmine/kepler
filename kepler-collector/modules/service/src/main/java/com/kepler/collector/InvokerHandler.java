@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
-import com.kepler.annotation.Version;
+import com.kepler.annotation.Service;
 import com.kepler.config.PropertiesUtils;
 import com.kepler.host.Host;
 import com.kepler.host.impl.DefaultHost;
@@ -22,7 +22,7 @@ import com.mongodb.DBObject;
 /**
  * @author kim 2015年7月22日
  */
-@Version("0.0.1")
+@Service(version = "0.0.1", autowired = true)
 public class InvokerHandler implements Feeder, Exported {
 
 	private final static Integer LIMIT_INVOKER = Integer.valueOf(PropertiesUtils.get(InvokerHandler.class.getName().toLowerCase() + ".limit", "5"));

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
+import com.kepler.annotation.Service;
 import com.kepler.config.PropertiesUtils;
 import com.kepler.host.Host;
 import com.kepler.management.search.Properties;
@@ -18,6 +19,7 @@ import com.mongodb.DBObject;
 /**
  * @author kim 2015年8月12日
  */
+@Service(version = "0.0.1", autowired = true)
 public class StatusHandler implements Feeder, Properties {
 
 	private final static Integer LIMIT_STATUS = Integer.valueOf(PropertiesUtils.get(StatusHandler.class.getName().toLowerCase() + ".limit", "5"));
