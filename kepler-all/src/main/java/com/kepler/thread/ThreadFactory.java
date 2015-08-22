@@ -50,14 +50,14 @@ public class ThreadFactory implements FactoryBean<ThreadPoolExecutor> {
 		this.threads = new ThreadPoolExecutor(ThreadFactory.CORE, ThreadFactory.MAX, ThreadFactory.KEEPALIVE, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(ThreadFactory.QUEUE), new ThreadPoolExecutor.CallerRunsPolicy());
 	}
 
-	public void destory() throws Exception {
-		this.destory(this.threads.shutdownNow());
+	public void destroy() throws Exception {
+		this.destroy(this.threads.shutdownNow());
 		while (!this.threads.awaitTermination(ThreadFactory.INTERVAL, TimeUnit.SECONDS)) {
 			ThreadFactory.LOGGER.warn("Threads closing ... (" + new Date() + " )");
 		}
 	}
 
-	private void destory(List<Runnable> runnables) {
+	private void destroy(List<Runnable> runnables) {
 		for (Runnable each : runnables) {
 			ThreadFactory.LOGGER.warn("Threads shutdown, lossing " + each.getClass() + " ... ");
 		}

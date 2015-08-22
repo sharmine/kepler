@@ -53,7 +53,7 @@ abstract public class Period implements Runnable {
 		this.threads.execute(this);
 	}
 
-	public void destory() {
+	public void destroy() {
 		this.shutdown.set(true);
 	}
 

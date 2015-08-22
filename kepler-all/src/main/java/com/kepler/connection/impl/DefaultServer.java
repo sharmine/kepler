@@ -91,7 +91,7 @@ public class DefaultServer {
 		this.bootstrap.group(new NioEventLoopGroup(), new NioEventLoopGroup()).channelFactory(DefaultServer.FACTORY).childHandler(this.inits.factory()).option(ChannelOption.SO_REUSEADDR, true).bind(this.local.port()).sync();
 	}
 
-	public void destory() throws Exception {
+	public void destroy() throws Exception {
 		this.bootstrap.group().shutdownGracefully().sync();
 		DefaultServer.LOGGER.warn("Server shutdown ... ");
 	}

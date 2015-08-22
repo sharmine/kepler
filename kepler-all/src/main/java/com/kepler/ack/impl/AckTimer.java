@@ -38,7 +38,7 @@ public class AckTimer implements Runnable {
 		}
 	}
 
-	public void destory() {
+	public void destroy() {
 		this.shutdown.set(true);
 	}
 

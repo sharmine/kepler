@@ -9,12 +9,12 @@
 
 	<bean id="kepler.zookeeper.connection" class="com.kepler.zookeeper.ZkConnection" />
 
-	<bean id="kepler.zookeeper" class="com.kepler.zookeeper.ZkFactory" init-method="init" destroy-method="destory">
+	<bean id="kepler.zookeeper" class="com.kepler.zookeeper.ZkFactory" init-method="init" destroy-method="destroy">
 		<constructor-arg ref="kepler.zookeeper.connection" />
 		<constructor-arg ref="kepler.zookeeper.processors" />
 	</bean>
 
-	<bean id="kepler.zookeeper.context" class="com.kepler.zookeeper.ZkContext" init-method="init" destroy-method="destory">
+	<bean id="kepler.zookeeper.context" class="com.kepler.zookeeper.ZkContext" init-method="init" destroy-method="destroy">
 		<constructor-arg ref="kepler.connection.connect" />
 		<constructor-arg ref="kepler.router.changes" />
 		<constructor-arg ref="kepler.host.context" />

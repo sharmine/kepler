@@ -33,7 +33,7 @@ public class StartPID implements Pid{
 		}
 	}
 
-	public void destory() {
+	public void destroy() {
 		this.file.delete();
 	}
 

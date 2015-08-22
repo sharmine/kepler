@@ -116,7 +116,7 @@ public class DefaultConnect implements Connect {
 		this.inits.add(new EncoderHandler(DefaultConnect.this.serial, Response.class));
 	}
 
-	public void destory() {
+	public void destroy() {
 		this.shutdown.set(true);
 	}
 

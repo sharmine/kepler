@@ -7,7 +7,7 @@
 
 	<bean id="kepler.ack.acks" class="com.kepler.ack.impl.Acks" />
 
-	<bean class="com.kepler.ack.impl.AckTimer" init-method="init" destroy-method="destory">
+	<bean class="com.kepler.ack.impl.AckTimer" init-method="init" destroy-method="destroy">
 		<constructor-arg ref="kepler.threads" />
 		<constructor-arg ref="kepler.ack.acks" />
 	</bean>

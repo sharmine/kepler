@@ -57,7 +57,7 @@ public class ZkFactory implements FactoryBean<ZooKeeper> {
 		this.connection.await();
 	}
 
-	public void destory() throws Exception {
+	public void destroy() throws Exception {
 		this.zoo.close();
 	}
 

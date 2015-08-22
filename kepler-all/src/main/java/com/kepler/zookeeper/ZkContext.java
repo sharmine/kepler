@@ -77,8 +77,8 @@ public class ZkContext implements Imported, Exported {
 		ZkContext.SERVICE.execute(this.changed);
 	}
 
-	public void destory() throws Exception {
-		this.exported.destory();
+	public void destroy() throws Exception {
+		this.exported.destroy();
 		this.shutdown.set(true);
 		ZkContext.SERVICE.shutdown();
 	}
@@ -159,7 +159,7 @@ public class ZkContext implements Imported, Exported {
 			this.exported.add(path);
 		}
 
-		public void destory() {
+		public void destroy() {
 			for (String exported : this.exported) {
 				try {
 					ZkContext.this.zoo.delete(exported, 0);
@@ -179,7 +179,7 @@ public class ZkContext implements Imported, Exported {
 			this.imported.put(path, host);
 		}
 
-		public void destory(String path) {
+		public void destroy(String path) {
 			Host host = this.imported.remove(path);
 			if (host != null) {
 				ZkContext.this.context.del(host);
@@ -198,7 +198,7 @@ public class ZkContext implements Imported, Exported {
 						ZkContext.this.importing(change.route());
 						continue;
 					case DEL:
-						ZkContext.this.imported.destory(change.route());
+						ZkContext.this.imported.destroy(change.route());
 						continue;
 					}
 				} catch (Throwable e) {
